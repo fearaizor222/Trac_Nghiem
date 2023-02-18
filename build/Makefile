@@ -1,12 +1,15 @@
+CXX := g++
+CXXFLAGS := -Wall -stdc++11
+
 OBJS := *.o
 SRCS := source/*.cpp
 HEADERS := util/*.h
 
 output: $(OBJS)
-	g++ $(OBJS) -o output
+	$(CXX) $(CXXFLAGS) $(OBJS) -o output
 
 $(OBJS): $(SRCS) $(HEADERS) 
-	g++ -c $(SRCS)
+	$(CXX) -c $(SRCS)
 
 clean:
 	rm *.o output
