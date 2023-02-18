@@ -1,0 +1,6 @@
+BAS1106     Giao duc the chat 1
+BAS1105-7   Giao duc quoc phong
+BAS1203     Giai tich 1
+BAS1150     Triet hoc
+BAS1201     Dai so
+INT1154     Tin hoc co so 1
