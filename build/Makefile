@@ -12,4 +12,4 @@ $(OBJS): $(SRCS) $(HEADERS)
 	$(CXX) -c $(SRCS)
 
 clean:
-	rm *.o output
+	del *.o output.exe
