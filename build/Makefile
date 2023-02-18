@@ -1,5 +1,5 @@
 CXX := g++
-CXXFLAGS := -Wall -stdc++11
+CXXFLAGS := -Wall -std=c++11
 
 OBJS := *.o
 SRCS := ../source/*.cpp
