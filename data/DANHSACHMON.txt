@@ -1,6 +1,29 @@
-BAS1106     Giao duc the chat 1
-BAS1105-7   Giao duc quoc phong
-BAS1203     Giai tich 1
-BAS1150     Triet hoc
-BAS1201     Dai so
-INT1154     Tin hoc co so 1
+BAS1106 Giáo dục thể chất 1
+BAS1105-7 Giáo dục quốc phòng và an ninh
+BAS1203 Giải tích 1
+BAS1150 Triết học Mác - Lênin
+BAS1201 Đại số
+INT1154 Tin học cơ sở 1
+INT1155 Tin học cơ sở 2
+BAS1156 Tiếng Anh Bổ Trợ
+BAS1157 Tiếng Anh (Course 1)
+BAS1151 Kinh tế chính trị Mác - Lênin
+BAS1226 Xác suất thống kê
+BAS1224 Vật lý 1 và thí nghiệm
+BAS1204 Giải tích 2
+BAS1107 Giáo dục thể chất 2
+ELE1433 Kỹ thuật số
+BAS1227 Vật lý 3 và thí nghiệm
+ELE1330 Xử lý tín hiệu số
+BAS1152 Chủ nghĩa xã hội khoa học
+BAS1158 Tiếng Anh (Course 2)
+SKD1101 Kỹ năng thuyết trình
+INT1358 Toán rời rạc 1
+INT1339 Ngôn ngữ lập trình C++
+SKD1102 Kỹ năng làm việc nhóm
+INT13145 Kiến trúc máy tính
+INT1306 Cấu trúc dữ liệu và giải thuật
+INT1359-3 Toán rời rạc 2
+BAS1159 Tiếng Anh (Course 3)
+BAS1122 Tư tưởng Hồ Chí Minh
+ELE1319 Lý thuyết thông tin
