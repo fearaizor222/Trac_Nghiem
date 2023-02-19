@@ -1,29 +1,29 @@
-BAS1106 Giáo dục thể chất 1
-BAS1105-7 Giáo dục quốc phòng và an ninh
-BAS1203 Giải tích 1
-BAS1150 Triết học Mác - Lênin
-BAS1201 Đại số
-INT1154 Tin học cơ sở 1
-INT1155 Tin học cơ sở 2
-BAS1156 Tiếng Anh Bổ Trợ
-BAS1157 Tiếng Anh (Course 1)
-BAS1151 Kinh tế chính trị Mác - Lênin
-BAS1226 Xác suất thống kê
-BAS1224 Vật lý 1 và thí nghiệm
-BAS1204 Giải tích 2
-BAS1107 Giáo dục thể chất 2
-ELE1433 Kỹ thuật số
-BAS1227 Vật lý 3 và thí nghiệm
-ELE1330 Xử lý tín hiệu số
-BAS1152 Chủ nghĩa xã hội khoa học
-BAS1158 Tiếng Anh (Course 2)
-SKD1101 Kỹ năng thuyết trình
-INT1358 Toán rời rạc 1
-INT1339 Ngôn ngữ lập trình C++
-SKD1102 Kỹ năng làm việc nhóm
-INT13145 Kiến trúc máy tính
-INT1306 Cấu trúc dữ liệu và giải thuật
-INT1359-3 Toán rời rạc 2
-BAS1159 Tiếng Anh (Course 3)
-BAS1122 Tư tưởng Hồ Chí Minh
-ELE1319 Lý thuyết thông tin
+BAS1106,Giao duc the chat 1
+BAS1105-7,Giao duc quoc phong an ninh
+BAS1203,Giai tich
+BAS1150,Triet hoc Mac - Lenin
+BAS1201,Dai so
+INT1154,Tin hoc co so 1
+INT1155,Tin hoc co so 2
+BAS1156,Tieng Anh Bo Tro
+BAS1157,Tieng Anh (Course 1)
+BAS1151,Kinh te chinh tri Mac - Lenin
+BAS1226,Xac suat thong ke
+BAS1224,Vat ly 1 va thi nghiem
+BAS1204,Giai tich 2
+BAS1107,Giao duc the chat 2
+ELE1433,Ky thuat so
+BAS1227,Vat ly 3 va thi nghiem
+ELE1330,Xu ly tin hieu so
+BAS1152,Chu nghia xa hoi khoa hoc
+BAS1158,Tieng Anh (Course 2)
+SKD1101,Ky nang thuyet trinh
+INT1358,Toan roi rac 1
+INT1339,Ngon ngu lap trinh C++
+SKD1102,Ky nang lam viec nhom
+INT13145,Kien truc may tinh
+INT1306,Cau truc du lieu và giai thuat
+INT1359-3,Toan roi rac 2
+BAS1159,Tieng Anh (Course 3)
+BAS1122,Tu tuong Ho Chi Minh
+ELE1319,Ly thuyet thong tin
