@@ -16,13 +16,13 @@ class DanhSachMonHoc{
 
         DanhSachMonHoc();
         ~DanhSachMonHoc();
-        DanhSachMonHoc(std::string path);
-        void insert(MonHoc *mon_hoc);
-        void output();
+        DanhSachMonHoc(std::string path);  //  Nhận 1 đường dẫn đến file .csv, lấy MAMH và TENMH
+        void insert(MonHoc *mon_hoc);  //  gắn dữ liệu môn dựa theo MAMH
+        void output();  //  debugging only use, will remove after done
 
     private:
         short length;
         MonHoc *data[MAXARR];
 
-        void move(int index);
+        void move(int index);  //  di chuyển dữ liệu qua bên phải
 };
