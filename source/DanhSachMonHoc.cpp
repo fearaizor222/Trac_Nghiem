@@ -25,8 +25,8 @@ DanhSachMonHoc::DanhSachMonHoc(std::string path) : DanhSachMonHoc(){
     std::string rawline = "";
     std::ifstream input(path);
     while(std::getline(input, rawline)){
-        std::string ma_mon = rawline.substr(0, rawline.find(" "));
-        std::string ten_mon = rawline.substr(rawline.find(" "), rawline.size()-1);
+        std::string ma_mon = rawline.substr(0, rawline.find(","));
+        std::string ten_mon = rawline.substr(rawline.find(",") + 1, rawline.size() - 1);
 
         this->insert(new MonHoc((char*)ma_mon.c_str(), ten_mon));
     }
