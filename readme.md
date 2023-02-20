@@ -25,6 +25,20 @@ Lưu ý: Chương trình cho phép lưu các danh sách vào file; Kiểm tra c�
 cd build
 make
 make run
+
+or
+
+cd build
+make
+.\output
+```
+Nếu có pwsh từ microsoft store thì
+```
+make && make run
+
+or
+
+make && .\output
 ```
 
 # Cấu trúc các thư mục
