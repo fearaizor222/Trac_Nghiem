@@ -13,7 +13,7 @@ private:
     float Diem;
 
 public:
-    Score(string Mamh, float Diem);
+    Score(string Mamh, float Diem); 
     Score(Score *score);
 
     string getMamh();
@@ -21,9 +21,9 @@ public:
     float getDiem();
     void setDiem(float Diem);
 
-    friend ofstream &operator<<(ofstream &out, Score *score);
-    friend istream &operator>>(istream &in, Score *score);
-    friend ostream &operator<<(ostream &out, Score *score);
+    friend ofstream &operator<<(ofstream &out, Score *score); //Ghi vào file
+    friend istream &operator>>(istream &in, Score *score); //Đọc từ file
+    friend ostream &operator<<(ostream &out, Score *score); //In ra màn hình
     Score();
     ~Score();
 };
@@ -45,11 +45,16 @@ class ScoreList
     int size = 0;
 
 public:
-    bool empty();
-    int get_size();
-    void insert(Score data);
-    void remove();
-    ScoreNode* get_score_from_subject(int index, DanhSachMonHoc *dsmh);
+    bool empty(); //Kiểm tra danh sách có rỗng hay không
+    int get_size(); //Lấy số lượng phần tử trong danh sách
+    void insert_first(Score data); //Thêm phần tử vào đầu danh sách
+    void insert_last(Score data); //Thêm phần tử vào cuối danh sách
+    void insert_at(Score data, int index); //Thêm phần tử vào vị trí index
+    void remove_byID (string Masv); //Xoá theo Mã sinh viên
+    void remove_at(int index); //Xóa phần tử tại vị trí index
+    ScoreNode* get_score_from_subject(int index, DanhSachMonHoc *dsmh); //Lấy điểm của môn học tại vị trí index
+    Score get_score_at_position (int index); //Lấy điểm tại vị trí index
+
 
     ScoreList();
     ~ScoreList();
