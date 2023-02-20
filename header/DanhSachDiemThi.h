@@ -50,7 +50,7 @@ public:
     void insert_first(Score data); //Thêm phần tử vào đầu danh sách
     void insert_last(Score data); //Thêm phần tử vào cuối danh sách
     void insert_at(Score data, int index); //Thêm phần tử vào vị trí index
-    void remove_byID (string Masv); //Xoá theo Mã sinh viên
+    void remove_by_MaSV (string Masv); //Xoá theo Mã sinh viên
     void remove_at(int index); //Xóa phần tử tại vị trí index
     ScoreNode* get_score_from_subject(int index, DanhSachMonHoc *dsmh); //Lấy điểm của môn học tại vị trí index
     Score get_score_at_position (int index); //Lấy điểm tại vị trí index
