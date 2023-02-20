@@ -1,3 +1,5 @@
+.SHELLFLAGS := pwsh
+
 CXX := g++
 CXXFLAGS := -Wall -std=c++11
 
@@ -10,6 +12,9 @@ output: $(OBJS)
 
 $(OBJS): $(SRCS) $(HEADERS)
 	$(CXX) -c $(SRCS)
+
+run:
+	start cmd "/c ; output &pause\"
 
 clean:
 	del *.o output.exe
