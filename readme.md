@@ -29,6 +29,6 @@ make run
 
 # Cấu trúc các thư mục
 - build: chứa các file object và file exe
-- data: chứa cái dữ liệu input
+- data: chứa cái dữ liệu input(file .csv)
 - header: chứa các file header(file .h)
 - source: chứa main và file .cpp
