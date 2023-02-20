@@ -24,7 +24,7 @@ Lưu ý: Chương trình cho phép lưu các danh sách vào file; Kiểm tra c�
 ```
 cd build
 make
-.\output
+make run
 ```
 
 # Cấu trúc các thư mục
