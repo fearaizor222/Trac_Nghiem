@@ -2,7 +2,7 @@
 #include <string.h>
 #include <fstream>
 #include <string>
-#define MAXARR 300
+#define MAX_MON 300
 
 class DanhSachMonHoc{
     public:
@@ -22,7 +22,7 @@ class DanhSachMonHoc{
 
     private:
         short length;
-        MonHoc *data[MAXARR];
+        MonHoc *data[MAX_MON];
 
         void move(int index);  //  di chuyển dữ liệu qua bên phải
 };
