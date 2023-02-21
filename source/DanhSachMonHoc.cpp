@@ -1,5 +1,4 @@
 #include "../header/DanhSachMonHoc.h"
-#include <iostream>
 
 DanhSachMonHoc::MonHoc::MonHoc(){
     strcpy_s(ma_mon_hoc, 15, "");
@@ -11,14 +10,13 @@ DanhSachMonHoc::MonHoc::MonHoc(char ma_mon_hoc[15], std::string ten_mon_hoc){
     this->ten_mon_hoc = ten_mon_hoc;
 }
 
-DanhSachMonHoc::DanhSachMonHoc(){
-    length = 0;
+std::ostream &operator<<(std::ostream &out, DanhSachMonHoc::MonHoc mon_hoc){
+    out<<mon_hoc.ma_mon_hoc<<","<<mon_hoc.ten_mon_hoc;
+    return out;
 }
 
-DanhSachMonHoc::~DanhSachMonHoc(){
-    for(int i = 0; i<length; i++){
-        delete data[i];
-    }
+DanhSachMonHoc::DanhSachMonHoc(){
+    length = 0;
 }
 
 DanhSachMonHoc::DanhSachMonHoc(std::string path) : DanhSachMonHoc(){
@@ -28,20 +26,20 @@ DanhSachMonHoc::DanhSachMonHoc(std::string path) : DanhSachMonHoc(){
         std::string ma_mon = rawline.substr(0, rawline.find(","));
         std::string ten_mon = rawline.substr(rawline.find(",") + 1, rawline.size() - 1);
 
-        this->insert(new MonHoc((char*)ma_mon.c_str(), ten_mon));
+        this->insert(MonHoc((char*)ma_mon.c_str(), ten_mon));
     }
 }
 
 void DanhSachMonHoc::move(int index){
-    MonHoc *ptr1 = data[index];
+    MonHoc temp1 = data[index];
     for(int i = index + 1; i<=length; i++){
-        MonHoc *ptr2 = data[i];
-        data[i] = ptr1;
-        ptr1 = ptr2;
+        MonHoc temp2 = data[i];
+        data[i] = temp1;
+        temp1 = temp2;
     }
 }
 
-void DanhSachMonHoc::insert(MonHoc *mon_hoc){
+void DanhSachMonHoc::insert(MonHoc mon_hoc){
     // if(length == 0){
     //     data[length] = mon_hoc;   may have unforeseen consequences, so i didnt remove
     //     length++;
@@ -49,7 +47,7 @@ void DanhSachMonHoc::insert(MonHoc *mon_hoc){
     // }
 
     for(int i = 0; i<length; i++){
-        if(strcmp(data[i]->ma_mon_hoc, mon_hoc->ma_mon_hoc) > 0){
+        if(strcmp(data[i].ma_mon_hoc, mon_hoc.ma_mon_hoc) > 0){
             this->move(i);
             data[i] = mon_hoc;
             length++;
@@ -62,6 +60,10 @@ void DanhSachMonHoc::insert(MonHoc *mon_hoc){
 void DanhSachMonHoc::output(){
     printf("%d\n",length);
     for(int i = 0; i<length;  i++){
-        printf("%s      %s\n", data[i]->ma_mon_hoc, data[i]->ten_mon_hoc.c_str());
+        printf("%s      %s\n", data[i].ma_mon_hoc, data[i].ten_mon_hoc.c_str());
     }
+}
+
+DanhSachMonHoc::MonHoc &DanhSachMonHoc::operator[](int index){
+    return data[index];
 }
