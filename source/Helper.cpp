@@ -35,3 +35,46 @@ int NhapSo(){
     }
     return tong;
 }
+
+char *NhapChuoi(){
+    char *str = (char*)malloc(50);
+    int i = 0;
+
+    while((str[i] = getch()) != ENTER){
+        if((str[i] >= 'a' && str[i] <= 'z') || 
+            (str[i] >= 'A' && str[i] <= 'Z') ||
+            str[i] == ' '){
+            printf("%c",str[i]);
+            i++;
+        }
+        if(str[i] == BACKSPACE){
+            printf("\b \b");
+            str[i--] = '\0';
+        }
+    }
+
+    str[i] = '\0';
+    return str;
+}
+
+char *NhapMa(){
+    char *str = (char*)malloc(50);
+    int i = 0;
+
+    while((str[i] = getch()) != ENTER ){
+        if( (str[0] >= 'a' && str[0] <= 'z') ||
+            (str[i] >= 'A' && str[i] <= 'Z') || 
+            (str[i] >= '0' && str[i] <= '9') ||
+            str[i] == '_'){
+            printf("X");
+            i++;
+        }
+        if(str[i] == BACKSPACE){
+            printf("\b \b");
+            str[i--] = '\0';
+        }
+    }
+
+    str[i] = '\0';
+    return str;
+}
