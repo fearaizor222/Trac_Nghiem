@@ -83,7 +83,7 @@ ScoreList::ScoreList()
     first = NULL;
 }
 
-ScoreList::get_score_at_position(int index) //Lấy điểm tại vị trí index
+Score ScoreList::get_score_at_position(int index) //Lấy điểm tại vị trí index
 {
     ScoreNode *p = first;
     int i = 0;
