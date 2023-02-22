@@ -24,6 +24,3 @@ class danhSachLopHoc{
     private:
     Lop *PTR[MAX_DSL];
 };
-int main(){
-    cout<<"Hello";
-}
