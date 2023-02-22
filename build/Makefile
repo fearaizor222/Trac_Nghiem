@@ -1,4 +1,5 @@
-.SHELLFLAGS := pwsh
+SHELL := pwsh.exe
+.SHELLFLAGS := -NoProfile -Command
 
 CXX := g++
 CXXFLAGS := -Wall -std=c++11
@@ -8,7 +9,7 @@ SRCS := ../source/*.cpp
 HEADERS := ../header/*.h
 
 output: $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o output
+	$(CXX) $(CXXFLAGS) $(OBJS) -o output.exe
 
 $(OBJS): $(SRCS) $(HEADERS)
 	$(CXX) -c $(SRCS)
@@ -17,4 +18,4 @@ run:
 	start cmd "/c ; output &pause\"
 
 clean:
-	del *.o output.exe
+	rm *.o output.exe
