@@ -2,51 +2,32 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include "DanhSachMonHoc.h"
+#ifndef DANHSACHDIEMTHI_H
+#define DANHSACHDIEMTHI_H
 
 using namespace std;
 
-class Score
-{
-private:
-    string Mamh;
-    float Diem;
+class DanhSachDiemThi{
+    private:
+        struct DiemThi{
+            char Mamh[15];
+            float Diem;
+        }
 
-public:
-    Score(string Mamh, float Diem); 
-    Score(Score *score);
+        struct DiemThiNode{
+            DiemThi data;
+            DiemThiNode *next;
+        }
+        typedef DiemThiNode *DTPtr;
+        
+    public:
+        DanhSachDiemThi();
+        ~DanhSachDiemThi();
+        void khoiTaoDTPtr(DTPtr *First);
+        void inDiemRaFile(DTPtr First, ofstream &out);  
+}
 
-    string getMamh();
-    void setMamh(string Mamh);
-    float getDiem();
-    void setDiem(float Diem);
 
-    friend ofstream &operator<<(ofstream &out, Score *score); //Ghi vào file
-    friend istream &operator>>(istream &in, Score *score); //Đọc từ file
-    friend ostream &operator<<(ostream &out, Score *score); //In ra màn hình
-    Score();
-    ~Score();
-};
 
-class ScoreNode
-{
-public:
-    Score data;
-    ScoreNode *next;
 
-    ScoreNode(Score data);
-    ScoreNode();
-    ~ScoreNode();
-};
 
-class ScoreList
-{
-    ScoreNode *first;
-    int size = 0;
-
-public:
-    Score get_score_at_position (int index); //Lấy điểm tại vị trí index
-
-    ScoreList();
-    ~ScoreList();
-};
