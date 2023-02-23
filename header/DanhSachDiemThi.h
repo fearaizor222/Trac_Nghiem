@@ -6,7 +6,7 @@
 using namespace std;
 
 class DanhSachDiemThi{
-    private:
+    public:
         struct DiemThi{
             char Mamh[15];
             float Diem;
@@ -17,10 +17,11 @@ class DanhSachDiemThi{
             DiemThiNode *next;
         };
         typedef DiemThiNode *DTPtr;
-        
-    public:
+
         DanhSachDiemThi();
         ~DanhSachDiemThi();
         void khoiTaoDTPtr(DTPtr *First);
         void inDiemRaFile(DTPtr First, ofstream &out);  
+    private:
+        DTPtr First=NULL;
 };
