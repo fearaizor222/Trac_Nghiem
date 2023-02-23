@@ -5,18 +5,18 @@ using namespace std;
 
 class Lop{
     private:
-    string maLop;
-    string tenLop;
-    int nienKhoa;
+        string maLop;
+        string tenLop;
+        int nienKhoa;
     public:
-    Lop(string maLop, string tenLop, int nienKhoa );
-
-    string getMaLop();
-    void setMaLop(string maLop);
-    string getTenLop();
-    void setTenLop(string tenlop);
-    int getNienKhoa();
-    void setNienKhoa(int nienKhoa);
+        Lop(string maLop, string tenLop, int nienKhoa );
+        void setMaLop(string maLop);
+        string getMaLop();
+        void setTenLop(string tenlop);
+        string getTenLop();
+        void setNienKhoa(int nienKhoa);
+        int getNienKhoa();
+        Lop();
 };
 
 
