@@ -41,16 +41,3 @@ void DanhSachDiemThi::inDiemRaFile(DTPtr First, ofstream &out){
     }
 }
 
-void DanhSachDiemThi::nhapDiemVaoTuFile(DTPtr *First, ifstream &in){ //For test case only, I will remove after test case is done
-    char temp[100];
-    in.getline(temp, 100); // Bỏ dòng đầu tiên
-    while(!in.eof()){
-        DTPtr p = new DiemThiNode;
-        in.getline(p->data.Mamh, 15, ',');
-        in>>p->data.Diem;
-        in.ignore();
-        p->next = *First;
-        *First = p;
-    }
-    in.close();
-}
