@@ -1,108 +1,56 @@
-#include "header\DanhSachDiemThi.h"
-#include <iostream>
+#include "..\header\DanhSachDiemThi.h"
+using namespace std;
 
-Score::Score(string Mamh, float Diem)
-{
-    this->Mamh = Mamh;
-    this->Diem = Diem;
+DanhSachDiemThi::DanhSachDiemThi(){ // Hàm khởi tạo
+    khoiTaoDTPtr(&First);
+
+    ofstream out("DiemThi.csv", ios::out); // Tạo file DiemThi.csv
+    if(!out){
+        cout<<"Khong mo duoc file";
+        return;
+    }
+    out<<"Ma mon hoc"<<","<<"Diem"<<endl;
+    inDiemRaFile(First, out);
+    out.close();
 }
 
-Score::Score(Score *score)
-{
-    *this = *score;
-}
-
-string Score::getMamh()
-{
-    return Mamh;
-}
-
-void Score::setMamh(string Mamh)
-{
-    this->Mamh = Mamh;
-}
-
-float Score::getDiem()
-{
-    return Diem;
-}
-
-void Score::setDiem(float Diem)
-{
-    this->Diem = Diem;
-}
-
-ofstream &operator<<(ofstream &out, Score *score)
-{
-    out << score->Mamh << endl;
-    out << score->Diem << endl;
-    return out;
-}
-
-istream &operator>>(istream &in, Score *score)
-{
-    in >> score->Mamh;
-    in >> score->Diem;
-    return in;
-}
-
-ostream &operator<<(ostream &out, Score *score)
-{
-     if(score->Diem == -1) {
-        out << "Chua thi"; //In ra "Chưa thi" nếu sinh viên chưa thi
-    } else {
-        out << score->Mamh << " " << score->Diem << endl;
-    } 
-    return out;
-}
-
-Score::Score()
-{
-}
-
-Score::~Score()
-{
-}
-
-ScoreNode::ScoreNode(Score data)
-{
-    this->data = data;
-    this->next = NULL;
-}
-
-ScoreNode::ScoreNode()
-{
-}
-
-ScoreNode::~ScoreNode()
-{
-}
-
-ScoreList::ScoreList()
-{
-    first = NULL;
-}
-
-Score ScoreList::get_score_at_position(int index) //Lấy điểm tại vị trí index
-{
-    ScoreNode *p = first;
-    int i = 0;
-    while (p != NULL)
-    {
-        if (i == index)
-        {
-            return p->data;
-        }
+DanhSachDiemThi::~DanhSachDiemThi(){ // Hàm hủy
+    DTPtr p = First;
+    while(p != NULL){
+        DTPtr q = p;
         p = p->next;
-        i++;
+        delete q;
     }
 }
 
-ScoreList::~ScoreList()
-{
+void DanhSachDiemThi::khoiTaoDTPtr(DTPtr *First){
+    *First = NULL;
+}
+    
+void DanhSachDiemThi::inDiemRaFile(DTPtr First, ofstream &out){
+    DTPtr p = First;
+    while(p != NULL){
+        if (p->data.Diem == -1){ // Nếu thí sinh chưa thi thì in ra chưa thi
+            out<<p->data.Mamh<<","<<"Chua thi"<<endl;
+            p = p->next;
+        }
+        else{
+        out<<p->data.Mamh<<","<<p->data.Diem<<endl;
+        p = p->next;
+        }
+    }
 }
 
-
-
-
-
+void DanhSachDiemThi::nhapDiemVaoTuFile(DTPtr *First, ifstream &in){ //For test case only, I will remove after test case is done
+    char temp[100];
+    in.getline(temp, 100); // Bỏ dòng đầu tiên
+    while(!in.eof()){
+        DTPtr p = new DiemThiNode;
+        in.getline(p->data.Mamh, 15, ',');
+        in>>p->data.Diem;
+        in.ignore();
+        p->next = *First;
+        *First = p;
+    }
+    in.close();
+}
