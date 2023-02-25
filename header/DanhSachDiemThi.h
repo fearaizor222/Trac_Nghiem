@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 #include <fstream>
-
 using namespace std;
 
 class DanhSachDiemThi{
@@ -20,7 +19,7 @@ class DanhSachDiemThi{
         DanhSachDiemThi();
         ~DanhSachDiemThi();
         void khoiTaoDTPtr(DTPtr *First);
-        void inDiemRaFile(DTPtr First, ofstream &out);  
+        void inDiemRaFile(DTPtr First, ofstream &out); 
     private:
         DTPtr First=NULL;
 };
