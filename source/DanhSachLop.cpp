@@ -43,7 +43,7 @@ void ListClasses::insertList(){
     for(int i=0;i<soluong;i++){
         printf("Nhap thong tin lop %d: \n",i+1);
         cout<<"Ma lop: ";
-            getline(cin,a); \
+            getline(cin,a); 
             List[i]->setMaLop(a);
             cout<<endl;
         cout<<"Ten lop: ";
