@@ -6,7 +6,7 @@
 #define ENTER 13
 #define BACKSPACE 8
 
-int NhapSo(){
+long long NhapSo(){
     char *number = (char*)malloc(50);
     int i = 0;
 
@@ -20,7 +20,7 @@ int NhapSo(){
             number[i--] = '\0';
         }
     }
-    int tong = -1;
+    long long tong = -1;
     
     if(i != 0){
         number[i] = '\0';
@@ -33,6 +33,8 @@ int NhapSo(){
         }
         tong += (number[i] - '0');
     }
+
+    free(number);
     return tong;
 }
 
