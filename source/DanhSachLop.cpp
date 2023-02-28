@@ -56,5 +56,8 @@ void ListClasses::insertList(){
             cout<<endl;
     }
 }
+void inRaCaiGiDo(){
+    
+}
 
 
