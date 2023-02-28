@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <iostream>
 #define MAX_DSL 500
 using namespace std;
