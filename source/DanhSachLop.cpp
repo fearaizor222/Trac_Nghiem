@@ -41,5 +41,6 @@ Lop::setNienKhoa(int nienKhoa){
 Lop::getNienKhoa(){
     return nienKhoa;
 }
+//Ghi chơi cho dui
 
 
