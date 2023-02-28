@@ -18,4 +18,4 @@ run:
 	start cmd "/c ; output &pause\"
 
 clean:
-	rm *.o output.exe
+	rm *.o , output.exe
