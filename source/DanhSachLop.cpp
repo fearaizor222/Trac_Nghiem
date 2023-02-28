@@ -18,11 +18,11 @@ string Lop::getTenLop(){
 void Lop::setNienKhoa(int nienkhoa){
     this->nienkhoa = nienkhoa;
 }
-Lop::setMaLop(string maLop){
-    this->maLop = maLop;
+int Lop::getNienKhoa(){
+    return nienkhoa;
 }
-Lop::getMaLop(){
-    return maLop;
+danhSachLopHoc::danhSachLopHoc(){
+    soluong = -1;
 }
 // danhSachLopHoc::~danhSachLopHoc(){
 //     delete [] List;
@@ -32,15 +32,29 @@ void ListClasses::init(){
         List[i] = new Lop();
     }
 }
-Lop::getTenLop(){
-    return tenLop;
+void ListClasses::setSoLuong(int soluong){
+    this->soluong = soluong;
 }
-Lop::setNienKhoa(int nienKhoa){
-    this->nienKhoa = nienKhoa;
+int ListClasses::getSoLuong(){
+    return soluong;
 }
-Lop::getNienKhoa(){
-    return nienKhoa;
+void ListClasses::insertList(){
+    string a; int b;
+    for(int i=0;i<soluong;i++){
+        printf("Nhap thong tin lop %d: \n",i+1);
+        cout<<"Ma lop: ";
+            getline(cin,a); \
+            List[i]->setMaLop(a);
+            cout<<endl;
+        cout<<"Ten lop: ";
+            getline(cin,a);
+            List[i]->setTenLop(a);
+            cout<<endl;
+        cout<<"Nien khoa: ";
+            cin>>b;
+            List[i]->setNienKhoa(b);
+            cout<<endl;
+    }
 }
-//Ghi chơi cho dui
 
 
