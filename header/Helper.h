@@ -9,6 +9,6 @@ Tạo thuvien.h có các CTC sau:
 -	ThongBao (char* S, kieu); kieu =1 thì thông báo; kieu=2 thì có phản hồi của user.
 */
 
-inline int NhapSo();
-inline char *NhapChuoi();
-inline char *NhapMa();
+extern long long NhapSo();
+extern char *NhapChuoi();
+extern char *NhapMa();
