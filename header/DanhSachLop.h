@@ -5,16 +5,16 @@ using namespace std;
 
 class Lop{
     private:
-        string maLop;
-        string tenLop;
-        int nienKhoa;
+        string malop;
+        string tenlop;
+        int nienkhoa;
     public:
-        Lop(string maLop, string tenLop, int nienKhoa );
-        void setMaLop(string maLop);
+        Lop(string malop, string tenlop, int nienkhoa );
+        void setMaLop(string malop);
         string getMaLop();
         void setTenLop(string tenlop);
         string getTenLop();
-        void setNienKhoa(int nienKhoa);
+        void setNienKhoa(int nienkhoa);
         int getNienKhoa();
         Lop();
 };
@@ -22,5 +22,15 @@ class Lop{
 
 class danhSachLopHoc{
     private:
-    Lop *PTR[MAX_DSL];
-};
+        int soluong; 
+        Lop *List[MAX_DSL];
+    public:
+       danhSachLopHoc();
+       ~danhSachLopHoc();
+       void init();
+       void setSoLuong(int soluong);
+       int getSoLuong();
+       void insertList();
+
+
+};typedef danhSachLopHoc ListClasses;
