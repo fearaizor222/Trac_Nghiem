@@ -29,7 +29,7 @@ danhSachLopHoc::danhSachLopHoc(){
 // }
 void ListClasses::init(){
     for(int i=0;i<soluong;i++){
-        List[i] = new Lop();
+        List[i] = new Lop(); 
     }
 }
 void ListClasses::setSoLuong(int soluong){
