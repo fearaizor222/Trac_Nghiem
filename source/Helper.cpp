@@ -7,7 +7,7 @@
 #define BACKSPACE 8
 #define MAX_LENGTH 50
 
-long long NhapSo(){
+uint64_t NhapSo(){
     char *number = (char*)malloc(MAX_LENGTH);
     int i = 0;
 
