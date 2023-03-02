@@ -18,8 +18,8 @@ class DanhSachDiemThi{
 
         DanhSachDiemThi();
         ~DanhSachDiemThi();
-        void khoiTaoDTPtr(DTPtr *First);
         void inDiemRaFile(DTPtr First, ofstream &out); 
     private:
         DTPtr First=NULL;
+        void khoiTaoDTPtr(DTPtr *First);
 };
