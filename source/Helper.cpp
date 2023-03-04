@@ -5,9 +5,10 @@
 #include <iostream>
 #define ENTER 13
 #define BACKSPACE 8
+#define MAX_LENGTH 50
 
-int NhapSo(){
-    char *number = (char*)malloc(50);
+long long NhapSo(){
+    char *number = (char*)malloc(MAX_LENGTH);
     int i = 0;
 
     while((number[i] = getch()) != ENTER){
@@ -15,12 +16,12 @@ int NhapSo(){
             printf("%c",number[i]);
             i++;
         }
-        if(number[i] == BACKSPACE){
+        if(number[i] == BACKSPACE && i > 0){
             printf("\b \b");
             number[i--] = '\0';
         }
     }
-    int tong = -1;
+    long long tong = -1;
     
     if(i != 0){
         number[i] = '\0';
@@ -33,21 +34,30 @@ int NhapSo(){
         }
         tong += (number[i] - '0');
     }
+
+    free(number);
     return tong;
 }
 
 char *NhapChuoi(){
-    char *str = (char*)malloc(50);
+    char *str = (char*)malloc(MAX_LENGTH);
     int i = 0;
+    int barrier;
 
-    while((str[i] = getch()) != ENTER){
+    while((barrier = getch()) != ENTER){
+        if (barrier == 0 || barrier == 224){
+            getch();
+            continue;
+        }
+        
+        str[i] = barrier;
         if((str[i] >= 'a' && str[i] <= 'z') || 
             (str[i] >= 'A' && str[i] <= 'Z') ||
             str[i] == ' '){
             printf("%c",str[i]);
             i++;
         }
-        if(str[i] == BACKSPACE){
+        if(str[i] == BACKSPACE && i > 0){
             printf("\b \b");
             str[i--] = '\0';
         }
@@ -58,18 +68,25 @@ char *NhapChuoi(){
 }
 
 char *NhapMa(){
-    char *str = (char*)malloc(50);
+    char *str = (char*)malloc(MAX_LENGTH);
     int i = 0;
+    int barrier;
 
-    while((str[i] = getch()) != ENTER ){
-        if( (str[0] >= 'a' && str[0] <= 'z') ||
-            (str[i] >= 'A' && str[i] <= 'Z') || 
-            (str[i] >= '0' && str[i] <= '9') ||
-            str[i] == '_'){
+    while((barrier = getch()) != ENTER ){
+        if (barrier == 0 || barrier == 224){
+            getch();
+            continue;
+        }
+
+        str[i] = barrier;
+        if( (str[0] >= 'a' && str[0] <= 'z' && i == 0) ||
+            (str[i] >= 'A' && str[i] <= 'Z' && i != 0) || 
+            (str[i] >= '0' && str[i] <= '9' && i != 0) ||
+            str[i] == '_'  && i != 0){
             printf("X");
             i++;
         }
-        if(str[i] == BACKSPACE){
+        if(str[i] == BACKSPACE && i > 0){
             printf("\b \b");
             str[i--] = '\0';
         }
