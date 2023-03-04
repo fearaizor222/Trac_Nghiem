@@ -22,6 +22,5 @@ class DanhSachSinhVien{
 
         DanhSachSinhVien();
         ~DanhSachSinhVien();
-        void khoiTaoSVPtr(SVPtr *First);
         void inSinhVienRaFile(SVPtr First, ofstream &out);
 };

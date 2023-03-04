@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <fstream>
 #define MAX_DSL 500
 using namespace std;
 
@@ -32,6 +33,6 @@ class danhSachLopHoc{
        void setSoLuong(int soluong);
        int getSoLuong();
        void insertList();
-
+       void inLopRaFile(Lop list[], ofstream &out);
 
 };typedef danhSachLopHoc ListClasses;
