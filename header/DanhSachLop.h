@@ -29,10 +29,12 @@ class danhSachLopHoc{
     public:
        danhSachLopHoc();
        ~danhSachLopHoc();
-       void init();
        void setSoLuong(int soluong);
        int getSoLuong();
-       void insertList();
-       void inLopRaFile(Lop list[], ofstream &out);
+       void insertList(Lop *List[], int &soluong);
+       void inLopRaFile(Lop *List[]);
+       void themLopVaoDanhSach(Lop *List[], int &soluong);
+       void xoaLopTrongDanhSach(Lop *List[], int &soluong);
+       void inLopTheoNienKhoa(Lop *List[]);
 
 };typedef danhSachLopHoc ListClasses;
