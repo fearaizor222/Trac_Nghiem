@@ -50,12 +50,14 @@ void DanhSachDiemThi::insertLast (DTPtr &First, DiemThi dt){
 
 //Hàm kiểm tra xem môn học đã thi chưa
 bool DanhSachDiemThi::kiemTraDaThi(DTPtr First, char Mamh[15]){
-    DTPtr p = First;
-    while(p != NULL){
-        if(strcmp(p->data.Mamh, Mamh) == 0){
+    DTPtr node_chay;
+    node_chay = new DiemThiNode;
+    node_chay = First;
+    while(node_chay != NULL){
+        if(strcmp(node_chay->data.Mamh, Mamh) == 0){
             return true;
         }
-        p = p->next;
+        node_chay = node_chay->next;
     }
     return false;
 }
@@ -81,7 +83,7 @@ void DanhSachDiemThi::insertDiem (DTPtr &First, DiemThi dt){
 }
 
 void DanhSachDiemThi::xuatDanhSachDiemThi(DTPtr First) {
-    ofstream out("../data/DiemThi.csv", ios::out); // Mở file Diemthi.csv để ghi
+    ofstream out("../data/DiemThi.csv", ios::out); // Mở file DiemThi.csv để ghi
     if (!out) {
         cout << "Khong mo duoc file";
         return;
@@ -100,4 +102,3 @@ void DanhSachDiemThi::xuatDanhSachDiemThi(DTPtr First) {
     }
     out.close();
 }
-

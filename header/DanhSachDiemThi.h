@@ -24,7 +24,7 @@ class DanhSachDiemThi{
         void insertLast (DTPtr &First, DiemThi dt); 
         bool kiemTraDaThi(DTPtr First, char Mamh[15]);
         void insertDiem(DTPtr &First, DiemThi dt);
-         DTPtr getFirst() { 
+        DTPtr getFirst() { 
             return First; 
         }
     private:
