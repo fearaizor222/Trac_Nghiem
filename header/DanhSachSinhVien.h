@@ -12,7 +12,7 @@ class DanhSachSinhVien{
             char TEN[16];
             bool Phai; // Nam = 0, Nu = 1
             char password[21];
-            DanhSachDiemThi DSDT; //Con trỏ quản lý danh sách điểm thi
+            DanhSachDiemThi::DTPtr ptr; //Con trỏ quản lý danh sách điểm thi
         };
 
         struct SinhVienNode{
