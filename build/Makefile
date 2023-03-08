@@ -15,7 +15,7 @@ $(OBJS): $(SRCS) $(HEADERS)
 	$(CXX) -c $(SRCS)
 
 run:
-	start cmd "/c ; output &pause\"
+	start cmd "/c ; output & pause"
 
 clean:
 	rm *.o , output.exe
