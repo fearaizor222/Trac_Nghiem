@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <fstream>
+#include "DanhSachDiemThi.h"
 using namespace std;
 
 class DanhSachSinhVien{
@@ -11,7 +12,7 @@ class DanhSachSinhVien{
             char TEN[16];
             bool Phai; // Nam = 0, Nu = 1
             char password[21];
-            DTPtr DanhSachDiemThi; //Con trỏ quản lý danh sách điểm thi
+            DanhSachDiemThi DSDT; //Con trỏ quản lý danh sách điểm thi
         };
 
         struct SinhVienNode{
