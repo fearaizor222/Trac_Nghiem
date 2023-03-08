@@ -9,6 +9,16 @@ class DanhSachDiemThi{
         struct DiemThi{
             char Mamh[15];
             float Diem;
+
+            DiemThi(){
+                strcpy(Mamh, "");
+                Diem = -1;
+            };
+
+            DiemThi(char _Mamh[], float _Diem){
+                strcpy(Mamh, _Mamh);
+                Diem = _Diem;
+            };
         };
 
         struct DiemThiNode{
@@ -19,15 +29,15 @@ class DanhSachDiemThi{
 
         DanhSachDiemThi();
         ~DanhSachDiemThi();
-        void xuatDanhSachDiemThi(DTPtr First);
-        void insertFirst (DTPtr &First, DiemThi dt);
-        void insertLast (DTPtr &First, DiemThi dt); 
-        bool kiemTraDaThi(DTPtr First, char Mamh[15]);
-        void insertDiem(DTPtr &First, DiemThi dt);
-        DTPtr getFirst() { 
+        void xuatDanhSachDiemThi();
+        void insertFirst (DiemThi dt);
+        void insertLast (DiemThi dt); 
+        bool kiemTraDaThi(char Mamh[15]);
+        void insertDiem(DiemThi dt);
+        DTPtr &getFirst() { 
             return First; 
         }
     private:
-        DTPtr First=NULL;
-        void khoiTaoDTPtr(DTPtr *First);
+        DTPtr First;
+        // void khoiTaoDTPtr(DTPtr *First);
 };

@@ -2,7 +2,8 @@
 using namespace std;
 
 DanhSachDiemThi::DanhSachDiemThi(){ // Hàm khởi tạo
-    khoiTaoDTPtr(&First);
+    // khoiTaoDTPtr(&First);
+    First = nullptr;
 
     ofstream out("../data/DiemThi.csv", ios::out); // Tạo file DiemThi.csv
     if(!out){
@@ -22,18 +23,18 @@ DanhSachDiemThi::~DanhSachDiemThi(){ // Hàm hủy
     }
 }
 
-void DanhSachDiemThi::khoiTaoDTPtr(DTPtr *First){
-    *First = NULL;
-}
+// void DanhSachDiemThi::khoiTaoDTPtr(DTPtr *First){
+//     *First = NULL;
+// }
     
-void DanhSachDiemThi::insertFirst (DTPtr &First, DiemThi dt){
+void DanhSachDiemThi::insertFirst(DiemThi dt){
     DTPtr p = new DiemThiNode;
     p->data = dt;
     p->next = First;
     First = p;
 }
 
-void DanhSachDiemThi::insertLast (DTPtr &First, DiemThi dt){
+void DanhSachDiemThi::insertLast (DiemThi dt){
     DTPtr p = new DiemThiNode;
     p->data = dt;
     p->next = NULL;
@@ -49,7 +50,7 @@ void DanhSachDiemThi::insertLast (DTPtr &First, DiemThi dt){
 }
 
 //Hàm kiểm tra xem môn học đã thi chưa
-bool DanhSachDiemThi::kiemTraDaThi(DTPtr First, char Mamh[15]){
+bool DanhSachDiemThi::kiemTraDaThi(char Mamh[15]){
     DTPtr node_chay;
     node_chay = new DiemThiNode;
     node_chay = First;
@@ -62,36 +63,29 @@ bool DanhSachDiemThi::kiemTraDaThi(DTPtr First, char Mamh[15]){
     return false;
 }
 
-void DanhSachDiemThi::insertDiem (DTPtr &First, DiemThi dt){
-    bool daThi = kiemTraDaThi(First, dt.Mamh); //Kiểm tra nếu chưa thi thì điểm = -1
-    if (!daThi){
-        dt.Diem = -1;
-        insertLast(First, dt);
-    }
-    else{
-        cout << "Nhap diem: ";
-        cin >> dt.Diem;
-        DTPtr p = First;
-        while (p != NULL) {
-            if (strcmp(p->data.Mamh, dt.Mamh) == 0) {
-                p->data.Diem = dt.Diem;
-                break;
-            }
-            p = p->next;
-        }
-    }
-}
+// void DanhSachDiemThi::insertDiem(){
+//         cout << "Nhap diem: ";
+//         cin >> dt.Diem;
+//         DTPtr p = First;
+//         while (p != NULL) {
+//             if (strcmp(p->data.Mamh, dt.Mamh) == 0) {
+//                 p->data.Diem = dt.Diem;
+//                 break;
+//             }
+//             p = p->next;
+//         }
+// }
 
-void DanhSachDiemThi::xuatDanhSachDiemThi(DTPtr First) {
+void DanhSachDiemThi::xuatDanhSachDiemThi() {
     ofstream out("../data/DiemThi.csv", ios::out); // Mở file DiemThi.csv để ghi
     if (!out) {
         cout << "Khong mo duoc file";
         return;
     }
-    out << "Ma mon hoc" << "|" << "Diem" << endl;
+    out << "Ma mon hoc" << "," << "Diem" << endl;
     DTPtr p = First;
     while (p != NULL) {
-        out << p->data.Mamh << "|"; 
+        out << p->data.Mamh << ","; 
         if (p->data.Diem == -1) {
             out << "Chua thi"; // Nếu chưa thi thì ghi "Chua thi"
         } else {
