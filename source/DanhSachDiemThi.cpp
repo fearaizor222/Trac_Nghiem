@@ -1,7 +1,8 @@
 #include "..\header\DanhSachDiemThi.h"
+#include "..\header\DanhSachMonHoc.h"
 using namespace std;
 
-DanhSachDiemThi::DanhSachDiemThi(){ // Hàm khởi tạo
+DanhSachDiemThi::DanhSachDiemThi(){
     // khoiTaoDTPtr(&First);
     First = nullptr;
 
@@ -14,7 +15,7 @@ DanhSachDiemThi::DanhSachDiemThi(){ // Hàm khởi tạo
     out.close();
 }
 
-DanhSachDiemThi::~DanhSachDiemThi(){ // Hàm hủy
+DanhSachDiemThi::~DanhSachDiemThi(){
     DTPtr p = First;
     while(p != NULL){
         DTPtr q = p;
@@ -63,18 +64,29 @@ bool DanhSachDiemThi::kiemTraDaThi(char Mamh[15]){
     return false;
 }
 
-// void DanhSachDiemThi::insertDiem(){
-//         cout << "Nhap diem: ";
-//         cin >> dt.Diem;
-//         DTPtr p = First;
-//         while (p != NULL) {
-//             if (strcmp(p->data.Mamh, dt.Mamh) == 0) {
-//                 p->data.Diem = dt.Diem;
-//                 break;
-//             }
-//             p = p->next;
-//         }
-// }
+void DanhSachDiemThi::insertDiem(){
+    char mamh[15];
+    cout << "Nhap ma mon hoc: ";
+    cin >> mamh;
+    DTPtr p = First;
+    while (p != NULL) {
+        if (strcmp(p->data.Mamh, mamh) == 0) {
+            cout << "Nhap diem: ";
+            cin >> p->data.Diem;
+            break;
+        }
+        p = p->next;
+    }
+    // Nếu không tìm thấy môn học trong danh sách
+    if (p == NULL) {
+        cout << "Khong tim thay mon hoc " << mamh << " trong danh sach" << endl;
+    }
+    // Kiểm tra nếu thí sinh chưa thi thì gán điểm bằng -1
+    else if (p->data.Diem == -1) {
+        cout << "Thi sinh chua thi mon hoc " << mamh << endl;
+        p->data.Diem = -1;
+    }
+}
 
 void DanhSachDiemThi::xuatDanhSachDiemThi() {
     ofstream out("../data/DiemThi.csv", ios::out); // Mở file DiemThi.csv để ghi
