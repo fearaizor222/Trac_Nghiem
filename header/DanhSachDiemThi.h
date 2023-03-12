@@ -31,9 +31,9 @@ class DanhSachDiemThi{
         ~DanhSachDiemThi();
         void xuatDanhSachDiemThi();
         void insertFirst (DiemThi dt);
-        void insertLast (DiemThi dt); 
+        void insertAfterDT (DiemThi dt, DTPtr First);
         bool kiemTraDaThi(char Mamh[15]);
-        void insertDiem();
+        void insertDiem(DTPtr &First, DiemThi dt);
         DTPtr &getFirst() { 
             return First; 
         }
