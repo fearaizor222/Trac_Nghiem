@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include "DanhSachSinhVien.h"
 #define MAX_DSL 500
 using namespace std;
 
@@ -20,8 +21,6 @@ class Lop{
         int getNienKhoa();
         Lop();
 };
-
-
 class danhSachLopHoc{
     private:
         int soluong; 
@@ -36,5 +35,6 @@ class danhSachLopHoc{
        void themLopVaoDanhSach(Lop *List[], int &soluong);
        void xoaLopTrongDanhSach(Lop *List[], int &soluong);
        void inLopTheoNienKhoa(Lop *List[]);
+       DanhSachSinhVien::SVPtr ptr; //Con trỏ danh sách sinh viên
 
 };typedef danhSachLopHoc ListClasses;
