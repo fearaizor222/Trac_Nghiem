@@ -9,13 +9,13 @@ SRCS := ../source/*.cpp
 HEADERS := ../header/*.h
 
 output: $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o output.exe
+	$(CXX) $(CXXFLAGS) $(OBJS) -o output.exe -I ../header/ -L ../source/ -lraylib -lopengl32 -lgdi32 -lwinmm
 
 $(OBJS): $(SRCS) $(HEADERS)
 	$(CXX) -c $(SRCS)
 
 run:
-	start cmd "/c ; output &pause\"
+	start cmd "/c ; output & pause"
 
 clean:
 	rm *.o , output.exe

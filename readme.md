@@ -14,9 +14,9 @@ Chương trình có các chức năng sau :
 - d/ Nhập sinh viên của lớp : nhập vào mã lớp trước, sau đó nhập các sinh viên vào lớp đó. 
 - e/ Nhập môn học: cho phép cập nhật (thêm / xóa / hiệu chỉnh ) thông tin của môn học.
 - f/ Nhập câu hỏi thi (Id là số nguyên dương ngẫu nhiên do chương trình tự tạo)
-- g/ Thi Trắc nghiệm ( trước khi thi hỏi người thi môn thi, số câu hỏi thi, số phút thi-sau đó lấy ngẫu nhiên các câu hỏi trong danh sách câu hỏi thi của môn.
+- g/ Thi Trắc nghiệm trước khi thi hỏi người thi môn thi, số câu hỏi thi, số phút thi-sau đó lấy ngẫu nhiên các câu hỏi trong danh sách câu hỏi thi của môn.
 - h/ In chi tiết các câu hỏi đã thi 1 môn học của  1 sinh viên. 
-- i/ In bảng điểm thi trắc nghiệm môn học của 1 lớp (nếu có sinh viên chưa thi thì ghi “Chưa thi”.
+- i/ In bảng điểm thi trắc nghiệm môn học của 1 lớp nếu có sinh viên chưa thi thì ghi “Chưa thi”.
 
 Lưu ý: Chương trình cho phép lưu các danh sách vào file; Kiểm tra các điều kiện làm dữ liệu bị sai. Sinh viên có thể tự thiết kế thêm danh sách để đáp ứng yêu cầu của đề tài.
 

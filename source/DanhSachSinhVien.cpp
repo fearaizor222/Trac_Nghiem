@@ -1,14 +1,7 @@
 
 #include "../header/DanhSachSinhVien.h"
 DanhSachSinhVien::DanhSachSinhVien(){
-    soluong = 0;
-    ofstream out("../data/DANHSACHSINHVIEN.csv", ios::out); 
-    if(!out){
-        cout<<"Khong mo duoc file";
-        return;
-    }
-    out<<"Ma Sinh Vien"<<","<<"Ho"<<","<<"Ten"<<","<<"Phai"<<";"<<"Password"<<endl;
-    out.close();
+    First = nullptr;
 }
 DanhSachSinhVien::~DanhSachSinhVien(){ 
     SVPtr p = First;
@@ -32,23 +25,20 @@ void DanhSachSinhVien::inSinhVienRaFile(SVPtr First){
     }
     out.close();
 }
-void DanhSachSinhVien::insertFirst(SVPtr &First, SinhVien sv){
+void DanhSachSinhVien::insertFirst(SinhVien sv){
      SVPtr p = new SinhVienNode;
     p->data = sv;
     p->next = First;
     First = p;
 }
-void DanhSachSinhVien::insertLast(SVPtr &First, SinhVien sv){
-      SVPtr p = new SinhVienNode;
-    p->data = sv;
-    p->next = NULL;
-    if(First == NULL){
-        First = p;
-    }else{
-        SVPtr q = First;
-        while(q->next != NULL){
-            q = q->next;
-        }
-        q->next = p;
+void DanhSachSinhVien::insertAfterSV(SVPtr First, SinhVien sv){
+     SVPtr p;
+    if (First == NULL){
+        cout << "Khong the them phan tu vao danh sach" << endl;
+    } else {
+        p = new SinhVienNode;
+        p->data = sv;
+        p->next = First->next;
+        First->next = p;
     }
 }
