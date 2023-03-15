@@ -30,12 +30,22 @@ DanhSachMonHoc::DanhSachMonHoc(std::string path) : DanhSachMonHoc(){
     }
 }
 
-void DanhSachMonHoc::move(int index){
-    MonHoc temp1 = data[index];
-    for(int i = index + 1; i<=length; i++){
-        MonHoc temp2 = data[i];
-        data[i] = temp1;
-        temp1 = temp2;
+void DanhSachMonHoc::move(int index, int offset){
+    if(offset == 1){
+        MonHoc temp1 = data[index];
+        for(int i = index + offset; i <= length; i++){
+            MonHoc temp2 = data[i];
+            data[i] = temp1;
+            temp1 = temp2;
+        }
+    }
+    else{
+        MonHoc temp1 = data[length - 1];
+        for(int i = length - 2; i >= index; i--){
+            MonHoc temp2 = data[i];
+            data[i] = temp1;
+            temp1 = temp2;
+        }
     }
 }
 
@@ -48,13 +58,24 @@ void DanhSachMonHoc::insert(MonHoc mon_hoc){
 
     for(int i = 0; i<length; i++){
         if(strcmp(data[i].ma_mon_hoc, mon_hoc.ma_mon_hoc) > 0){
-            this->move(i);
+            this->move(i, 1);
             data[i] = mon_hoc;
             length++;
             return;
         }
     }
     data[length++] = mon_hoc;
+}
+
+void DanhSachMonHoc::deleteByID(char ma_mon_hoc[]){
+    for(int i = 0; i<length; i++){
+        if(strcmp(this->data[i].ma_mon_hoc, ma_mon_hoc) == 0){
+            // printf("vô đc đây ko");
+            this->move(i, -1);
+            length--;
+            break;
+        }
+    }
 }
 
 void DanhSachMonHoc::output(){
