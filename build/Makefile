@@ -9,7 +9,7 @@ SRCS := ../source/*.cpp
 HEADERS := ../header/*.h
 
 output: $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o output.exe -I ../header/ -L ../source/ -lraylib -lopengl32 -lgdi32 -lwinmm
+	$(CXX) $(CXXFLAGS) $(OBJS) -o output.exe -I ../header/ -L ../source/ -lraylib -lopengl32 -lgdi32 -lwinmm -mwindows
 
 $(OBJS): $(SRCS) $(HEADERS)
 	$(CXX) -c $(SRCS)
