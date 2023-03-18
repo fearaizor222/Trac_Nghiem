@@ -116,6 +116,37 @@ void ListClasses::inLopTheoNienKhoa(Lop *List[]){
         }
     }
 }
-//note something bla bla bla
+void ListClasses::hieuChinh(Lop *List[]){
+    int lop, luachon, b;
+    string a;
+    cout<<"Nhap lop can hieu chinh: ";
+    cin>>lop;
+    do{
+        cout<<"1-Ma Lop"<<endl;
+        cout<<"2-Ten Lop"<<endl;
+        cout<<"3-Nien Khoa"<<endl;
+        cout<<"0-Exit"<<endl;
+        switch(luachon){
+            case 1: cout<<"Nhap ma lop: ";
+                    getline(cin,a);
+                    List[lop]->setMaLop(a);
+                    cout<<endl;
+                    break;
+            case 2: cout<<"Nhap ten lop: ";
+                    getline(cin,a);
+                    List[lop]->setTenLop(a);
+                    cout<<endl;
+                    break;
+            case 3: cout<<"Nhap nien khoa: ";
+                    cin>>b;
+                    List[lop]->setNienKhoa(b);
+                    cout<<endl;
+                    break;
+            default:
+                    cout<<"INVALID NUMBER"<<endl;
+        }
+    }while(luachon==0);
+
+}
 
 

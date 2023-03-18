@@ -11,6 +11,7 @@ class Lop{
         string malop;
         string tenlop;
         int nienkhoa;
+        DanhSachSinhVien::SVPtr ptr; //Con trỏ danh sách sinh viên
     public:
         Lop(string malop, string tenlop, int nienkhoa );
         void setMaLop(string malop);
@@ -35,6 +36,7 @@ class danhSachLopHoc{
        void themLopVaoDanhSach(Lop *List[], int &soluong);
        void xoaLopTrongDanhSach(Lop *List[], int &soluong);
        void inLopTheoNienKhoa(Lop *List[]);
-       DanhSachSinhVien::SVPtr ptr; //Con trỏ danh sách sinh viên
+       void hieuChinh(Lop *List[]);
+      
 
 };typedef danhSachLopHoc ListClasses;
