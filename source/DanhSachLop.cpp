@@ -42,7 +42,7 @@ void ListClasses::setSoLuong(int soluong){
 int ListClasses::getSoLuong(){
     return soluong;
 }
-void ListClasses::insertList(Lop *List[], int &soluong){
+void ListClasses::insertList(int &soluong){
     string a; int b;
     for(int i=0;i<soluong;i++){
         printf("Nhap thong tin lop %d: \n",i);
@@ -60,7 +60,7 @@ void ListClasses::insertList(Lop *List[], int &soluong){
             cout<<endl;
     }
 }
-void ListClasses::inLopRaFile(Lop *List[]){
+void ListClasses::inLopRaFile(){
     ofstream out("../data/DANHSACHLOP.csv", ios::out); // Mở file Diemthi.csv để ghi
     if (!out) {
         cout << "Khong mo duoc file";
@@ -106,7 +106,7 @@ void ListClasses::xoaLopTrongDanhSach(Lop *List[], int &soluong){
         }
         soluong--;
 }
-void ListClasses::inLopTheoNienKhoa(Lop *List[]){
+void ListClasses::inLopTheoNienKhoa(){
     int nienkhoaCanIn;
     cout<<"Nhap nien khoa can in: ";
     cin>>nienkhoaCanIn;
@@ -116,17 +116,29 @@ void ListClasses::inLopTheoNienKhoa(Lop *List[]){
         }
     }
 }
-void ListClasses::hieuChinh(Lop *List[]){
-    int lop, luachon, b;
+void ListClasses::hieuChinh(){
+    int lop, luachon1, luachon2, b;
     string a;
-    cout<<"Nhap lop can hieu chinh: ";
-    cin>>lop;
     do{
-        cout<<"1-Ma Lop"<<endl;
-        cout<<"2-Ten Lop"<<endl;
-        cout<<"3-Nien Khoa"<<endl;
-        cout<<"0-Exit"<<endl;
-        switch(luachon){
+    cout<<"Nhap lua chon cua ban: "<<endl;
+    cout<<"1-Them lop"<<endl;
+    cout<<"2-Xoa Lop"<<endl;
+    cout<<"3-Hieu chinh"<<endl;
+    cout<<"4-Thoat"<<endl;
+    switch(luachon1){
+        case 1: ListClasses::themLopVaoDanhSach(List, soluong);
+        break;
+        case 2: ListClasses::xoaLopTrongDanhSach(List,soluong);
+        break;
+        case 3:
+            cout<<"Nhap lop can hieu chinh: ";
+            cin>>lop;
+            do{
+                cout<<"1-Ma Lop"<<endl;
+                cout<<"2-Ten Lop"<<endl;
+                cout<<"3-Nien Khoa"<<endl;
+                cout<<"4-Thoat"<<endl;
+            switch(luachon2){
             case 1: cout<<"Nhap ma lop: ";
                     getline(cin,a);
                     List[lop]->setMaLop(a);
@@ -145,7 +157,12 @@ void ListClasses::hieuChinh(Lop *List[]){
             default:
                     cout<<"INVALID NUMBER"<<endl;
         }
-    }while(luachon==0);
+    }while(luachon2==4);
+        break;
+        default: cout<<"INVALID NUMBER"<<endl;
+    }
+    }while(luachon1==4);
+
 
 }
 
