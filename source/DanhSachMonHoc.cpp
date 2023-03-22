@@ -23,8 +23,8 @@ DanhSachMonHoc::DanhSachMonHoc(std::string path) : DanhSachMonHoc(){
     std::string rawline = "";
     std::ifstream input(path);
     while(std::getline(input, rawline)){
-        std::string ma_mon = rawline.substr(0, rawline.find(","));
-        std::string ten_mon = rawline.substr(rawline.find(",") + 1, rawline.size() - 1);
+        std::string ma_mon = rawline.substr(0, rawline.find("|"));
+        std::string ten_mon = rawline.substr(rawline.find("|") + 1, rawline.size() - 1);
 
         this->insert(MonHoc((char*)ma_mon.c_str(), ten_mon));
     }
@@ -70,7 +70,6 @@ void DanhSachMonHoc::insert(MonHoc mon_hoc){
 void DanhSachMonHoc::deleteByID(char ma_mon_hoc[]){
     for(int i = 0; i<length; i++){
         if(strcmp(this->data[i].ma_mon_hoc, ma_mon_hoc) == 0){
-            // printf("vô đc đây ko");
             this->move(i, -1);
             length--;
             break;
