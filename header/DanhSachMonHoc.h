@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DANHSACHMONHOC_H
+#define DANHSACHMONHOC_H
 #include <string.h>
 #include <fstream>
 #include <string>
@@ -29,3 +30,5 @@ class DanhSachMonHoc{
 
         void move(int index, int offset);  //  di chuyển dữ liệu qua bên phải
 };
+
+#endif
