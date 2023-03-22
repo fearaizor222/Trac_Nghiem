@@ -1,11 +1,11 @@
 #pragma once
+// #include "DanhSachDiemThi.h"
 #include <iostream>
 #include <fstream>
 #include <string.h>
-#include <string>
-#include "DanhSachDiemThi.h"
 using namespace std;
 
+class DanhSachDiemThi;
 class DanhSachSinhVien{
     public:
 
@@ -15,7 +15,7 @@ class DanhSachSinhVien{
             char TEN[16];
             bool Phai; // Nam = 0, Nu = 1
             char password[8];
-            DanhSachDiemThi::DTPtr ptr; //Con trỏ quản lý danh sách điểm thi
+            DanhSachDiemThi::DTPtr ptr ; //Con trỏ quản lý danh sách điểm thi
        
         struct Date{
                 int ngay, thang, nam;
@@ -25,20 +25,19 @@ class DanhSachSinhVien{
         };
 
         struct SinhVienNode{
-            SinhVien data;
+            SinhVien sv_data;
             SinhVienNode *next;
         };
         typedef SinhVienNode *SVPtr;
        
         DanhSachSinhVien();
         ~DanhSachSinhVien();
-        void inSinhVienRaFile(SVPtr First);
+        void inSinhVienRaFile(SVPtr FirstSV);
         void insertFirst(SinhVien sv);
-        void insertAfterSV(SVPtr First , SinhVien sv);
+        void insertAfterSV(SVPtr FirstSV , SinhVien sv);
         SVPtr &getFirst() { 
-            return First; 
+            return FirstSV; 
         }
     private:
-        SVPtr First;
-
+        SVPtr FirstSV;
 };
