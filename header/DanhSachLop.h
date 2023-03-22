@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DANHSACHLOP_H
+#define DANHSACHLOP_H
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -40,3 +41,5 @@ class danhSachLopHoc{
       
 
 };typedef danhSachLopHoc ListClasses;
+
+#endif
