@@ -39,6 +39,7 @@ DanhSachCauHoi::Node::Node(CauHoi _cau_hoi){
 
 DanhSachCauHoi::DanhSachCauHoi(){
     root = nullptr;
+    length = 0;
     random();
 }
 
@@ -48,8 +49,28 @@ DanhSachCauHoi::Node *&DanhSachCauHoi::getRoot(){
 
 DanhSachCauHoi::DanhSachCauHoi(std::string path) : DanhSachCauHoi(){
     std::ifstream input(path);
-    
-    
+    std::string line;
+    std::string ma_mon = path.substr(0, path.find("."));
+    while(getline(input, line)){
+        std::stringstream _line(line);
+        std::string noi_dung, cau_a, cau_b, cau_c, cau_d, dap_an;
+        getline(_line, noi_dung, '|');
+        getline(_line, cau_a, '|');
+        getline(_line, cau_b, '|');
+        getline(_line, cau_c, '|');
+        getline(_line, cau_d, '|');
+        getline(_line, dap_an);
+
+        insert(root, {id_data[length++], (char*)ma_mon.c_str(), noi_dung, cau_a, cau_b, cau_c, cau_d, dap_an});
+    }
+}
+
+void DanhSachCauHoi::insert(CauHoi _cau_hoi){ 
+    if(root == nullptr) root = new Node(_cau_hoi);
+    else{
+        if(root->data.Id > _cau_hoi.Id) insert(root->left, _cau_hoi);
+        else insert(root->right, _cau_hoi);
+    }
 }
 
 void DanhSachCauHoi::insert(Node *&cur, CauHoi _cau_hoi){ 
@@ -60,9 +81,17 @@ void DanhSachCauHoi::insert(Node *&cur, CauHoi _cau_hoi){
     }
 }
 
+void DanhSachCauHoi::output(){
+    if(root != nullptr){
+        std::cout<<root->data.Id<<std::endl;
+        output(root->left);
+        output(root->right);
+    }
+}
+
 void DanhSachCauHoi::output(Node *cur){
     if(cur != nullptr){
-        std::cout<<cur->data.Id<<" ";
+        std::cout<<cur->data.Id<<std::endl;
         output(cur->left);
         output(cur->right);
     }
@@ -75,13 +104,14 @@ int DanhSachCauHoi::rrand(int value)
 
 void DanhSachCauHoi::random()
 {
+    srand(time(0));
     for (int i = 0; i < RANDOM; i++)
     {
         id_data[i] = i + 1;
     }
     for (int i = RANDOM; i > 1; i--)
     {
-        int num = rrand(i);
+        int num = rand()%RANDOM;
         int temp = id_data[i - 1];
 
         id_data[i - 1] = id_data[num];
