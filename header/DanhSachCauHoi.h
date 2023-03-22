@@ -1,7 +1,6 @@
 #pragma once
 #include <cstdint>
 #include <string>
-#include <sstream>
 #include <cstring>
 #include <fstream>
 #include <iostream>
@@ -50,16 +49,13 @@ class DanhSachCauHoi{
 
         DanhSachCauHoi();
         DanhSachCauHoi(std::string path);
-        void insert(CauHoi _cau_hoi);
         void insert(Node *&cur, CauHoi _cau_hoi);
-        void output();
         void output(Node *cur);
         Node *&getRoot();
 
     private:
         Node *root;
-        uint16_t id_data[RANDOM];
-        int length;
+        int id_data[RANDOM];
 
         int rrand(int value);
         void random();
