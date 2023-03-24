@@ -9,8 +9,12 @@ OBJS := *.o
 SRCS := ../source/*.cpp
 HEADERS := ../header/*.h
 
+ifeq ($(UI), 1)
+	LINKER += -mwindows
+endif
+
 output: $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o output.exe $(LINKER) $(UI)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o output.exe $(LINKER)
 
 $(OBJS): $(SRCS) $(HEADERS)
 	$(CXX) -c $(SRCS)
