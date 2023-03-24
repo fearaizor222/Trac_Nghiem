@@ -3,46 +3,25 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-#define ENTER 13
-#define BACKSPACE 8
-#define MAX_LENGTH 50
 
-uint64_t NhapSo(){
-    char *number = (char*)malloc(50);
-    int i = 0;
-
-    while((number[i] = getch()) != ENTER){
-        if(number[i] >= '0' && number[i] <= '9'){
-            printf("%c",number[i]);
-            i++;
-        }
-        if(number[i] == BACKSPACE && i > 0){
-            printf("\b \b");
-            number[i--] = '\0';
-        }
-    }
-    long long tong = -1;
-    
-    if(i != 0){
-        number[i] = '\0';
-        i = 0;
-        tong = 0;
-        while(number[i + 1] != '\0'){
-            tong += (number[i] - '0');
-            tong *= 10;
-            i++;
-        }
-        tong += (number[i] - '0');
-    }
-
-    free(number);
-    return tong;
+bool Number(char c){
+    return c >= '0' && c <= '9';
 }
 
-char *NhapChuoi(){
+bool Word(char c){
+    return (c >= 'a' && c <= 'z') ||
+           (c >= 'A' && c <= 'Z') ||
+           (c == ' ');
+}
+
+bool All(char c){
+    return c >= 32 && c <= 126;
+}
+
+char* Input(bool (*funcptr)(char), bool secure, int64_t *convertible){
     char *str = (char*)malloc(MAX_LENGTH);
     int i = 0;
-    int barrier;
+    int barrier;  // Có 2 công dụng, cản kí tự đặc biệt và lấy kí tự vừa bấm
 
     while((barrier = getch()) != ENTER){
         if (barrier == 0 || barrier == 224){
@@ -50,48 +29,28 @@ char *NhapChuoi(){
             continue;
         }
         
-        str[i] = barrier;
-        if((str[i] >= 'a' && str[i] <= 'z') || 
-            (str[i] >= 'A' && str[i] <= 'Z') ||
-            str[i] == ' '){
-            printf("%c",str[i]);
-            i++;
-        }
-        if(str[i] == BACKSPACE && i > 0){
+        if(funcptr(barrier)) printf(secure? "X" : "%c" ,str[i++] = barrier);  // Hiện kí tự vừa bấm
+
+        if(barrier == BACKSPACE && i > 0){  // xóa kí tự
             printf("\b \b");
-            str[i--] = '\0';
+            i--;
         }
     }
 
     str[i] = '\0';
-    return str;
-}
 
-char *NhapMa(){
-    char *str = (char*)malloc(MAX_LENGTH);
-    int i = 0;
-    int barrier;
-
-    while((barrier = getch()) != ENTER ){
-        if (barrier == 0 || barrier == 224){
-            getch();
-            continue;
-        }
-
-        str[i] = barrier;
-        if( (str[0] >= 'a' && str[0] <= 'z' && i == 0) ||
-            (str[i] >= 'A' && str[i] <= 'Z' && i != 0) || 
-            (str[i] >= '0' && str[i] <= '9' && i != 0) ||
-            str[i] == '_'  && i != 0){
-            printf("X");
-            i++;
-        }
-        if(str[i] == BACKSPACE && i > 0){
-            printf("\b \b");
-            str[i--] = '\0';
+    if(convertible != nullptr){  // Đổi char* thành số, dùng khi có truyền vào biến
+        (*convertible) = -1;
+        if(i != 0){
+            i = 0;
+            (*convertible) = 0;
+            while(str[i + 1] != '\0'){
+                (*convertible) += (str[i] - '0');
+                (*convertible) *= 10;
+                i++;
+            }
+            (*convertible) += (str[i] - '0');
         }
     }
-
-    str[i] = '\0';
     return str;
 }

@@ -1,5 +1,11 @@
-#pragma once
+#ifndef HELPER_H
+#define HELPER_H
+
 #include <cstdint>
+
+#define ENTER 13
+#define BACKSPACE 8
+#define MAX_LENGTH 50
 
 /*
 Tạo thuvien.h có các CTC sau:
@@ -8,6 +14,10 @@ Tạo thuvien.h có các CTC sau:
 -	NhapMa(): XXXXXXX, X : chữ cái in, chữ số, _. Ký tự bắt đầu là chữ cái
 */
 
-extern uint64_t NhapSo();
-extern char *NhapChuoi();
-extern char *NhapMa();
+extern bool Number(char);  // 3 hàm điều kiện, cho nhập số, chuỗi và toàn bộ kí tự, trừ kí tự đặc biệt
+extern bool Word(char);
+extern bool All(char);
+
+extern char* Input(bool (*funcptr)(char) = All, bool secure = false, int64_t *convertible = nullptr);
+                // Hàm điều kiện                hiện chữ hoặc giấu        tham chiếu khi cần lấy số
+#endif
