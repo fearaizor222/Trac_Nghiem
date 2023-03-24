@@ -3,13 +3,14 @@ SHELL := pwsh.exe
 
 CXX := g++
 CXXFLAGS := -Wall -std=c++11
+LINKER := -I ../header/ -L ../source/ -lraylib -lopengl32 -lgdi32 -lwinmm
 
 OBJS := *.o
 SRCS := ../source/*.cpp
 HEADERS := ../header/*.h
 
 output: $(OBJS)
-	$(CXX) $(CXXFLAGS) $(OBJS) -o output.exe -I ../header/ -L ../source/ -lraylib -lopengl32 -lgdi32 -lwinmm -mwindows
+	$(CXX) $(CXXFLAGS) $(OBJS) -o output.exe $(LINKER) $(UI)
 
 $(OBJS): $(SRCS) $(HEADERS)
 	$(CXX) -c $(SRCS)
