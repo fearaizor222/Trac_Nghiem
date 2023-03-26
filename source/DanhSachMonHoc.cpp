@@ -1,12 +1,13 @@
 #include "../header/DanhSachMonHoc.h"
 
 DanhSachMonHoc::MonHoc::MonHoc(){
-    strcpy_s(ma_mon_hoc, 15, "");
+    strncpy(ma_mon_hoc,"", 15);
     ten_mon_hoc = "";
 }
 
 DanhSachMonHoc::MonHoc::MonHoc(char ma_mon_hoc[15], std::string ten_mon_hoc){
     strncpy(this->ma_mon_hoc, ma_mon_hoc, 15);
+    ma_mon_hoc[15] = '\0';
     this->ten_mon_hoc = ten_mon_hoc;
 }
 
