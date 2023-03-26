@@ -1,6 +1,6 @@
 #include "../header/LoginByID.h"
-bool search(SVPtr FirstSV,string masv) {
-        SVPtr* current = FirstSV;
+bool search(DanhSachSinhVien::SVPtr FirstSV,string masv) {
+        DanhSachSinhVien::SVPtr current = FirstSV;
         while (current != nullptr) {
             if (current->sv_data == masv) {
                 return true;

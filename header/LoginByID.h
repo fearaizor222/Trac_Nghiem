@@ -5,6 +5,6 @@
 #include <string.h>
 #include "DanhSachLop.h"
 #include "../header/DanhSachSinhVien.h"
-bool search(SVPtr FirstSV ,string masv);
-void login(string tendangnhap, string matkhau);
+extern bool search(DanhSachSinhVien::SVPtr FirstSV ,string masv);
+extern void login(string tendangnhap, string matkhau);
 #endif
