@@ -19,8 +19,10 @@ class DanhSachSinhVien{
        
         struct Date{
                 int ngay, thang, nam;
+                Date();
+                Date(int ngay, int thang, int nam);
             };
-            SinhVien();
+           SinhVien();
            SinhVien(char MASV[15], char HO[21], char TEN[16], bool Phai, char password[8]);
         };
 

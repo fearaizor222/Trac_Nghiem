@@ -15,7 +15,14 @@ DanhSachSinhVien::SinhVien::SinhVien(char MASV[15], char HO[21], char TEN[16], b
     strncpy(this->password, password, 8);
     this->Phai = Phai;
 }
-
+DanhSachSinhVien::SinhVien::Date::Date(){
+    ngay = thang = nam = -1;
+}
+DanhSachSinhVien::SinhVien::Date::Date(int ngay, int thang, int nam){
+    this->ngay = ngay;
+    this->thang = thang;
+    this->nam = nam;
+}
 DanhSachSinhVien::DanhSachSinhVien(){
     FirstSV = nullptr;
 }
