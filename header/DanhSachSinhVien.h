@@ -10,11 +10,11 @@ class DanhSachSinhVien{
     public:
 
         struct SinhVien{
-            char MASV[15];
-            char HO[21];
-            char TEN[16];
+            string MASV;
+            string HO;
+            string TEN;
             bool Phai; // Nam = 0, Nu = 1
-            char password[8];
+            string password;
             DanhSachDiemThi::DTPtr ptr ; //Con trỏ quản lý danh sách điểm thi
        
         struct Date{
@@ -23,7 +23,7 @@ class DanhSachSinhVien{
                 Date(int ngay, int thang, int nam);
             };
            SinhVien();
-           SinhVien(char MASV[15], char HO[21], char TEN[16], bool Phai, char password[8]);
+           SinhVien(string MASV, string HO, string TEN, bool Phai, string password);
         };
 
         struct SinhVienNode{
