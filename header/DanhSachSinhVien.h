@@ -1,11 +1,12 @@
-#pragma once
-// #include "DanhSachDiemThi.h"
+#ifndef DANHSACHSINHVIEN_H  
+#define DANHSACHSINHVIEN_H
+#include "DanhSachDiemThi.h"
 #include <iostream>
 #include <fstream>
 #include <string.h>
 using namespace std;
 
-class DanhSachDiemThi;
+// class DanhSachDiemThi;
 class DanhSachSinhVien{
     public:
 
@@ -43,3 +44,5 @@ class DanhSachSinhVien{
     private:
         SVPtr FirstSV;
 };
+
+#endif
