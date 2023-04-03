@@ -1,9 +1,11 @@
-#pragma once
+#ifndef DANHSACHDIEMTHI_H
+#define DANHSACHDIEMTHI_H
 #include <iostream>
 #include <fstream>
 #include <string.h>
 using namespace std;
 
+class DanhSachSinhVien;
 class DanhSachDiemThi{
     public:
         struct DiemThi{
@@ -29,15 +31,19 @@ class DanhSachDiemThi{
 
         DanhSachDiemThi();
         ~DanhSachDiemThi();
-        void xuatDanhSachDiemThi();
+        void xuatFileDanhSachDiemThi();
+        static int demMonHocDaThi(DTPtr First);
         void insertFirst (DiemThi dt);
         void insertAfterDT (DiemThi dt, DTPtr First);
-        bool kiemTraDaThi(char Mamh[15]);
+        static bool kiemTraDaThi(DTPtr First, char Mamh[15]);
         void insertDiem(DTPtr &First, DiemThi dt);
+        void xuatDiemTheoLop(DanhSachSinhVien &list, char Malop[15]);
         DTPtr &getFirst() { 
             return First; 
         }
+
     private:
         DTPtr First;
-        // void khoiTaoDTPtr(DTPtr *First);
 };
+
+#endif
