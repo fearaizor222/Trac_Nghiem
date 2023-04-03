@@ -7,5 +7,4 @@
 #include "../header/DanhSachSinhVien.h"
 extern bool search(DanhSachSinhVien::SVPtr FirstSV ,string masv, string matkhau);
 extern void login(string tendangnhap, string matkhau);
-bool soSanh(string s1, string s2, int index);
 #endif
