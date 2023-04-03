@@ -25,6 +25,7 @@ class DanhSachSinhVien{
             };
            SinhVien();
            SinhVien(string MASV, string HO, string TEN, bool Phai, string password);
+           friend ostream &operator<<(std::ostream &out, SinhVien sinh_vien);
         };
 
         struct SinhVienNode{
@@ -35,14 +36,20 @@ class DanhSachSinhVien{
        
         DanhSachSinhVien();
         ~DanhSachSinhVien();
+        DanhSachSinhVien(string path);
         void inSinhVienRaFile(SVPtr FirstSV);
         void insertFirst(SinhVien sv);
         void insertAfterSV(SVPtr FirstSV , SinhVien sv);
+        void insert(SinhVien sinh_vien); 
         SVPtr &getFirst() { 
             return FirstSV; 
         }
+        SinhVien &operator[](int index);
     private:
+        int length;
         SVPtr FirstSV;
+        SinhVien data[1000];
+        void move(int index, int offset);
 };
 
 #endif

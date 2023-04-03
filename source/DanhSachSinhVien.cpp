@@ -61,4 +61,47 @@ void DanhSachSinhVien::insertAfterSV(SVPtr FirstSV, SinhVien sv){
         p->next = FirstSV->next;
         FirstSV->next = p;
     }
+}DanhSachSinhVien::DanhSachSinhVien(std::string path) : DanhSachSinhVien(){
+    string rawline = "";
+    ifstream input(path);
+    while(getline(input, rawline)){
+        string Ma_SV = rawline.substr(0, rawline.find(","));
+        string Ho = rawline.substr(rawline.find(",") + 1, rawline.size() - 1);
+        string Ten = rawline.substr(rawline.find(",")+ 1, rawline.size() - 1 );
+        string PHAI = rawline.substr(rawline.find(","+ 1), rawline.size() - 1);
+        string PASSWORD = rawline.substr(rawline.find(","+ 1), rawline.size() - 1);
+        bool Gender = (PHAI=="Nam")?1:0;
+
+        insert(SinhVien(Ma_SV, Ho, Ten, Gender, PASSWORD));
+    }
+}
+void DanhSachSinhVien::insert(SinhVien sinh_vien){
+    for(int i = 0; i<length; i++){
+        if(data[i].MASV.compare(sinh_vien.MASV) > 0){
+            this->move(i, 1);
+            data[i] = sinh_vien;
+            length++;
+            return;
+        }
+    }
+    data[length++] = sinh_vien;
+}
+
+void DanhSachSinhVien::move(int index, int offset){
+    if(offset == 1){
+        SinhVien temp1 = data[index];
+        for(int i = index + offset; i <= length; i++){
+            SinhVien temp2 = data[i];
+            data[i] = temp1;
+            temp1 = temp2;
+        }
+    }
+    else{
+        SinhVien temp1 = data[length - 1];
+        for(int i = length - 2; i >= index; i--){
+            SinhVien temp2 = data[i];
+            data[i] = temp1;
+            temp1 = temp2;
+        }
+    }
 }
