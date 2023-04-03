@@ -1,6 +1,8 @@
-#include "..\header\DanhSachDiemThi.h"
-#include "..\header\DanhSachMonHoc.h"
+#include "../header/DanhSachDiemThi.h"
+#include "../header/DanhSachSinhVien.h"
+#include "../header/DanhSachLop.h"
 using namespace std;
+
 
 DanhSachDiemThi::DanhSachDiemThi(){
     // khoiTaoDTPtr(&First);
@@ -15,10 +17,6 @@ DanhSachDiemThi::~DanhSachDiemThi(){
         delete q;
     }
 }
-
-// void DanhSachDiemThi::khoiTaoDTPtr(DTPtr *First){
-//     *First = NULL;
-// }
     
 void DanhSachDiemThi::insertFirst(DiemThi dt){
     DTPtr p = new DiemThiNode;
@@ -28,20 +26,20 @@ void DanhSachDiemThi::insertFirst(DiemThi dt){
 }
 
 //Hàm thêm điểm thi vào sau nút địa chỉ First
-void DanhSachDiemThi::insertAfterDT (DiemThi dt, DTPtr First){
-    DTPtr p;
-    if (First == NULL){
+void DanhSachDiemThi::insertAfterDT (DiemThi dt, DTPtr p){
+    DTPtr q;
+    if (p == NULL){
         cout << "Khong the them phan tu vao danh sach" << endl;
     } else {
-        p = new DiemThiNode;
-        p->data = dt;
-        p->next = First->next;
-        First->next = p;
+        q = new DiemThiNode;
+        q->data = dt;
+        q->next = p->next;
+        p->next = q;
     }
 }
 
 // Hàm kiểm tra xem môn học đã thi chưa
-bool DanhSachDiemThi::kiemTraDaThi(char Mamh[15]){
+bool DanhSachDiemThi::kiemTraDaThi(DTPtr First,char Mamh[15]){
     DTPtr node_chay;
     node_chay = new DiemThiNode;
     node_chay = First;
@@ -52,6 +50,21 @@ bool DanhSachDiemThi::kiemTraDaThi(char Mamh[15]){
         node_chay = node_chay->next;
     }
     return false;
+}
+
+// Hàm đếm số môn học đã thi
+int DanhSachDiemThi::demMonHocDaThi(DTPtr First){
+    int dem = 0;
+    DTPtr sub_node;
+    sub_node = new DiemThiNode;
+    sub_node = First;
+    while(sub_node != NULL){
+        if(sub_node->data.Diem != -1){
+            dem++;
+        }
+        sub_node = sub_node->next;
+    }
+    return dem;
 }
 
 void DanhSachDiemThi::insertDiem(DTPtr &First, DiemThi dt){
@@ -69,27 +82,65 @@ void DanhSachDiemThi::insertDiem(DTPtr &First, DiemThi dt){
     }
 }
 
-void DanhSachDiemThi::xuatDanhSachDiemThi() {
+void DanhSachDiemThi::xuatFileDanhSachDiemThi(){
     ofstream out("../data/DiemThi.csv", ios::app); // Mở file DiemThi.csv để ghi
     if (!out) {
         cout << "Khong mo duoc file";
         return;
     }
-    // Khởi chạy dòng đầu chỉ ở lần đầu tiên
-    static int count = 0;
-    if (count == 0) {
-        out << "Ma mon hoc" << "," << "Diem" << endl;
-    }
-
     DTPtr p = First;
     while (p != NULL) {
-        out << p->data.Mamh << ","; 
-        if (kiemTraDaThi(p->data.Mamh) == false) {
+        out << p->data.Mamh << "|"; 
+        if (kiemTraDaThi(First ,p->data.Mamh) == false) {
             out << "Chua thi"; // Nếu chưa thi thì ghi "Chua thi"
         } else {
             out << p->data.Diem; 
         }
         out << endl;
+        p = p->next;
+    }
+    out.close();
+}
+
+
+// Hàm in điểm theo lớp
+void xuatDiemTheoLop(DanhSachSinhVien &list, char Malop[15]){
+    ofstream out;
+
+    char filename[50];
+    char dinhdang[5];
+    //Định dạng và tên file
+    strcpy(dinhdang, ".csv");
+    strcpy(filename, "../data/DIEM_");
+    //Nối tên file với mã lớp dạng (VD: DIEM_D21CQCN02-N.csv) 
+    strcat(filename, Malop);
+    strcat(filename, dinhdang);
+    out.open(filename, ios::app);
+    if (!out) {
+        cout << "Khong mo duoc file";
+        return;
+    }
+    DanhSachSinhVien::SVPtr p = list.getFirst();
+    while (p != NULL) {
+
+        out << p->sv_data.MASV << "|";
+        out << DanhSachDiemThi::demMonHocDaThi(p->sv_data.ptr) << "|";
+
+        if (DanhSachDiemThi::demMonHocDaThi(p->sv_data.ptr) != 0){
+            DanhSachDiemThi::DTPtr sub_node;
+            sub_node = new DanhSachDiemThi::DiemThiNode;
+            sub_node = p->sv_data.ptr;
+        while (sub_node != NULL){
+            out << sub_node->data.Mamh << "|";
+            if (DanhSachDiemThi::kiemTraDaThi(p->sv_data.ptr,sub_node->data.Mamh) == false) {
+                out << "Chua thi"; // Nếu chưa thi thì ghi "Chua thi"
+            } else {
+                out << sub_node->data.Diem; 
+            }
+            out << endl;
+            sub_node = sub_node->next;
+            }
+        }
         p = p->next;
     }
     out.close();
