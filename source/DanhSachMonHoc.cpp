@@ -8,12 +8,12 @@ DanhSachMonHoc::MonHoc::MonHoc(){
 
 DanhSachMonHoc::MonHoc::MonHoc(char ma_mon_hoc[15], std::string ten_mon_hoc){
     strncpy(this->ma_mon_hoc, ma_mon_hoc, 15);
-    ma_mon_hoc[15] = '\0';
+    // ma_mon_hoc[15] = '\0';
     this->ten_mon_hoc = ten_mon_hoc;
 }
 
 std::ostream &operator<<(std::ostream &out, DanhSachMonHoc::MonHoc mon_hoc){
-    out<<mon_hoc.ma_mon_hoc<<","<<mon_hoc.ten_mon_hoc;
+    out<<mon_hoc.ma_mon_hoc<<"|"<<mon_hoc.ten_mon_hoc;
     return out;
 }
 
@@ -28,7 +28,7 @@ DanhSachMonHoc::DanhSachMonHoc(std::string path) : DanhSachMonHoc(){
         std::string ma_mon = rawline.substr(0, rawline.find("|"));
         std::string ten_mon = rawline.substr(rawline.find("|") + 1, rawline.size() - 1);
 
-        this->insert(MonHoc((char*)ma_mon.c_str(), ten_mon));
+        this->insert({(char*)ma_mon.c_str(), ten_mon}, 0);
     }
 }
 
@@ -41,7 +41,7 @@ void DanhSachMonHoc::move(int index, int offset){
             temp1 = temp2;
         }
     }
-    else{
+    else if(offset == -1){
         MonHoc temp1 = data[length - 1];
         for(int i = length - 2; i >= index; i--){
             MonHoc temp2 = data[i];
@@ -51,13 +51,10 @@ void DanhSachMonHoc::move(int index, int offset){
     }
 }
 
-void DanhSachMonHoc::insert(MonHoc mon_hoc){
-    // if(length == 0){
-    //     data[length] = mon_hoc;   may have unforeseen consequences, so i didnt remove
-    //     length++;
-    //     return;
-    // }
-
+void DanhSachMonHoc::insert(MonHoc mon_hoc, bool write_to_file){
+    if(write_to_file){
+        update(mon_hoc);
+    }
     for(int i = 0; i<length; i++){
         if(strcmp(data[i].ma_mon_hoc, mon_hoc.ma_mon_hoc) > 0){
             this->move(i, 1);
@@ -69,15 +66,25 @@ void DanhSachMonHoc::insert(MonHoc mon_hoc){
     data[length++] = mon_hoc;
 }
 
-void DanhSachMonHoc::deleteByID(char ma_mon_hoc[]){
+int DanhSachMonHoc::searchByID(char ma_mon_hoc[]){
     for(int i = 0; i<length; i++){
-        if(strcmp(this->data[i].ma_mon_hoc, ma_mon_hoc) == 0){
-            // printf("vô đc đây ko");
-            this->move(i, -1);
-            length--;
-            break;
+        if(strcmp(data[i].ma_mon_hoc, ma_mon_hoc) == 0){
+            return i;
         }
     }
+    return -1;
+}
+
+void DanhSachMonHoc::deleteByID(char ma_mon_hoc[]){
+    int index = searchByID(ma_mon_hoc);
+    this->move(index, -1);
+    length--;
+}
+
+void DanhSachMonHoc::update(MonHoc mon_hoc){
+    std::ofstream output("../data/DANHSACHMON.txt", std::ios::app);
+    output<<mon_hoc<<std::endl;
+    output.close();
 }
 
 void DanhSachMonHoc::output(){
