@@ -16,12 +16,12 @@ class DanhSachMonHoc{
         };
 
         DanhSachMonHoc();
-        DanhSachMonHoc(std::string path);  //  Nhận 1 đường dẫn đến file .txt, lấy MAMH và TENMH
-        void insert(MonHoc mon_hoc, bool write_to_file = 1);  //  Gắn dữ liệu môn dựa theo MAMH, Nếu MAMH đã tồn tại thì báo lỗi
-        int searchByID(char ma_mon_hoc[]);  // Tìm kiếm phần tử theo mã môn
-        void deleteByID(char ma_mon_hoc[]);  // Xóa phần tử theo mã môn
-        void update(MonHoc mon_hoc);  // Cập nhật dữ liệu vào file
-        void output();  // debugging only use, will remove after done
+        DanhSachMonHoc(std::string path);
+        void insert(MonHoc mon_hoc, bool write_to_file = 1);  
+        int search(char ma_mon_hoc[]);  
+        void remove(char ma_mon_hoc[]);
+        void update(MonHoc mon_hoc);
+        void output();
 
         MonHoc &operator[](int index);
 

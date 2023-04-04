@@ -53,7 +53,18 @@ void DanhSachMonHoc::move(int index, int offset){
     }
 }
 
-void DanhSachMonHoc::insert(MonHoc mon_hoc, bool write_to_file){
+/**
+ * @brief Thêm môn học vào danh sách
+ * @param mon_hoc Môn học cần thêm
+ * @param write_to_file Nếu là true thì sẽ cập nhật dữ liệu vào file
+ * @throw "Danh sách môn học đã đầy" Nếu danh sách đã đầy
+ * @throw "Mã môn học đã tồn tại" Nếu mã môn học đã tồn tại
+*/
+void DanhSachMonHoc::insert(MonHoc mon_hoc, bool write_to_file){ 
+    if(length == MAX_MON){
+        throw "Danh sách môn học đã đầy";
+        return;
+    }
     if(searchByID(mon_hoc.ma_mon_hoc) != -1){
         std::string error = "Mã môn học đã tồn tại: " + std::string(mon_hoc.ma_mon_hoc);
         throw error;
@@ -73,7 +84,12 @@ void DanhSachMonHoc::insert(MonHoc mon_hoc, bool write_to_file){
     data[length++] = mon_hoc;
 }
 
-int DanhSachMonHoc::searchByID(char ma_mon_hoc[]){
+/**
+ * @brief Tìm kiếm môn học theo mã môn học
+ * @param ma_mon_hoc Mã môn học cần tìm
+ * @return Vị trí của môn học trong danh sách
+*/
+int DanhSachMonHoc::search(char ma_mon_hoc[]){
     for(int i = 0; i<length; i++){
         if(strcmp(data[i].ma_mon_hoc, ma_mon_hoc) == 0){
             return i;
@@ -82,14 +98,33 @@ int DanhSachMonHoc::searchByID(char ma_mon_hoc[]){
     return -1;
 }
 
-void DanhSachMonHoc::deleteByID(char ma_mon_hoc[]){
-    int index = searchByID(ma_mon_hoc);
+/**
+ * @brief Xóa môn học khỏi danh sách
+ * @param ma_mon_hoc Mã môn học cần xóa
+ * @throw "Không tìm thấy mã môn học" Nếu không tìm thấy mã môn học
+*/
+void DanhSachMonHoc::remove(char ma_mon_hoc[]){
+    int index;
+    if((index = searchByID(ma_mon_hoc)) == -1){
+        std::string error = "Không tìm thấy mã môn học: " + std::string(ma_mon_hoc);
+        throw error;
+        return;
+    }
     this->move(index, -1);
     length--;
 }
 
+/**
+ * @brief Cập nhật dữ liệu vào file
+ * @param mon_hoc Môn học cần cập nhật
+ * @throw "Không thể mở file" Nếu không thể mở file
+*/
 void DanhSachMonHoc::update(MonHoc mon_hoc){
     std::ofstream output("../data/DANHSACHMON.txt", std::ios::app);
+    if(!output.is_open()){
+        throw "Không thể mở file";
+        return;
+    }
     output<<mon_hoc<<std::endl;
     output.close();
 }
