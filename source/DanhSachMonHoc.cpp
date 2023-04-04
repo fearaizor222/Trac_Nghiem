@@ -65,7 +65,7 @@ void DanhSachMonHoc::insert(MonHoc mon_hoc, bool write_to_file){
         throw "Danh sách môn học đã đầy";
         return;
     }
-    if(searchByID(mon_hoc.ma_mon_hoc) != -1){
+    if(search(mon_hoc.ma_mon_hoc) != -1){
         std::string error = "Mã môn học đã tồn tại: " + std::string(mon_hoc.ma_mon_hoc);
         throw error;
         return;
@@ -105,7 +105,7 @@ int DanhSachMonHoc::search(char ma_mon_hoc[]){
 */
 void DanhSachMonHoc::remove(char ma_mon_hoc[]){
     int index;
-    if((index = searchByID(ma_mon_hoc)) == -1){
+    if((index = search(ma_mon_hoc)) == -1){
         std::string error = "Không tìm thấy mã môn học: " + std::string(ma_mon_hoc);
         throw error;
         return;
