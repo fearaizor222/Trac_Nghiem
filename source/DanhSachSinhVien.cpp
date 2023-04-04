@@ -65,11 +65,11 @@ void DanhSachSinhVien::insertAfterSV(SVPtr FirstSV, SinhVien sv){
     string rawline = "";
     ifstream input(path);
     while(getline(input, rawline)){
-        string Ma_SV = rawline.substr(0, rawline.find(","));
-        string Ho = rawline.substr(rawline.find(",") + 1, rawline.size() - 1);
-        string Ten = rawline.substr(rawline.find(",")+ 1, rawline.size() - 1 );
-        string PHAI = rawline.substr(rawline.find(","+ 1), rawline.size() - 1);
-        string PASSWORD = rawline.substr(rawline.find(","+ 1), rawline.size() - 1);
+        string Ma_SV = rawline.substr(0, rawline.find("|"));
+        string Ho = rawline.substr(rawline.find("|") + 1, rawline.size() - 1);
+        string Ten = rawline.substr(rawline.find("|")+ 1, rawline.size() - 1 );
+        string PHAI = rawline.substr(rawline.find("|"+ 1), rawline.size() - 1);
+        string PASSWORD = rawline.substr(rawline.find("|"+ 1), rawline.size() - 1);
         bool Gender = (PHAI=="Nam")?1:0;
 
         insert(SinhVien(Ma_SV, Ho, Ten, Gender, PASSWORD));
