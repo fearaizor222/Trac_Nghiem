@@ -17,10 +17,12 @@ class DanhSachMonHoc{
         };
 
         DanhSachMonHoc();
-        DanhSachMonHoc(std::string path);  //  Nhận 1 đường dẫn đến file .csv, lấy MAMH và TENMH
-        void insert(MonHoc mon_hoc);  //  gắn dữ liệu môn dựa theo MAMH
+        DanhSachMonHoc(std::string path);  //  Nhận 1 đường dẫn đến file .txt, lấy MAMH và TENMH
+        void insert(MonHoc mon_hoc, bool write_to_file = 1);  //  Gắn dữ liệu môn dựa theo MAMH
+        int searchByID(char ma_mon_hoc[]);  // Tìm kiếm phần tử theo mã môn
         void deleteByID(char ma_mon_hoc[]);  // Xóa phần tử theo mã môn
-        void output();  //  debugging only use, will remove after done
+        void update(MonHoc mon_hoc);  // Cập nhật dữ liệu vào file
+        void output();  // debugging only use, will remove after done
 
         MonHoc &operator[](int index);
 
@@ -28,7 +30,7 @@ class DanhSachMonHoc{
         short length;
         MonHoc data[MAX_MON];
 
-        void move(int index, int offset);  //  di chuyển dữ liệu qua bên phải
+        void move(int index, int offset);  // Di chuyển dữ liệu qua bên phải hoặc bên trái
 };
 
 #endif
