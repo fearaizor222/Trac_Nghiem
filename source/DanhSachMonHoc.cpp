@@ -1,4 +1,6 @@
 #include "../header/DanhSachMonHoc.h"
+#include <string.h>
+#include <fstream>
 
 DanhSachMonHoc::MonHoc::MonHoc(){
     strncpy(ma_mon_hoc,"", 15);
@@ -52,6 +54,11 @@ void DanhSachMonHoc::move(int index, int offset){
 }
 
 void DanhSachMonHoc::insert(MonHoc mon_hoc, bool write_to_file){
+    if(searchByID(mon_hoc.ma_mon_hoc) != -1){
+        std::string error = "Mã môn học đã tồn tại: " + std::string(mon_hoc.ma_mon_hoc);
+        throw error;
+        return;
+    } 
     if(write_to_file){
         update(mon_hoc);
     }

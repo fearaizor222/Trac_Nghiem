@@ -1,8 +1,7 @@
 #ifndef DANHSACHMONHOC_H
 #define DANHSACHMONHOC_H
-#include <string.h>
-#include <fstream>
 #include <string>
+
 #define MAX_MON 300
 
 class DanhSachMonHoc{
@@ -18,7 +17,7 @@ class DanhSachMonHoc{
 
         DanhSachMonHoc();
         DanhSachMonHoc(std::string path);  //  Nhận 1 đường dẫn đến file .txt, lấy MAMH và TENMH
-        void insert(MonHoc mon_hoc, bool write_to_file = 1);  //  Gắn dữ liệu môn dựa theo MAMH
+        void insert(MonHoc mon_hoc, bool write_to_file = 1);  //  Gắn dữ liệu môn dựa theo MAMH, Nếu MAMH đã tồn tại thì báo lỗi
         int searchByID(char ma_mon_hoc[]);  // Tìm kiếm phần tử theo mã môn
         void deleteByID(char ma_mon_hoc[]);  // Xóa phần tử theo mã môn
         void update(MonHoc mon_hoc);  // Cập nhật dữ liệu vào file
