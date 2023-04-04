@@ -10,8 +10,7 @@ bool search(DanhSachSinhVien::SVPtr FirstSV,string masv, string matkhau) {
         return false;
     }
 
-void login(string tendangnhap, string matkhau){
-    DanhSachSinhVien::SVPtr FirstSV;
+void login(string tendangnhap, string matkhau,DanhSachSinhVien::SVPtr FirstSV){
     if(tendangnhap=="GV" && matkhau=="GV"){
 
     }else if(tendangnhap!="GV" || matkhau!="GV"){
