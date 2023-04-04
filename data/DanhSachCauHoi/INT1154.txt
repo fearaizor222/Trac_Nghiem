@@ -1,5 +1,0 @@
-Trong soạn thảo Word, muốn trình bày văn bản dạng cột (dạng thường thấy tên các trang báo và tạp chí), ta thực hiện:|Insert - Column|View - Column|Format - Column|Table - Column|A
-Trong soạn thảo văn bản Word, công dụng của tổ hợp phím Ctrl + O là:|Mở một hồ sơ mới|Đóng hồ sơ đang mở|Mở một hồ sơ đã có|Lưu hồ sơ vào đĩa|B
-Khi đang soạn thảo văn bản Word, muốn phục hồi thao tác vừa thực hiện thì bấm tổ hợp phím:|Ctrl – Z|Ctrl – X|Ctrl – V|Ctrl – Y|C
-Trong khi làm việc với Word, tổ hợp phím tắt nào cho phép chọn tất cả văn bản đang soạn thảo:|Ctrl + A|Ctrl + F|Alt + A|Alt + F|D
-Trong soạn thảo văn bản Word, công dụng của tổ hợp phím Ctrl - H là:|Tạo tệp văn bản mới|Chức năng thay thế trong soạn thảo|Định dạng chữ hoa|Lưu tệp văn bản vào đĩa|A
