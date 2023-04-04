@@ -10,7 +10,7 @@ DanhSachMonHoc::MonHoc::MonHoc(){
 
 DanhSachMonHoc::MonHoc::MonHoc(char ma_mon_hoc[15], std::string ten_mon_hoc){
     strncpy(this->ma_mon_hoc, ma_mon_hoc, 15);
-    // ma_mon_hoc[15] = '\0';
+    ma_mon_hoc[15] = '\0';
     this->ten_mon_hoc = ten_mon_hoc;
 }
 

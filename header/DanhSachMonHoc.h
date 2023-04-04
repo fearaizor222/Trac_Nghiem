@@ -7,7 +7,7 @@
 class DanhSachMonHoc{
     public:
         struct MonHoc{
-            char ma_mon_hoc[15];
+            char ma_mon_hoc[16];
             std::string ten_mon_hoc;
 
             MonHoc();
