@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
+#include <fstream>
 
 bool Number(char c){
     return c >= '0' && c <= '9';
@@ -53,4 +54,41 @@ char* Input(bool (*funcptr)(char), bool secure, int64_t *convertible){
         }
     }
     return str;
+}
+
+int rrand(int value)
+{
+    return (int)((double)value * (rand() / (RAND_MAX + 1.0)));
+}
+
+void shuffle(int *id_data)
+{
+    for (int i = 0; i < RANDOM; i++){
+        id_data[i] = i + 1;
+    }
+    
+    for (int i = RANDOM; i > 1; i--){
+        int num = rrand(i);
+        int temp = id_data[i - 1];
+
+        id_data[i - 1] = id_data[num];
+        id_data[num] = temp;
+    }
+}
+
+void randomID(){
+    srand(time(NULL));
+    std::ofstream out("../data/ID.txt");
+    int array[RANDOM];
+
+    shuffle(array);
+
+    for (int i = 0; i < RANDOM / 50; i++){
+        for(int j = 0; j < 50; j++){
+            if(j == 49) out << array[i * 50 + j] << std::endl;
+            else out << array[i * 50 + j] << "|";
+        }
+    }
+
+    out.close();
 }
