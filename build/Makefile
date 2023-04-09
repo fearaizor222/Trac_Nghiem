@@ -2,7 +2,7 @@ SHELL := pwsh.exe
 .SHELLFLAGS := -NoProfile -Command
 
 CXX := g++
-CXXFLAGS := -std=c++11
+CXXFLAGS := -std=c++11 -Wall -g
 LINKER := -I ../header/ -L ../source/ -lraylib -lopengl32 -lgdi32 -lwinmm
 
 OBJS := *.o
@@ -17,7 +17,7 @@ output: $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) -o output.exe $(LINKER)
 
 $(OBJS): $(SRCS) $(HEADERS)
-	$(CXX) -c $(SRCS)
+	$(CXX) $(CXXFLAGS) -c $(SRCS)
 
 run:
 	start cmd "/c ; output & pause"
