@@ -83,10 +83,10 @@ void randomID(){
 
     shuffle(array);
 
-    for (int i = 0; i < RANDOM / 50; i++){
-        for(int j = 0; j < 50; j++){
-            if(j == 49) out << array[i * 50 + j] << std::endl;
-            else out << array[i * 50 + j] << "|";
+    for (int i = 0; i < RANDOM / 10; i++){
+        for(int j = 0; j < 10; j++){
+            if(j == 9) out << array[i * 10 + j] << "|\n";
+            else out << array[i * 10 + j] << "|";
         }
     }
 
