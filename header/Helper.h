@@ -6,6 +6,7 @@
 #define ENTER 13
 #define BACKSPACE 8
 #define MAX_LENGTH 50
+#define RANDOM 5000
 
 /*
 Tạo thuvien.h có các CTC sau:
@@ -20,4 +21,11 @@ extern bool All(char);
 
 extern char* Input(bool (*funcptr)(char) = All, bool secure = false, int64_t *convertible = nullptr);
                 // Hàm điều kiện                hiện chữ hoặc giấu        tham chiếu khi cần lấy số
+
+extern int rrand(int value);
+
+extern void random();
+
+extern void randomID();
+
 #endif

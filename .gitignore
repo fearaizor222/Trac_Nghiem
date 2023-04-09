@@ -1,5 +1,6 @@
 .vscode/
-random_id.csv
+ID.txt
+test.*
 
 # Prerequisites
 *.d
