@@ -61,7 +61,8 @@ void DanhSachSinhVien::insertAfterSV(SVPtr FirstSV, SinhVien sv){
         p->next = FirstSV->next;
         FirstSV->next = p;
     }
-}DanhSachSinhVien::DanhSachSinhVien(std::string path) : DanhSachSinhVien(){
+}
+DanhSachSinhVien::DanhSachSinhVien(std::string path) : DanhSachSinhVien(){
     string rawline = "";
     ifstream input(path);
     while(getline(input, rawline)){
