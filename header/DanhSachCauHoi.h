@@ -4,7 +4,8 @@
 #include <string>
 #include <fstream>
 
-#define RANDOM_ID 5000
+#define MAX_ID 5000
+#define DIVISION 10
 
 class RandomID{
     public:
@@ -51,12 +52,15 @@ class DanhSachCauHoi{
 
             Node();
             Node(CauHoi _cau_hoi);
+            ~Node();
         };
 
         DanhSachCauHoi();
         DanhSachCauHoi(std::string path);
+        ~DanhSachCauHoi();
         void insert(CauHoi _cau_hoi);
         void insert(Node *&cur, CauHoi _cau_hoi);
+        void update(Node *&cur, std::ofstream &out);
         void output();
         void output(Node *cur);
         Node *&getRoot();

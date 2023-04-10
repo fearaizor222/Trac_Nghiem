@@ -33,11 +33,11 @@ int RandomID::getID(){
 }
 
 void RandomID::shuffle(int *id_data){
-    for (int i = 0; i < RANDOM_ID; i++){
+    for (int i = 0; i < MAX_ID; i++){
         id_data[i] = i + 1;
     }
 
-    for (int i = RANDOM_ID; i > 1; i--){
+    for (int i = MAX_ID; i > 1; i--){
         int num = rrand(i);
         int temp = id_data[i - 1];
 
@@ -49,15 +49,14 @@ void RandomID::shuffle(int *id_data){
 void RandomID::randomize(){
     srand(time(NULL));
     std::ofstream out("../data/ID.txt");
-    int array[RANDOM_ID];
-    int division = 10;
+    int array[MAX_ID];
     std::string attach;
     shuffle(array);
 
-    for (int i = 0; i < RANDOM_ID / division; i++){
-        for(int j = 0; j < division; j++){            
-            attach = (j == division - 1)? "|\n" : "|";
-            out << array[i * division + j] << attach;
+    for (int i = 0; i < MAX_ID / DIVISION; i++){
+        for(int j = 0; j < DIVISION; j++){            
+            attach = (j == DIVISION - 1)? "|\n" : "|";
+            out << array[i * DIVISION + j] << attach;
         }
     }
 
@@ -65,7 +64,7 @@ void RandomID::randomize(){
 }
 
 DanhSachCauHoi::CauHoi::CauHoi(){
-    Id = -1;
+    Id = random_id.getID();
     strncpy(ma_mon_hoc, "", 15);
     noi_dung = "";
     dap_an_a = "";
@@ -111,8 +110,21 @@ DanhSachCauHoi::Node::Node(CauHoi _cau_hoi){
     right = nullptr;
 }
 
+DanhSachCauHoi::Node::~Node(){
+    delete left;
+    delete right;
+}
+
 DanhSachCauHoi::DanhSachCauHoi(){
     root = nullptr;
+}
+
+DanhSachCauHoi::~DanhSachCauHoi(){
+    std::ofstream out("../data/DANHSACHCAUHOI.txt");
+    update(root, out);
+    out.close();
+
+    delete root;
 }
 
 DanhSachCauHoi::Node *&DanhSachCauHoi::getRoot(){
@@ -161,9 +173,17 @@ void DanhSachCauHoi::insert(Node *&cur, CauHoi _cau_hoi){
     }
 }
 
+void DanhSachCauHoi::update(Node *&cur, std::ofstream &out){
+    if(cur != nullptr){
+        update(cur->left, out);
+        out<<cur->data.ma_mon_hoc<<"|"<<cur->data.noi_dung<<"|"<<cur->data.dap_an_a<<"|"<<cur->data.dap_an_b<<"|"<<cur->data.dap_an_c<<"|"<<cur->data.dap_an_d<<"|"<<cur->data.dap_an<<std::endl;
+        update(cur->right, out);
+    }
+}
+
 void DanhSachCauHoi::output(){
     if(root != nullptr){
-        std::cout<<root->data.noi_dung<<std::endl;
+        std::cout<<root->data.Id<<"    "<<root->data.noi_dung<<std::endl;
         output(root->left);
         output(root->right);
     }
@@ -171,7 +191,7 @@ void DanhSachCauHoi::output(){
 
 void DanhSachCauHoi::output(Node *cur){
     if(cur != nullptr){
-        std::cout<<cur->data.noi_dung<<std::endl;
+        std::cout<<cur->data.Id<<"    "<<cur->data.noi_dung<<std::endl;
         output(cur->left);
         output(cur->right);
     }
