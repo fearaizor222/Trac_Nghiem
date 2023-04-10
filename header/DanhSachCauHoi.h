@@ -1,11 +1,25 @@
-#pragma once
-#include <cstdint>
+#ifndef DANHSACHCAUHOI_H
+#define DANHSACHCAUHOI_H
+
 #include <string>
-#include <sstream>
-#include <cstring>
 #include <fstream>
-#include <iostream>
-#define RANDOM 150
+
+#define RANDOM_ID 5000
+
+class RandomID{
+    public:
+        RandomID();
+        ~RandomID();
+        int getID();
+
+    private:
+        std::string curr_id_line;
+        std::ifstream id_file;
+
+        int rrand(int value);
+        void shuffle(int *id_data);
+        void randomize();
+};
 
 class DanhSachCauHoi{
     public:
@@ -21,21 +35,12 @@ class DanhSachCauHoi{
             std::string dap_an;
 
             CauHoi();
-            CauHoi(uint16_t _Id, char _ma_mon_hoc[15],
+            CauHoi(char _ma_mon_hoc[15],
                    std::string _noi_dung, std::string _dap_an_a,
                    std::string _dap_an_b, std::string _dap_an_c,
                    std::string _dap_an_d, std::string _dap_an);
 
-            CauHoi &operator=(CauHoi &other){
-                this->Id = other.Id;
-                strcpy(this->ma_mon_hoc, other.ma_mon_hoc);
-                this->noi_dung = other.noi_dung;
-                this->dap_an_a = other.dap_an_a;
-                this->dap_an_b = other.dap_an_b;
-                this->dap_an_c = other.dap_an_c;
-                this->dap_an = other.dap_an;
-                return *this;
-            }
+            CauHoi &operator=(CauHoi &other);
         };
 
         struct Node
@@ -58,9 +63,9 @@ class DanhSachCauHoi{
 
     private:
         Node *root;
-        uint16_t id_data[RANDOM];
-        int length;
 
-        int rrand(int value);
-        void random();
 };
+
+static RandomID random_id;
+
+#endif
