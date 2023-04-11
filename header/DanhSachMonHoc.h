@@ -32,4 +32,6 @@ class DanhSachMonHoc{
         void move(int index, int offset);  // Di chuyển dữ liệu qua bên phải hoặc bên trái
 };
 
+typedef typename DanhSachMonHoc::MonHoc MonHoc;
+
 #endif
