@@ -14,7 +14,7 @@ DanhSachMonHoc::MonHoc::MonHoc(char ma_mon_hoc[15], std::string ten_mon_hoc){
     this->ten_mon_hoc = ten_mon_hoc;
 }
 
-std::ostream &operator<<(std::ostream &out, DanhSachMonHoc::MonHoc mon_hoc){
+std::ostream &operator<<(std::ostream &out, MonHoc mon_hoc){
     out<<mon_hoc.ma_mon_hoc<<"|"<<mon_hoc.ten_mon_hoc;
     return out;
 }
@@ -136,6 +136,6 @@ void DanhSachMonHoc::output(){
     }
 }
 
-DanhSachMonHoc::MonHoc &DanhSachMonHoc::operator[](int index){
+MonHoc &DanhSachMonHoc::operator[](int index){
     return data[index];
 }

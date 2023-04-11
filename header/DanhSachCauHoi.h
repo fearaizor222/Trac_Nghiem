@@ -53,23 +53,32 @@ class DanhSachCauHoi{
             Node();
             Node(CauHoi _cau_hoi);
             ~Node();
+
+            Node &operator=(Node &other);
         };
 
         DanhSachCauHoi();
         DanhSachCauHoi(std::string path);
         ~DanhSachCauHoi();
         void insert(CauHoi _cau_hoi);
-        void insert(Node *&cur, CauHoi _cau_hoi);
-        void update(Node *&cur, std::ofstream &out);
+        void remove(int id);
         void output();
-        void output(Node *cur);
         Node *&getRoot();
 
     private:
         Node *root;
 
+        void output(Node *cur);
+        void update(Node *&cur, std::ofstream &out);
+        void insert(Node *&cur, CauHoi _cau_hoi);
+        void remove(Node *&cur, int id);
+        void removeWithTwoChildren(Node *&cur);
 };
 
+typedef typename DanhSachCauHoi::CauHoi CauHoi;
+typedef typename DanhSachCauHoi::Node Node;
+
 static RandomID random_id;
+static Node *temporary;
 
 #endif
