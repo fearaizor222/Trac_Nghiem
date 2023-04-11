@@ -26,7 +26,7 @@ class DanhSachCauHoi{
     public:
         struct CauHoi
         {
-            uint16_t Id;
+            int Id;
             char ma_mon_hoc[15];
             std::string noi_dung;
             std::string dap_an_a;
