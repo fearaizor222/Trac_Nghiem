@@ -91,6 +91,11 @@ DanhSachCauHoi::CauHoi::CauHoi(char _ma_mon_hoc[15],
     dap_an_c = _dap_an_c;
     dap_an_d = _dap_an_d;
     dap_an = _dap_an;
+
+    if(Id == -1){
+        std::string error = "Không thể tạo câu hỏi mới do đã hết ID"; 
+        throw error;
+    }
 }
 
 DanhSachCauHoi::CauHoi &DanhSachCauHoi::CauHoi::operator=(CauHoi &other){
@@ -139,6 +144,12 @@ DanhSachCauHoi::Node *&DanhSachCauHoi::getRoot(){
 
 DanhSachCauHoi::DanhSachCauHoi(std::string path) : DanhSachCauHoi(){
     std::ifstream input(path);
+
+    if(!input.is_open()){
+        std::string error = "Không thể mở file: " + path;
+        throw error;
+    }
+
     std::string line;
     while(getline(input, line)){
         std::stringstream _line(line);
@@ -180,7 +191,10 @@ void DanhSachCauHoi::remove(int id){
 }
 
 void DanhSachCauHoi::remove(Node *&cur, int id){
-    if(cur == nullptr) return;
+    if(cur == nullptr){
+        std::string error = "Không tìm thấy câu hỏi có ID: " + std::to_string(id);
+        throw error;
+    }
     else if(id < cur->data.Id) remove(cur->left, id);
     else if(id > cur->data.Id) remove(cur->right, id);
     else{
