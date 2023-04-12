@@ -53,8 +53,6 @@ class DanhSachCauHoi{
             Node();
             Node(CauHoi _cau_hoi);
             ~Node();
-
-            Node &operator=(Node &other);
         };
 
         DanhSachCauHoi();
@@ -78,7 +76,7 @@ class DanhSachCauHoi{
 typedef typename DanhSachCauHoi::CauHoi CauHoi;
 typedef typename DanhSachCauHoi::Node Node;
 
-static RandomID random_id;
+static RandomID random_id; 
 static Node *temporary;
 
 #endif

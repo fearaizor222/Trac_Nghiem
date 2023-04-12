@@ -64,7 +64,7 @@ void RandomID::randomize(){
 }
 
 DanhSachCauHoi::CauHoi::CauHoi(){
-    Id = random_id.getID();
+    Id = -1;
     strncpy(ma_mon_hoc, "", 15);
     noi_dung = "";
     dap_an_a = "";
@@ -95,6 +95,7 @@ DanhSachCauHoi::CauHoi &DanhSachCauHoi::CauHoi::operator=(CauHoi &other){
     this->dap_an_a = other.dap_an_a;
     this->dap_an_b = other.dap_an_b;
     this->dap_an_c = other.dap_an_c;
+    this->dap_an_d = other.dap_an_d;
     this->dap_an = other.dap_an;
     return *this;
 }
@@ -109,7 +110,7 @@ DanhSachCauHoi::Node::Node(CauHoi _cau_hoi){
     left = nullptr;
     right = nullptr;
 }
-
+ 
 DanhSachCauHoi::Node::~Node(){
     delete left;
     delete right;
@@ -153,16 +154,13 @@ DanhSachCauHoi::DanhSachCauHoi(std::string path) : DanhSachCauHoi(){
             cau_c,
             cau_d,
             dap_an
-        });        
+        });
+        number++;      
     }
 }
 
 void DanhSachCauHoi::insert(CauHoi _cau_hoi){
-    if(root == nullptr) root = new Node(_cau_hoi);
-    else{
-        if(root->data.Id > _cau_hoi.Id) insert(root->left, _cau_hoi);
-        else insert(root->right, _cau_hoi);
-    }
+    insert(root, _cau_hoi);    
 }
 
 void DanhSachCauHoi::insert(Node *&cur, CauHoi _cau_hoi){ 
@@ -170,6 +168,33 @@ void DanhSachCauHoi::insert(Node *&cur, CauHoi _cau_hoi){
     else{
         if(cur->data.Id > _cau_hoi.Id) insert(cur->left, _cau_hoi);
         else insert(cur->right, _cau_hoi);
+    }
+}
+
+void DanhSachCauHoi::remove(int id){
+    remove(root, id); 
+}
+
+void DanhSachCauHoi::remove(Node *&cur, int id){
+    if(cur == nullptr) return;
+    else if(id < cur->data.Id) remove(cur->left, id);
+    else if(id > cur->data.Id) remove(cur->right, id);
+    else{
+        temporary = cur;
+        if(temporary->right == nullptr) cur = temporary->left;
+        else if(temporary->left == nullptr) cur = temporary->right;
+        else removeWithTwoChildren(cur->right);
+        delete temporary;
+    }
+}
+
+void DanhSachCauHoi::removeWithTwoChildren(Node *&cur){
+    if(cur->left != nullptr)
+        removeWithTwoChildren(cur->left);
+    else{
+        temporary->data = cur->data;
+        temporary = cur;
+        cur = temporary->right;
     }
 }
 
@@ -182,16 +207,12 @@ void DanhSachCauHoi::update(Node *&cur, std::ofstream &out){
 }
 
 void DanhSachCauHoi::output(){
-    if(root != nullptr){
-        std::cout<<root->data.Id<<"    "<<root->data.noi_dung<<std::endl;
-        output(root->left);
-        output(root->right);
-    }
+    output(root);
 }
 
 void DanhSachCauHoi::output(Node *cur){
     if(cur != nullptr){
-        std::cout<<cur->data.Id<<"    "<<cur->data.noi_dung<<std::endl;
+        std::cout<<cur->data.Id<<" ";
         output(cur->left);
         output(cur->right);
     }
