@@ -24,6 +24,11 @@ int RandomID::getID(){
     if(curr_id_line.empty()){
         std::getline(id_file, curr_id_line);
     }
+
+    if(curr_id_line.empty()){
+        return -1;
+    }
+
     std::stringstream ss(curr_id_line);
     std::string number;
     getline(ss, number, '|');
@@ -155,7 +160,6 @@ DanhSachCauHoi::DanhSachCauHoi(std::string path) : DanhSachCauHoi(){
             cau_d,
             dap_an
         });
-        number++;      
     }
 }
 
