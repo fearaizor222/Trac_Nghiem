@@ -83,7 +83,7 @@ void DanhSachDiemThi::insertDiem(DTPtr &First, DiemThi dt){
 }
 
 void DanhSachDiemThi::xuatFileDanhSachDiemThi(){
-    ofstream out("../data/DiemThi.csv", ios::app); // Mở file DiemThi.csv để ghi
+    ofstream out("../data/DIEMTHI.txt", ios::app); // Mở file DiemThi.csv để ghi
     if (!out) {
         cout << "Khong mo duoc file";
         return;
@@ -104,13 +104,13 @@ void DanhSachDiemThi::xuatFileDanhSachDiemThi(){
 
 
 // Hàm in điểm theo lớp
-void xuatDiemTheoLop(DanhSachSinhVien &list, char Malop[15]){
+void DanhSachDiemThi::xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop){
     ofstream out;
 
     char filename[50];
     char dinhdang[5];
     //Định dạng và tên file
-    strcpy(dinhdang, ".csv");
+    strcpy(dinhdang, ".txt");
     strcpy(filename, "../data/DIEM_");
     //Nối tên file với mã lớp dạng (VD: DIEM_D21CQCN02-N.csv) 
     strcat(filename, Malop);
@@ -123,24 +123,24 @@ void xuatDiemTheoLop(DanhSachSinhVien &list, char Malop[15]){
     DanhSachSinhVien::SVPtr p = list.getFirst();
     while (p != NULL) {
 
-        out << p->sv_data.MASV << "|";
+        out << p->sv_data.MASV << endl ;
         out << DanhSachDiemThi::demMonHocDaThi(p->sv_data.ptr) << "|";
 
-        if (DanhSachDiemThi::demMonHocDaThi(p->sv_data.ptr) != 0){
-            DanhSachDiemThi::DTPtr sub_node;
-            sub_node = new DanhSachDiemThi::DiemThiNode;
-            sub_node = p->sv_data.ptr;
-        while (sub_node != NULL){
-            out << sub_node->data.Mamh << "|";
-            if (DanhSachDiemThi::kiemTraDaThi(p->sv_data.ptr,sub_node->data.Mamh) == false) {
+        // if (DanhSachDiemThi::demMonHocDaThi(p->sv_data.ptr) != 0){
+            DanhSachDiemThi::DTPtr q;
+            q = new DanhSachDiemThi::DiemThiNode;
+            q = p->sv_data.ptr;
+        while (q != NULL){
+            out << q->data.Mamh << "|";
+            if (DanhSachDiemThi::kiemTraDaThi(p->sv_data.ptr,q->data.Mamh) == false) {
                 out << "Chua thi"; // Nếu chưa thi thì ghi "Chua thi"
             } else {
-                out << sub_node->data.Diem; 
+                out << q->data.Diem; 
             }
             out << endl;
-            sub_node = sub_node->next;
+            q = q->next;
             }
-        }
+        // }
         p = p->next;
     }
     out.close();
