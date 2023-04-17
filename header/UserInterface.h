@@ -8,7 +8,7 @@
 #include <cstring>
 #include <iostream>
 #include <map>
-#include <stack>
+#include <vector>
 
 const std::map<std::string, std::string> viet_key = {
     {"á", "a"}, {"à", "a"}, {"ả", "a"}, {"ã", "a"}, {"ạ", "a"}, {"ă", "a"}, {"â", "a"}, 
@@ -40,15 +40,31 @@ const std::map<std::string, std::string> viet_key = {
 };
 
 int find(std::string str, char c){
-    for(int i = str.length() - 1; i > 0; i--){
+    int index = std::string::npos;
+    for(int i = str.length() - 1; i >= 0; i--){
         if(str[i] == ' '){
             return std::string::npos;
         }
         if(str[i] == c){
+            if(c == 'u' || c == 'U'){
+                for(int j = i - 1; j >= 0; j--){
+                    if(str[j] == ' ') return i;
+                    if(str[j] == c) return j;
+                }
+            }
             return i;
         }
     }
     return std::string::npos;
+}
+
+int offset(std::vector<int> arr, std::string s){
+    int offset = 0;
+    int length = s.find_last_of(' ');
+    for(int i = 0; i < length && i < arr.size(); i++){
+        if(arr[i] > 1) offset += arr[i] - 1;
+    }
+    return offset;
 }
 
 Vector2 TopLeft(){
@@ -94,6 +110,7 @@ struct Text{
     Font font;
     int size;
     int spacing;
+    std::vector<int> true_length;
 
     Text(std::string _data = "",
             Color _normal = BLACK,
@@ -197,7 +214,6 @@ struct InputBox{
 
         if (clicked){
             int key = GetCharPressed();
-            std::stack<int> true_length;
             while (key > 0){
                 int length = 0;
                 const char * utf8 = CodepointToUTF8(key, &length);
@@ -206,20 +222,21 @@ struct InputBox{
                 // if(str_utf8.length() > 1) str_utf8.pop_back();
                 // if(length > 1) for(int i = 0; i < length; i++){
                     // text.data.pop_back();
-                // }
-
+                //    }
+     
                 // if ((key >= 32) && (key <= 126)){
                 // for(int i = 0; i < length; i++){     
                     // if(length > 1) text.data.pop_back();
-                    true_length.push(length);
-                    if(length > 1){
-                        // int how_many_to_remove = text.data.find_last_of(viet_key.find(str_utf8)->second[0]);
+                    if(length > 1){ 
                         int how_many_to_remove = find(text.data, viet_key.find(str_utf8)->second[0]);
                         if(how_many_to_remove == std::string::npos) how_many_to_remove = text.data.length();
                         text.data.resize(how_many_to_remove);
+                        text.true_length.resize(how_many_to_remove - offset(text.true_length, text.data));
+                        if(text.true_length.back() == 0) text.true_length.pop_back();
                     }
                     text.data += str_utf8;
                     // secure_text.data += '*';
+                    text.true_length.push_back(length);
                 // }
                 // }
                 
@@ -227,12 +244,17 @@ struct InputBox{
                 else if(!isBoxFull() && max_length != -1) max_length = -1;
 
                 key = GetCharPressed();
-                // std::cout<<text.data<<std::endl;
+                for(int i = 0; i<text.true_length.size(); i++) std::cout << text.true_length[i] << " ";
+                std::cout<<std::endl;
             }
 
-            if (IsKeyDown(KEY_BACKSPACE) && text.data.length() > 0){
-                text.data.pop_back();
+            if (IsKeyPressed(KEY_BACKSPACE) && text.true_length.size() > 0){
+                for(int i = 0; i < text.true_length.back(); i++) text.data.pop_back();
+                text.true_length.pop_back();
+                
                 // secure_text.data.pop_back();
+                for(int i = 0; i<text.true_length.size(); i++) std::cout << text.true_length[i] << " ";
+                std::cout<<std::endl;
             }
         }
         
