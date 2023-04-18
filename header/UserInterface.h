@@ -110,7 +110,7 @@ struct Text{
     Font font;
     int size;
     int spacing;
-    std::vector<int> true_length;
+    std::vector<int> text_layout;
 
     Text(std::string _data = "",
             Color _normal = BLACK,
@@ -219,42 +219,31 @@ struct InputBox{
                 const char * utf8 = CodepointToUTF8(key, &length);
                 std::string str_utf8(utf8);
                 str_utf8.resize(length);
-                // if(str_utf8.length() > 1) str_utf8.pop_back();
-                // if(length > 1) for(int i = 0; i < length; i++){
-                    // text.data.pop_back();
-                //    }
-     
-                // if ((key >= 32) && (key <= 126)){
-                // for(int i = 0; i < length; i++){     
-                    // if(length > 1) text.data.pop_back();
-                    if(length > 1){ 
-                        int how_many_to_remove = find(text.data, viet_key.find(str_utf8)->second[0]);
-                        if(how_many_to_remove == std::string::npos) how_many_to_remove = text.data.length();
-                        text.data.resize(how_many_to_remove);
-                        text.true_length.resize(how_many_to_remove - offset(text.true_length, text.data));
-                        if(text.true_length.back() == 0) text.true_length.pop_back();
-                    }
-                    text.data += str_utf8;
-                    // secure_text.data += '*';
-                    text.true_length.push_back(length);
-                // }
-                // }
+                if(length > 1){ 
+                    int how_many_to_remove = find(text.data, viet_key.find(str_utf8)->second[0]);
+                    if(how_many_to_remove == std::string::npos) how_many_to_remove = text.data.length();
+                    text.data.resize(how_many_to_remove);
+                    text.text_layout.resize(how_many_to_remove);
+                }
+                text.data += str_utf8;
+                secure_text.data += '*';
+                text.text_layout.push_back(length);
+                if(length > 1){
+                    for(int i = 0; i<length - 1; i++) text.text_layout.push_back(0);
+                }
                 
                 if(isBoxFull() && max_length == -1) max_length = text.data.length();
                 else if(!isBoxFull() && max_length != -1) max_length = -1;
 
                 key = GetCharPressed();
-                for(int i = 0; i<text.true_length.size(); i++) std::cout << text.true_length[i] << " ";
-                std::cout<<std::endl;
             }
 
-            if (IsKeyPressed(KEY_BACKSPACE) && text.true_length.size() > 0){
-                for(int i = 0; i < text.true_length.back(); i++) text.data.pop_back();
-                text.true_length.pop_back();
+            if (IsKeyDown(KEY_BACKSPACE) && text.text_layout.size() > 0){
+                while(text.text_layout.back() == 0) text.text_layout.pop_back();
+                for(int i = 0; i < text.text_layout.back(); i++) text.data.pop_back();
+                text.text_layout.pop_back();
                 
-                // secure_text.data.pop_back();
-                for(int i = 0; i<text.true_length.size(); i++) std::cout << text.true_length[i] << " ";
-                std::cout<<std::endl;
+                secure_text.data.pop_back();
             }
         }
         
