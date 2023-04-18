@@ -1,14 +1,29 @@
 #ifndef USERINTERFACE_H
 #define USERINTERFACE_H
 
-#define SIZE_DASH_NORMAL 15
-
 #include "raylib.h"
 #include <string>
 #include <cstring>
 #include <iostream>
 #include <map>
 #include <vector>
+
+#define SIZE_DASH_NORMAL 15
+#define FONT_PATH "../style/TimesNewRoman.ttf"
+#define LOGO_PATH "../style/240px-Logo_PTIT_University.png"
+#define WIDTH 480
+#define HEIGHT 640
+
+enum Scene{
+    Login = 0,
+    Main,
+    Exit
+};
+
+static Vector2 global_mouse_pos;
+static Font font;
+static Image logo;
+static Scene current_scene;
 
 const std::map<std::string, std::string> viet_key = {
     {"á", "a"}, {"à", "a"}, {"ả", "a"}, {"ã", "a"}, {"ạ", "a"}, {"ă", "a"}, {"â", "a"}, 
@@ -39,6 +54,27 @@ const std::map<std::string, std::string> viet_key = {
     {"Ý", "Y"}, {"Ỳ", "Y"}, {"Ỷ", "Y"}, {"Ỹ", "Y"}, {"Ỵ", "Y"},            
 };
 
+void Initialize(){
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+    InitWindow(WIDTH, HEIGHT, "Phần mềm trắc nghiệm");
+    
+    global_mouse_pos = {-1, -1};
+    current_scene = Login;
+
+    font = LoadFontEx(FONT_PATH, 30, 0, 8192);
+    logo = LoadImage(LOGO_PATH);
+
+    SetWindowIcon(logo);
+    SetWindowMinSize(480, 640);
+    SetTargetFPS(10);
+}
+
+void Deinitialize(){
+    UnloadFont(font);
+    UnloadImage(logo);
+    CloseWindow();
+}
+
 int find(std::string str, char c){
     int index = std::string::npos;
     for(int i = str.length() - 1; i >= 0; i--){
@@ -56,15 +92,6 @@ int find(std::string str, char c){
         }
     }
     return std::string::npos;
-}
-
-int offset(std::vector<int> arr, std::string s){
-    int offset = 0;
-    int length = s.find_last_of(' ');
-    for(int i = 0; i < length && i < arr.size(); i++){
-        if(arr[i] > 1) offset += arr[i] - 1;
-    }
-    return offset;
 }
 
 Vector2 TopLeft(){
