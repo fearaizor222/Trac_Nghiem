@@ -60,18 +60,7 @@ void ListClasses::insertList(int &soluong){
             cout<<endl;
     }
 }
-void ListClasses::inLopRaFile(){
-    ofstream out("../data/DANHSACHLOP.csv", ios::out); // Mở file Diemthi.csv để ghi
-    if (!out) {
-        cout << "Khong mo duoc file";
-        return;
-    }
-    out<<"Ma Lop"<<","<<"Ten Lop"<<","<<"Nien Khoa"<<endl;
-    for(int i=0;i<soluong;i++){
-        out<<List[i]->getMaLop()<<","<<List[i]->getTenLop()<<","<<List[i]->getNienKhoa();
-    }
-    out.close();
-}
+
 void ListClasses::themLopVaoDanhSach(Lop *List[], int &soluong){
         int soluongcanthem, b;
         string a;
@@ -162,9 +151,75 @@ void ListClasses::hieuChinh(){
         default: cout<<"INVALID NUMBER"<<endl;
     }
     }while(luachon1==4);
-
- 
- 
+}
+danhSachLopHoc::danhSachLopHoc(std::string path) : danhSachLopHoc(){
+    string rawline = "";
+    ifstream input(path);
+    while(getline(input, rawline)){
+        string MALOP = rawline.substr(0, rawline.find("|"));
+        string TENLOP = rawline.substr(rawline.find("|") + 1, rawline.size() - 1);
+        string NIENKHOA = rawline.substr(rawline.find("|")+ 1, rawline.size() - 1 );
+        int NIEN_KHOA = stoi(NIENKHOA);
+ //       insert(Lop(MALOP, TENLOP, NIEN_KHOA));
+    }
+}
+void danhSachLopHoc::insert(Lop *lop_hoc, bool write_to_file){ 
+    if(soluong == MAX_DSL){
+        throw "Danh sách lớp đã đầy";
+        return;
+    }
+    if(searchClass(lop_hoc->getMaLop() ) != -1){
+        std::string error = "Mã lớp đã tồn tại: " + std::string(lop_hoc->getMaLop());
+        throw error;
+        return;
+    } 
+    if(write_to_file){
+        update(lop_hoc);
+    }
+    for(int i = 0; i<soluong; i++){
+        if(strcmp(List[i]->getMaLop().c_str(), lop_hoc->getMaLop().c_str()) > 0){
+            this->move(i, 1);
+            List[i] = lop_hoc;
+            soluong++;
+            return;
+        }
+    }
+    List[soluong++] = lop_hoc;
+}
+void danhSachLopHoc::move(int index, int offset){
+    if(offset == 1){
+        Lop *temp1 = List[index];
+        for(int i = index + offset; i <= soluong; i++){
+            Lop *temp2 = List[i];
+            List[i] = temp1;
+            temp1 = temp2;
+        }
+    }
+    else{
+        Lop *temp1 = List[soluong - 1];
+        for(int i = soluong - 2; i >= index; i--){
+            Lop *temp2 = List[i];
+            List[i] = temp1;
+            temp1 = temp2;
+        }
+    }
+}
+int danhSachLopHoc::searchClass(string malop){
+    for(int i = 0; i<soluong; i++){
+        if(strcmp(List[i]->getMaLop().c_str(), malop.c_str()) == 0){
+            return i;
+        }
+    }
+    return -1;
+}
+void danhSachLopHoc::update(Lop *lop_hoc){
+    std::ofstream output("../data/DANHSACHLOP.txt", std::ios::app);
+    if(!output.is_open()){
+        throw "Không thể mở file";
+        return;
+    }
+    output<<lop_hoc<<std::endl;
+    output.close();
 }
 
 
