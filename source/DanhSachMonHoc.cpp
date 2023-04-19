@@ -30,7 +30,7 @@ DanhSachMonHoc::DanhSachMonHoc(std::string path) : DanhSachMonHoc(){
         std::string ma_mon = rawline.substr(0, rawline.find("|"));
         std::string ten_mon = rawline.substr(rawline.find("|") + 1, rawline.size() - 1);
 
-        this->insert({(char*)ma_mon.c_str(), ten_mon}, 0);
+        this->insert({(char*)ma_mon.c_str(), ten_mon});
     }
 }
 
@@ -60,7 +60,7 @@ void DanhSachMonHoc::move(int index, int offset){
  * @throw "Danh sách môn học đã đầy" Nếu danh sách đã đầy
  * @throw "Mã môn học đã tồn tại" Nếu mã môn học đã tồn tại
 */
-void DanhSachMonHoc::insert(MonHoc mon_hoc, bool write_to_file){ 
+void DanhSachMonHoc::insert(MonHoc mon_hoc){ 
     if(length == MAX_MON){
         throw "Danh sách môn học đã đầy";
         return;
@@ -70,9 +70,6 @@ void DanhSachMonHoc::insert(MonHoc mon_hoc, bool write_to_file){
         throw error;
         return;
     } 
-    if(write_to_file){
-        update(mon_hoc);
-    }
     for(int i = 0; i<length; i++){
         if(strcmp(data[i].ma_mon_hoc, mon_hoc.ma_mon_hoc) > 0){
             this->move(i, 1);
@@ -119,13 +116,15 @@ void DanhSachMonHoc::remove(char ma_mon_hoc[]){
  * @param mon_hoc Môn học cần cập nhật
  * @throw "Không thể mở file" Nếu không thể mở file
 */
-void DanhSachMonHoc::update(MonHoc mon_hoc){
-    std::ofstream output("../data/DANHSACHMON.txt", std::ios::app);
+void DanhSachMonHoc::update(){
+    std::ofstream output("../data/DANHSACHMON.txt");
     if(!output.is_open()){
         throw "Không thể mở file";
         return;
     }
-    output<<mon_hoc<<std::endl;
+    for(int i = 0; i<length; i++){
+        output<<data[i]<<std::endl;
+    }
     output.close();
 }
 
@@ -138,4 +137,8 @@ void DanhSachMonHoc::output(){
 
 MonHoc &DanhSachMonHoc::operator[](int index){
     return data[index];
+}
+
+DanhSachMonHoc::~DanhSachMonHoc(){
+    update();
 }

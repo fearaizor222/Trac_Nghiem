@@ -17,13 +17,15 @@ class DanhSachMonHoc{
 
         DanhSachMonHoc();
         DanhSachMonHoc(std::string path);
-        void insert(MonHoc mon_hoc, bool write_to_file = 1);  
+        void insert(MonHoc mon_hoc);  
         int search(char ma_mon_hoc[]);  
         void remove(char ma_mon_hoc[]);
-        void update(MonHoc mon_hoc);
+        void update();
         void output();
 
         MonHoc &operator[](int index);
+
+        ~DanhSachMonHoc();
 
     private:
         short length;
