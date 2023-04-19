@@ -5,7 +5,7 @@
 #include <string>
 #include <cstring>
 #include <iostream>
-#include <map>
+#include "HashMap.h"
 #include <vector>
 
 #define SIZE_DASH_NORMAL 15
@@ -25,7 +25,7 @@ static Font font;
 static Image logo;
 static Scene current_scene;
 
-const std::map<std::string, std::string> viet_key = {
+HashMap viet_key = {
     {"á", "a"}, {"à", "a"}, {"ả", "a"}, {"ã", "a"}, {"ạ", "a"}, {"ă", "a"}, {"â", "a"}, 
     {"ắ", "ă"}, {"ằ", "ă"}, {"ẳ", "ă"}, {"ẵ", "ă"}, {"ặ", "ă"},  
     {"ấ", "â"}, {"ầ", "â"}, {"ẩ", "â"}, {"ẫ", "â"}, {"ậ", "â"},
@@ -247,7 +247,7 @@ struct InputBox{
                 std::string str_utf8(utf8);
                 str_utf8.resize(length);
                 if(length > 1){ 
-                    int how_many_to_remove = find(text.data, viet_key.find(str_utf8)->second[0]);
+                    int how_many_to_remove = find(text.data, viet_key[str_utf8][0]);
                     if(how_many_to_remove == std::string::npos) how_many_to_remove = text.data.length();
                     text.data.resize(how_many_to_remove);
                     text.text_layout.resize(how_many_to_remove);
