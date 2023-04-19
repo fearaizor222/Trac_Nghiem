@@ -123,13 +123,11 @@ void DanhSachDiemThi::xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop){
     DanhSachSinhVien::SVPtr p = list.getFirst();
     while (p != NULL) {
 
-        out << p->sv_data.MASV << endl ;
-        out << p->sv_data.HO << " " << p->sv_data.TEN << endl;
+        out << p->sv_data.MASV << "|" ;
+        out << p->sv_data.HO << " " << p->sv_data.TEN << "|";
 
         // if (DanhSachDiemThi::demMonHocDaThi(p->sv_data.ptr) != 0){
-            DTPtr q;
-            q = new DanhSachDiemThi::DiemThiNode;
-            q = p->sv_data.ptr;
+            DTPtr q = First;
         while (q != NULL){
             out << q->data.Mamh << "|";
             // if (DanhSachDiemThi::kiemTraDaThi(p->sv_data.ptr,q->data.Mamh) == false) {
