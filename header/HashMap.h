@@ -7,86 +7,35 @@
 
 /**
  * @brief HashMap but only for string key and string value
-*/
-class HashMap{
+ */
+class HashMap
+{
     public:
-        struct Node{
+        struct HashNode
+        {
             std::string key;
             std::string value;
-            Node* next;
+            HashNode *next;
 
-            Node(std::string key, std::string value){
-                this->key = key;
-                this->value = value;
-                this->next = nullptr;
-            }
+            HashNode(std::string key, std::string value);
         };
 
-        HashMap(){
-            this->size = 100;
-            this->data = new Node*[size];
-            for(int i = 0; i< size; i++){
-                data[i] = nullptr;
-            }
-        }
+        HashMap();
+        HashMap(int size);
+        HashMap(std::initializer_list<std::pair<std::string, std::string>> list);
 
-        HashMap(int size){
-            this->size = size;
-            this->data = new Node*[size];
-            for(int i = 0; i< size; i++){
-                data[i] = nullptr;
-            }
-        }
+        std::string &operator[](std::string key);
 
-        HashMap(std::initializer_list<std::pair<std::string, std::string>> list) : HashMap(list.size()){
-            typename std::initializer_list<std::pair<std::string, std::string>>::iterator it = list.begin();
-
-            while(it != list.end()){
-                int index = hashFunction(it->first);
-                Node* node = new Node(it->first, it->second);
-                node->next = data[index];
-                data[index] = node;
-                it++;
-            }
-        }
-
-        std::string &operator[](std::string key){
-            int index = hashFunction(key);
-            Node* node = data[index];
-            while(node != nullptr){
-                if(node->key == key){
-                    return node->value;
-                }
-                node = node->next;
-            }
-            return data[index]->value;
-        }
-
-        ~HashMap(){
-            for(int i = 0; i < size; i++){
-                delete data[i];
-            }
-            delete[] data;
-        }
-    
+        ~HashMap();
+        
     private:
-        Node** data;
+        HashNode **data;
         int size;
 
-        /**
-         * @brief DJB2 hash function
-         * @param key can only be string
-        */
-        int hashFunction(std::string key){
-            uint32_t hash = 5381;
-            char c;
-            for(int i = 0; i < key.length(); i++){
-                c = key[i];
-                hash = ((hash << 5) + hash) + c;
-            }
-            return hash % size;
-        }
-
+        int hashFunction(std::string key);
+        
 };
+
+typedef HashMap::HashNode HashNode;
 
 #endif
