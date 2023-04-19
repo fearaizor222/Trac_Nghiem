@@ -53,19 +53,19 @@ bool DanhSachDiemThi::kiemTraDaThi(DTPtr First,char Mamh[15]){
 }
 
 // Hàm đếm số môn học đã thi
-int DanhSachDiemThi::demMonHocDaThi(DTPtr First){
-    int dem = 0;
-    DTPtr sub_node;
-    sub_node = new DiemThiNode;
-    sub_node = First;
-    while(sub_node != NULL){
-        if(sub_node->data.Diem != -1){
-            dem++;
-        }
-        sub_node = sub_node->next;
-    }
-    return dem;
-}
+// int DanhSachDiemThi::demMonHocDaThi(DTPtr First){
+//     int dem = 0;
+//     DTPtr sub_node;
+//     sub_node = new DiemThiNode;
+//     sub_node = First;
+//     while(sub_node != NULL){
+//         if(sub_node->data.Diem != -1){
+//             dem++;
+//         }
+//         sub_node = sub_node->next;
+//     }
+//     return dem;
+// }
 
 void DanhSachDiemThi::insertDiem(DTPtr &First, DiemThi dt){
     if (First==NULL){
@@ -124,19 +124,19 @@ void DanhSachDiemThi::xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop){
     while (p != NULL) {
 
         out << p->sv_data.MASV << endl ;
-        out << DanhSachDiemThi::demMonHocDaThi(p->sv_data.ptr) << "|";
+        out << p->sv_data.HO << " " << p->sv_data.TEN << endl;
 
         // if (DanhSachDiemThi::demMonHocDaThi(p->sv_data.ptr) != 0){
-            DanhSachDiemThi::DTPtr q;
+            DTPtr q;
             q = new DanhSachDiemThi::DiemThiNode;
             q = p->sv_data.ptr;
         while (q != NULL){
             out << q->data.Mamh << "|";
-            if (DanhSachDiemThi::kiemTraDaThi(p->sv_data.ptr,q->data.Mamh) == false) {
-                out << "Chua thi"; // Nếu chưa thi thì ghi "Chua thi"
-            } else {
+            // if (DanhSachDiemThi::kiemTraDaThi(p->sv_data.ptr,q->data.Mamh) == false) {
+            //     out << "Chua thi"; // Nếu chưa thi thì ghi "Chua thi"
+            // } else {
                 out << q->data.Diem; 
-            }
+            // }
             out << endl;
             q = q->next;
             }
