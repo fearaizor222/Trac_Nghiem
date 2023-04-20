@@ -37,10 +37,10 @@ class DanhSachSinhVien{
         DanhSachSinhVien();
         ~DanhSachSinhVien();
         DanhSachSinhVien(string path);
-        void inSinhVienRaFile(SVPtr FirstSV);
+ //       void inSinhVienRaFile(SVPtr FirstSV);
         void insertFirst(SinhVien sv);
-        void insertAfterSV(SVPtr FirstSV , SinhVien sv);
         void insert(SinhVien sinh_vien); 
+        void insertLast(SinhVien sv);
         SVPtr &getFirst() { 
             return FirstSV; 
         }
@@ -48,7 +48,6 @@ class DanhSachSinhVien{
     private:
         int length;
         SVPtr FirstSV;
-        SinhVien data[1000];
         void move(int index, int offset);
 };
 

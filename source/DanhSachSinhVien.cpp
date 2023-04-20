@@ -31,36 +31,39 @@ DanhSachSinhVien::~DanhSachSinhVien(){
         delete q;
     }
 }
-void DanhSachSinhVien::inSinhVienRaFile(SVPtr FirstSV){
-    ofstream out("../data/DANHSACHSINHVIEN.csv", ios::out); 
-    if(!out){
-        cout<<"Khong mo duoc file";
-        return;
-    }
-    out<<"Ma Sinh Vien"<<","<<"Ho"<<","<<"Ten"<<","<<"Phai"<<";"<<"Password"<<endl;
-    SVPtr p = FirstSV;
-    while( p!=NULL ){
-        out<<p->sv_data.MASV<<p->sv_data.HO<<p->sv_data.TEN<<p->sv_data.Phai<<endl;
-        p = p->next;
-    }
-    out.close();
-}
+// void DanhSachSinhVien::inSinhVienRaFile(SVPtr FirstSV){
+//     ofstream out("../data/DANHSACHSINHVIEN.csv", ios::out); 
+//     if(!out){
+//         cout<<"Khong mo duoc file";
+//         return;
+//     }
+//     out<<"Ma Sinh Vien"<<","<<"Ho"<<","<<"Ten"<<","<<"Phai"<<";"<<"Password"<<endl;
+//     SVPtr p = FirstSV;
+//     while( p!=NULL ){
+//         out<<p->sv_data.MASV<<p->sv_data.HO<<p->sv_data.TEN<<p->sv_data.Phai<<endl;
+//         p = p->next;
+//     }
+//     out.close();
+// }
 void DanhSachSinhVien::insertFirst(SinhVien sv){
      SVPtr p = new SinhVienNode;
     p->sv_data = sv;
     p->next = FirstSV;
     FirstSV = p;
 }
-void DanhSachSinhVien::insertAfterSV(SVPtr FirstSV, SinhVien sv){
-     SVPtr p;
-    if (FirstSV == NULL){
-        cout << "Khong the them phan tu vao danh sach" << endl;
-    } else {
-        p = new SinhVienNode;
-        p->sv_data = sv;
-        p->next = FirstSV->next;
-        FirstSV->next = p;
+void DanhSachSinhVien::insertLast(SinhVien sv){
+    SVPtr p = new SinhVienNode;
+    p->sv_data = sv;
+    p->next = NULL;
+    if(FirstSV==NULL){
+        FirstSV = p;
+        return;
     }
+    SVPtr temp = FirstSV;
+    while(temp->next!=NULL){
+        temp = temp->next;
+    }
+    temp->next = p;
 }
 DanhSachSinhVien::DanhSachSinhVien(std::string path) : DanhSachSinhVien(){
     string rawline = "";
@@ -78,31 +81,31 @@ DanhSachSinhVien::DanhSachSinhVien(std::string path) : DanhSachSinhVien(){
 }
 void DanhSachSinhVien::insert(SinhVien sinh_vien){
     for(int i = 0; i<length; i++){
-        if(data[i].MASV.compare(sinh_vien.MASV) > 0){
+        if(FirstSV->sv_data.MASV.compare(sinh_vien.MASV) > 0){
             this->move(i, 1);
             data[i] = sinh_vien;
             length++;
             return;
-        }
-    }
+        } 
+    } 
     data[length++] = sinh_vien;
 }
 
-void DanhSachSinhVien::move(int index, int offset){
-    if(offset == 1){
-        SinhVien temp1 = data[index];
-        for(int i = index + offset; i <= length; i++){
-            SinhVien temp2 = data[i];
-            data[i] = temp1;
-            temp1 = temp2;
-        }
-    }
-    else{
-        SinhVien temp1 = data[length - 1];
-        for(int i = length - 2; i >= index; i--){
-            SinhVien temp2 = data[i];
-            data[i] = temp1;
-            temp1 = temp2;
-        }
-    }
-}
+// void DanhSachSinhVien::move(int index, int offset){
+//     if(offset == 1){
+//         SinhVien temp1 = data[index];
+//         for(int i = index + offset; i <= length; i++){
+//             SinhVien temp2 = data[i];
+//             data[i] = temp1;
+//             temp1 = temp2;
+//         }
+//     }
+//     else{
+//         SinhVien temp1 = data[length - 1];
+//         for(int i = length - 2; i >= index; i--){
+//             SinhVien temp2 = data[i];
+//             data[i] = temp1;
+//             temp1 = temp2;
+//         }
+//     }
+// }
