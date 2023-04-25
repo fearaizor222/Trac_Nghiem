@@ -41,9 +41,9 @@ class danhSachLopHoc{
        void xoaLopTrongDanhSach(Lop *List[], int &soluong);
        void inLopTheoNienKhoa();
        void hieuChinh();
-       void insert(Lop *lop_hoc,bool write_to_file);
+       void insert(Lop *lop_hoc);
        int searchClass(string malop);
-       void update(Lop *lop_hoc);
+       void update();
        Lop &operator[](int index); 
       
 

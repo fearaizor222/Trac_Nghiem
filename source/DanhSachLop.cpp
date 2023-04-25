@@ -35,6 +35,7 @@ danhSachLopHoc::danhSachLopHoc(){
     for(int i=0;i<soluong;i++){
         delete List[i];
     }
+    update();
  }
 void ListClasses::setSoLuong(int soluong){
     this->soluong = soluong;
@@ -163,7 +164,7 @@ danhSachLopHoc::danhSachLopHoc(std::string path) : danhSachLopHoc(){
  //       insert(Lop(MALOP, TENLOP, NIEN_KHOA));
     }
 }
-void danhSachLopHoc::insert(Lop *lop_hoc, bool write_to_file){ 
+void danhSachLopHoc::insert(Lop *lop_hoc){ 
     if(soluong == MAX_DSL){
         throw "Danh sách lớp đã đầy";
         return;
@@ -173,9 +174,6 @@ void danhSachLopHoc::insert(Lop *lop_hoc, bool write_to_file){
         throw error;
         return;
     } 
-    if(write_to_file){
-        update(lop_hoc);
-    }
     for(int i = 0; i<soluong; i++){
         if(strcmp(List[i]->getMaLop().c_str(), lop_hoc->getMaLop().c_str()) > 0){
             this->move(i, 1);
@@ -212,13 +210,15 @@ int danhSachLopHoc::searchClass(string malop){
     }
     return -1;
 }
-void danhSachLopHoc::update(Lop *lop_hoc){
+void danhSachLopHoc::update(){
     std::ofstream output("../data/DANHSACHLOP.txt", std::ios::app);
     if(!output.is_open()){
         throw "Không thể mở file";
         return;
     }
-    output<<lop_hoc<<std::endl;
+    for(int i=0;i<soluong;i++){
+        output<<List[i]<<endl;
+    }
     output.close();
 }
 
