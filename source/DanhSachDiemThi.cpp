@@ -27,27 +27,28 @@ void DanhSachDiemThi::insertFirst(DiemThi dt){
 
 //Hàm thêm điểm thi vào sau nút địa chỉ First
 void DanhSachDiemThi::insertAfterDT (DiemThi dt, DTPtr p){
-    DTPtr q;
     if (p == NULL){
         cout << "Khong the them phan tu vao danh sach" << endl;
+        return;
     } else {
-        q = new DiemThiNode;
+        DTPtr q = new DiemThiNode;
         q->data = dt;
         q->next = p->next;
         p->next = q;
+        // p = q; //Cập nhật con trỏ đến nút mới chèn vào
     }
 }
 
 // Hàm kiểm tra xem môn học đã thi chưa
 bool DanhSachDiemThi::kiemTraDaThi(DTPtr First,char Mamh[15]){
-    DTPtr node_chay;
-    node_chay = new DiemThiNode;
-    node_chay = First;
-    while(node_chay != NULL){
-        if(strcmp(node_chay->data.Mamh, Mamh) == 0){
+    DTPtr p;
+    p = new DiemThiNode;
+    p = First;
+    while(p != NULL){
+        if(strcmp(p->data.Mamh, Mamh) == 0){
             return true;
         }
-        node_chay = node_chay->next;
+        p = p->next;
     }
     return false;
 }
@@ -135,10 +136,13 @@ void DanhSachDiemThi::xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop){
             // } else {
                 out << q->data.Diem; 
             // }
-            out << endl;
+            if (q->next != NULL){
+                out << "|";
+            }
             q = q->next;
             }
         // }
+        out << endl;
         p = p->next;
     }
     out.close();

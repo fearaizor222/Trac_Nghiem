@@ -39,7 +39,8 @@ class DanhSachSinhVien{
         DanhSachSinhVien(string path);
  //       void inSinhVienRaFile(SVPtr FirstSV);
         void insertFirst(SinhVien sv);
-        void insert(SinhVien sinh_vien); 
+        void insertSV(SVPtr &FirstSV, SinhVien sv);
+        void insertAfter(SVPtr FirstSV, SinhVien sv);
         void insertLast(SinhVien sv);
         SVPtr &getFirst() { 
             return FirstSV; 

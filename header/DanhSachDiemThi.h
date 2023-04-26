@@ -38,10 +38,10 @@ class DanhSachDiemThi{
         static bool kiemTraDaThi(DTPtr First, char Mamh[15]);
         void insertDiem(DTPtr &First, DiemThi dt);
         void xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop);
+        void update();
         DTPtr &getFirst() { 
             return First; 
         }
-
     private:
         DTPtr First;
 };
