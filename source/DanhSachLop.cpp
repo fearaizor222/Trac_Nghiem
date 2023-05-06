@@ -153,17 +153,25 @@ void ListClasses::hieuChinh(){
     }
     }while(luachon1==4);
 }
-danhSachLopHoc::danhSachLopHoc(std::string path) : danhSachLopHoc(){
-    string rawline = "";
+
+danhSachLopHoc::danhSachLopHoc(std::string path):danhSachLopHoc(){
     ifstream input(path);
-    while(getline(input, rawline)){
-        string MALOP = rawline.substr(0, rawline.find("|"));
-        string TENLOP = rawline.substr(rawline.find("|") + 1, rawline.size() - 1);
-        string NIENKHOA = rawline.substr(rawline.find("|")+ 1, rawline.size() - 1 );
+    if(!input.is_open()){
+        string error = "Không thể mở file!: "+ path;
+        throw error;
+    }
+    string line;
+    while(getline(input, line)){
+        stringstream _line(line);
+        string MALOP, TENLOP, NIENKHOA;
+        getline(_line,MALOP, '|');
+        getline(_line,TENLOP, '|');
+        getline(_line,NIENKHOA, '|');
         int NIEN_KHOA = stoi(NIENKHOA);
- //       insert(Lop(MALOP, TENLOP, NIEN_KHOA));
+        insert(new Lop{MALOP,TENLOP,NIEN_KHOA});
     }
 }
+
 void danhSachLopHoc::insert(Lop *lop_hoc){ 
     if(soluong == MAX_DSL){
         throw "Danh sách lớp đã đầy";

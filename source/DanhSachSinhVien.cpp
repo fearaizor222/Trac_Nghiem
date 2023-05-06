@@ -63,7 +63,7 @@ void DanhSachSinhVien::insertAfter(SVPtr p, SinhVien sv){
     p->next = q;
 }
 
-void DanhSachSinhVien::insertSV(SVPtr &FirstSV, SinhVien sv){
+void DanhSachSinhVien::insertSV(SinhVien sv){
     if (FirstSV == NULL){
         insertFirst(sv);
         return;
@@ -78,20 +78,6 @@ void DanhSachSinhVien::insertSV(SVPtr &FirstSV, SinhVien sv){
     }
 }
 
-// void DanhSachSinhVien::insertLast(SinhVien sv){
-//     SVPtr p = new SinhVienNode;
-//     p->sv_data = sv;
-//     p->next = NULL;
-//     if(FirstSV==NULL){
-//         FirstSV = p;
-//         return;
-//     }
-//     SVPtr temp = FirstSV;
-//     while(temp->next!=NULL){
-//         temp = temp->next;
-//     }
-//     temp->next = p;
-// }
 // DanhSachSinhVien::DanhSachSinhVien(std::string path) : DanhSachSinhVien(){
 //     string rawline = "";
 //     ifstream input(path);
@@ -103,36 +89,25 @@ void DanhSachSinhVien::insertSV(SVPtr &FirstSV, SinhVien sv){
 //         string PASSWORD = rawline.substr(rawline.find("|"+ 1), rawline.size() - 1);
 //         bool Gender = (PHAI=="Nam")?1:0;
 
-//         insert(SinhVien(Ma_SV, Ho, Ten, Gender, PASSWORD));
+//         insertSV(SinhVien(Ma_SV, Ho, Ten, Gender, PASSWORD));
 //     }
 // }
-// void DanhSachSinhVien::insert(SinhVien sinh_vien){
-//     for(int i = 0; i<length; i++){
-//         if(FirstSV->sv_data.MASV.compare(sinh_vien.MASV) > 0){
-//             this->move(i, 1);
-//             sv_data[i] = sinh_vien;
-//             length++;
-//             return;
-//         } 
-//     } 
-//     sv_data[length++] = sinh_vien;
-// }
-
-// void DanhSachSinhVien::move(int index, int offset){
-//     if(offset == 1){
-//         SinhVien temp1 = data[index];
-//         for(int i = index + offset; i <= length; i++){
-//             SinhVien temp2 = data[i];
-//             data[i] = temp1;
-//             temp1 = temp2;
-//         }
-//     }
-//     else{
-//         SinhVien temp1 = data[length - 1];
-//         for(int i = length - 2; i >= index; i--){
-//             SinhVien temp2 = data[i];
-//             data[i] = temp1;
-//             temp1 = temp2;
-//         }
-//     }
-// }
+DanhSachSinhVien::DanhSachSinhVien(std::string path):DanhSachSinhVien(){
+    ifstream input;
+      if(!input.is_open()){
+        std::string error = "Không thể mở file: " + path;
+        throw error;
+    }
+    string line;
+    while(getline(input,line)){
+        stringstream _line(line);
+        string Ma_SV, Ho, Ten, PHAI, PASSWORD;
+        getline(_line,Ma_SV,'|');
+        getline(_line,Ho, '|');
+        getline(_line,Ten,'|');
+        getline(_line,PHAI,'|');
+        getline(_line,PASSWORD,'|');
+        bool Gender = (PHAI=="Nam")?1:0;
+        insertSV(SinhVien(Ma_SV, Ho, Ten, Gender, PASSWORD));
+    }
+}

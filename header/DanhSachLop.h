@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <sstream>
 #include "DanhSachSinhVien.h"
 #define MAX_DSL 500
 using namespace std;

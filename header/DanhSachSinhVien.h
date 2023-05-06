@@ -3,6 +3,7 @@
 #include "DanhSachDiemThi.h"
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string.h>
 using namespace std;
 
@@ -39,7 +40,7 @@ class DanhSachSinhVien{
         DanhSachSinhVien(string path);
  //       void inSinhVienRaFile(SVPtr FirstSV);
         void insertFirst(SinhVien sv);
-        void insertSV(SVPtr &FirstSV, SinhVien sv);
+        void insertSV(SinhVien sv);
         void insertAfter(SVPtr FirstSV, SinhVien sv);
         void insertLast(SinhVien sv);
         SVPtr &getFirst() { 
