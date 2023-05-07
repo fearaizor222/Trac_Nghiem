@@ -15,7 +15,7 @@ class DanhSachSinhVien{
             string MASV;
             string HO;
             string TEN;
-            bool Phai; // Nam = 0, Nu = 1
+            string Phai; // Nam = 0, Nu = 1
             string password;
             DanhSachDiemThi::DTPtr ptr ; //Con trỏ quản lý danh sách điểm thi
        
@@ -25,7 +25,7 @@ class DanhSachSinhVien{
                 Date(int ngay, int thang, int nam);
             };
            SinhVien();
-           SinhVien(string MASV, string HO, string TEN, bool Phai, string password);
+           SinhVien(string MASV, string HO, string TEN, string Phai, string password);
            friend ostream &operator<<(std::ostream &out, SinhVien sinh_vien);
         };
 

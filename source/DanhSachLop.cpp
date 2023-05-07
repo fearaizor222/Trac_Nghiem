@@ -21,6 +21,11 @@ void Lop::setNienKhoa(int nienkhoa){
 int Lop::getNienKhoa(){
     return nienkhoa;
 }
+Lop::Lop(string ma_lop, string ten_lop, int nien_khoa){
+    malop = ma_lop;
+    ten_lop = tenlop;
+    nienkhoa = nien_khoa;
+}
 danhSachLopHoc::danhSachLopHoc(){
     soluong = -1;
     ofstream out("../data/DANHSACHLOP.csv", ios::out);

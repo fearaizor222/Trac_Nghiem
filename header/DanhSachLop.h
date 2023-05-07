@@ -16,7 +16,7 @@ class Lop{
         int nienkhoa;
         DanhSachSinhVien::SVPtr ptr; //Con trỏ danh sách sinh viên
     public:
-        Lop(string malop, string tenlop, int nienkhoa );
+        Lop(string ma_lop, string ten_lop, int nien_khoa );
         void setMaLop(string malop);
         string getMaLop();
         void setTenLop(string tenlop);
