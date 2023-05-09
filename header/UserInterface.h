@@ -6,6 +6,7 @@
 #include <cstring>
 #include "DArray.h"
 #include "HashMap.h"
+#include "Stack.h"
 
 #define SIZE_DASH_NORMAL 15
 #define FONT_PATH "../style/TimesNewRoman.ttf"
@@ -13,16 +14,12 @@
 #define WIDTH 480
 #define HEIGHT 640
 
-enum Scene{
-    Login = 0,
-    Main,
-    Exit
-};
-
 extern Vector2 global_mouse_pos;
 extern Font font;
 extern Image logo;
+extern Stack<Scene> scene_stack;
 extern Scene current_scene;
+extern bool is_close_icon_pressed;
 
 static HashMap viet_key = {
     {"á", "a"}, {"à", "a"}, {"ả", "a"}, {"ã", "a"}, {"ạ", "a"}, {"ă", "a"}, {"â", "a"}, 
@@ -77,7 +74,7 @@ struct Text{
     Font font;
     int size;
     int spacing;
-    DArray text_layout;
+    DArray<int> text_layout;
 
     Text(std::string _data = "",
         Color _normal = BLACK,

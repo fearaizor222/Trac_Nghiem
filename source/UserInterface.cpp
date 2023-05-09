@@ -4,14 +4,18 @@
 Vector2 global_mouse_pos;
 Font font;
 Image logo;
+Stack<Scene> scene_stack;
 Scene current_scene;
+bool is_close_icon_pressed;
 
 void Initialize(){
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(WIDTH, HEIGHT, "Phần mềm trắc nghiệm");
     
     global_mouse_pos = {-1, -1};
-    current_scene = Login;
+    scene_stack.push(Exit);
+    scene_stack.push(Login);
+    is_close_icon_pressed = false;
 
     font = LoadFontEx(FONT_PATH, 30, 0, 8192);
     logo = LoadImage(LOGO_PATH);
@@ -19,6 +23,8 @@ void Initialize(){
     SetWindowIcon(logo);
     SetWindowMinSize(480, 640);
     SetTargetFPS(10);
+
+    SetExitKey(KEY_NULL);
 }
 
 void Deinitialize(){
@@ -28,7 +34,6 @@ void Deinitialize(){
 }
 
 int find(std::string str, char c){
-    int index = std::string::npos;
     for(int i = str.length() - 1; i >= 0; i--){
         if(str[i] == ' '){
             return std::string::npos;
