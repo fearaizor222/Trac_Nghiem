@@ -3,16 +3,49 @@
 
 #include "LinkedList.h"
 
-class Stack{
+template <class type>
+class Stack
+{
     public:
-        Stack();
-        void push(Scene data);
-        Scene pop();
-        Scene peek();
-        bool isEmpty();
+        Stack()
+        {
+            size = 0;
+        }
+
+        void push(type data)
+        {
+            list.push_back(data);
+            size++;
+        } 
+
+        type pop()
+        {
+            if (isEmpty())
+            {
+                return Exit;
+            }
+            type temp = list.back();
+            list.pop_back();
+            size--;
+            return temp;
+        }
+
+        type peek()
+        {
+            if (isEmpty())
+            {
+                return Exit;
+            }
+            return list.back();
+        }
+
+        bool isEmpty()
+        {
+            return size == 0;
+        }
 
     private:
-        LinkedList list;
+        LinkedList<type> list;
         int size;
 };
 
