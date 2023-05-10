@@ -44,6 +44,11 @@ class DArray
             return *this;
         }
 
+        type &operator[](int index)
+        {
+            return data[index];
+        }
+
         void push_back(type value)
         {
             if (count == capacity)

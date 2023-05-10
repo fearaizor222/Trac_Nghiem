@@ -77,10 +77,35 @@ class LinkedList
                 tail->next = nullptr;
             }
         }
+        
+        void pop_front(){
+            if(head == nullptr){
+                return;
+            }
+            else if(head == tail){
+                delete head;
+                head = tail = nullptr;
+            }
+            else{
+                Node *temp = head;
+                head = head->next;
+                delete temp;
+            }
+        }
 
-        type &back()
+        type front()
+        {
+            return head->data;
+        }
+
+        type back()
         {
             return tail->data;
+        }
+
+        bool empty()
+        {
+            return head == nullptr;
         }
 
     private:
