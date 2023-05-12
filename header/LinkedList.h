@@ -1,6 +1,8 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
+#include <iostream>
+
 enum Scene
 {
     Login = 0,
@@ -9,26 +11,79 @@ enum Scene
     Exit
 };
 
+struct IntPair{
+    int first;
+    int second;
+};
+
+template<class type>
+struct LinkedListNode
+{
+    type data;
+    LinkedListNode *next;
+
+    LinkedListNode()
+    {
+        data = 0;
+        next = nullptr;
+    }
+
+    LinkedListNode(type data)
+    {
+        this->data = data;
+        this->next = nullptr;
+    }
+
+    LinkedListNode(const LinkedListNode &other)
+    {
+        data = other.data;
+        next = nullptr;
+    }
+
+    LinkedListNode &operator=(const LinkedListNode &other)
+    {
+        data = other.data;
+        next = nullptr;
+        return *this;
+    }
+};
+
 template <class type>
 class LinkedList
 {
     public:
-        struct Node
-        {
-            type data;
-            Node *next;
-
-            Node(type data)
-            {
-                this->data = data;
-                this->next = nullptr;
-            }
-        };
+        typedef LinkedListNode<type> Node;
 
         LinkedList()
         {
             head = nullptr;
             tail = nullptr;
+        }
+
+        LinkedList(const LinkedList<type> &other)
+        {
+            head = nullptr;
+            tail = nullptr;
+            for (Node *temp = other.head; temp != nullptr; temp = temp->next)
+            {
+                push_back(temp->data);
+            }
+        }
+
+        LinkedList<type> &operator=(const LinkedList<type> &other)
+        {
+            for (Node *temp = head; temp != nullptr; temp = head)
+            {
+                head = head->next;
+                delete temp;
+            }
+            head = nullptr;
+            tail = nullptr;
+            for (Node *temp = other.head; temp != nullptr; temp = temp->next)
+            {
+                push_back(temp->data);
+            }
+            return *this;
         }
 
         ~LinkedList()
@@ -51,6 +106,19 @@ class LinkedList
             {
                 tail->next = temp;
                 tail = temp;
+            }
+        }
+
+        void push_front(type data){
+            Node *temp = new Node(data);
+            if (head == nullptr)
+            {
+                head = tail = temp;
+            }
+            else
+            {
+                temp->next = head;
+                head = temp;
             }
         }
 
@@ -87,7 +155,7 @@ class LinkedList
                 head = tail = nullptr;
             }
             else{
-                Node *temp = head;
+                Node* temp = head;
                 head = head->next;
                 delete temp;
             }

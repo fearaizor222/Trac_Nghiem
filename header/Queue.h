@@ -10,8 +10,24 @@ class Queue{
             _size = 0;
         }
 
+        Queue(const Queue<type> &other){
+            _queue = other._queue;
+            _size = other._size;
+        }
+
+        Queue<type> &operator=(const Queue<type> &other){
+            _queue = other._queue;
+            _size = other._size;
+            return *this;
+        }
+
         void push(type data){
             _queue.push_back(data);
+            _size++;
+        }
+
+        void push_front(type data){
+            _queue.push_front(data);
             _size++;
         }
 
