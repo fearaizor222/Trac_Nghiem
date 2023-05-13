@@ -1,10 +1,6 @@
 #ifndef DANHSACHLOP_H
 #define DANHSACHLOP_H
 #include <string>
-#include <iostream>
-#include <fstream>
-#include <string.h>
-#include <sstream>
 #include "DanhSachSinhVien.h"
 #define MAX_DSL 500
 using namespace std;
@@ -13,41 +9,39 @@ class Lop{
     private:
         string malop;
         string tenlop;
-        int nienkhoa;
-        DanhSachSinhVien::SVPtr ptr; //Con trỏ danh sách sinh viên
+        string nienkhoa;
+        DanhSachSinhVien dssv;
     public:
-        Lop(string ma_lop, string ten_lop, int nien_khoa );
+        Lop();
+        Lop(string ma_lop, string ten_lop, string nien_khoa );
         void setMaLop(string malop);
         string getMaLop();
         void setTenLop(string tenlop);
         string getTenLop();
-        void setNienKhoa(int nienkhoa);
-        int getNienKhoa();
-        Lop();
-        friend ostream &operator<<(std::ostream &out, Lop lop_hoc);
+        void setNienKhoa(string nienkhoa);
+        string getNienKhoa();
+        void updatePath(string old_path, string new_path);
+        bool isEmpty();
 };
-class danhSachLopHoc{
+
+class DanhSachLopHoc{
     private:
         int soluong; 
         Lop *List[MAX_DSL];
-        void move(int index, int offset);
+
     public:
-       danhSachLopHoc();
-       ~danhSachLopHoc();
-       danhSachLopHoc(string path);
-       void setSoLuong(int soluong);
+       DanhSachLopHoc();
+       ~DanhSachLopHoc();
+       DanhSachLopHoc(string path);
        int getSoLuong();
-       void insertList(int &soluong);
-       void themLopVaoDanhSach(Lop *List[], int &soluong);
-       void xoaLopTrongDanhSach(Lop *List[], int &soluong);
-       void inLopTheoNienKhoa();
+       void removeClass(string malop);
+       void inLopTheoNienKhoa(string nienkhoa);
        void hieuChinh();
        void insert(Lop *lop_hoc);
        int searchClass(string malop);
        void update();
        Lop &operator[](int index); 
-      
-
-};typedef danhSachLopHoc ListClasses;
+       Lop &operator[](string malop); 
+};
 
 #endif

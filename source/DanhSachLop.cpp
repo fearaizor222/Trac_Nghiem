@@ -1,165 +1,185 @@
 #include "../header/DanhSachLop.h"
+#include <iostream>
+#include <fstream>
+#include <string.h>
+#include <sstream>
+#include <cstdio>
+
 Lop::Lop(){
-    malop = tenlop = "N/A";
-    nienkhoa = 0;
+    malop = tenlop = nienkhoa = "N/A";
 }
+
 void Lop::setMaLop(string malop){
+    updatePath(dssv.getPath(), "../data/DSSV/" + malop + "-" + this->nienkhoa + ".txt");
+
     this->malop = malop;
 }
+
 string Lop::getMaLop(){
     return malop;
 }
+
 void Lop::setTenLop(string tenlop){
     this->tenlop = tenlop;
 }
+
 string Lop::getTenLop(){
     return tenlop;
 }
-void Lop::setNienKhoa(int nienkhoa){
+
+void Lop::setNienKhoa(string nienkhoa){
+    updatePath(dssv.getPath(), "../data/DSSV/" + this->malop + "-" + nienkhoa + ".txt");
+
     this->nienkhoa = nienkhoa;
 }
-int Lop::getNienKhoa(){
+
+string Lop::getNienKhoa(){
     return nienkhoa;
 }
-Lop::Lop(string ma_lop, string ten_lop, int nien_khoa){
+
+Lop::Lop(string ma_lop, string ten_lop, string nien_khoa){
     malop = ma_lop;
-    ten_lop = tenlop;
+    tenlop = ten_lop;
     nienkhoa = nien_khoa;
+
+    string file_name = "../data/DSSV/" + malop + "-" + nien_khoa + ".txt";
+    dssv = DanhSachSinhVien(file_name);
 }
-danhSachLopHoc::danhSachLopHoc(){
-    soluong = -1;
-    ofstream out("../data/DANHSACHLOP.csv", ios::out);
-    if(!out){
-        cout<<"Khong mo duoc file";
-        return;
+
+bool Lop::isEmpty(){
+    return dssv.isEmpty();
+}
+
+void Lop::updatePath(string old_path, string new_path){
+    std::ifstream input(old_path);
+    std::ofstream output(new_path);
+    std::string line;
+
+    while(getline(input, line)){
+        output<<line<<std::endl;
     }
-    out<<"Ma Lop"<<","<<"Ten Lop"<<","<<"Nien Khoa"<<endl;
-    out.close();
+
+    input.close();
+    output.close();
+    remove(old_path.c_str());
+
+    dssv.setPath(new_path);
 }
- danhSachLopHoc::~danhSachLopHoc(){
+
+DanhSachLopHoc::DanhSachLopHoc(){
+    soluong = 0;
+    for(int i = 0; i<MAX_DSL; i++){
+        List[i] = nullptr;
+    }
+}
+ DanhSachLopHoc::~DanhSachLopHoc(){
+    update();
     for(int i=0;i<soluong;i++){
         delete List[i];
     }
-    update();
  }
-void ListClasses::setSoLuong(int soluong){
-    this->soluong = soluong;
-}
-int ListClasses::getSoLuong(){
+
+int DanhSachLopHoc::getSoLuong(){
     return soluong;
 }
-void ListClasses::insertList(int &soluong){
-    string a; int b;
-    for(int i=0;i<soluong;i++){
-        printf("Nhap thong tin lop %d: \n",i);
-        cout<<"Ma lop: ";
-            getline(cin,a); 
-            List[i]->setMaLop(a);
-            cout<<endl;
-        cout<<"Ten lop: ";
-            getline(cin,a);
-            List[i]->setTenLop(a);
-            cout<<endl;
-        cout<<"Nien khoa: ";
-            cin>>b;
-            List[i]->setNienKhoa(b);
-            cout<<endl;
+
+void DanhSachLopHoc::removeClass(string malopcanxoa){
+    for (int i = 0; i < soluong; i++){
+        if (malopcanxoa.compare(List[i]->getMaLop()) == 0){
+            if(List[i]->isEmpty()){
+                string path = "../data/DSSV/" + List[i]->getMaLop() + "-" + List[i]->getNienKhoa() + ".txt";
+                remove(path.c_str());
+                for (int j = i; j < soluong; j++)
+                {
+                    List[j] = List[j + 1];
+                }
+                soluong--;
+                break;
+            }
+        }
     }
 }
 
-void ListClasses::themLopVaoDanhSach(Lop *List[], int &soluong){
-        int soluongcanthem, b;
-        string a;
-        cin>>soluongcanthem;
-        soluong+=soluongcanthem;
-        for(int i=soluong-soluongcanthem;i<soluong;i++){
-        printf("Nhap thong tin lop %d: \n",i);
-        cout<<"Ma lop: ";
-            getline(cin,a); 
-            List[i]->setMaLop(a);
-            cout<<endl;
-        cout<<"Ten lop: ";
-            getline(cin,a);
-            List[i]->setTenLop(a);
-            cout<<endl;
-        cout<<"Nien khoa: ";
-            cin>>b;
-            List[i]->setNienKhoa(b);
-            cout<<endl;
-        }
-}
-void ListClasses::xoaLopTrongDanhSach(Lop *List[], int &soluong){
-        string malopcanxoa;
-        cout<<"Nhap ma lop can xoa: ";
-        getline(cin,malopcanxoa);
-        for(int i=0;i<soluong;i++){
-            if(malopcanxoa==List[i]->getMaLop()){
-               for(int j=i;j<soluong;j++){
-                List[j]=List[j+1];
-               }
-            }
-        }
-        soluong--;
-}
-void ListClasses::inLopTheoNienKhoa(){
-    int nienkhoaCanIn;
-    cout<<"Nhap nien khoa can in: ";
-    cin>>nienkhoaCanIn;
+void DanhSachLopHoc::inLopTheoNienKhoa(string nienkhoa){
     for(int i=0;i<soluong;i++){
-        if(nienkhoaCanIn==List[i]->getNienKhoa()){
+        if(nienkhoa.compare(List[i]->getNienKhoa()) == 0){
             cout<<List[i]->getMaLop()<<" "<<List[i]->getTenLop()<<" "<<List[i]->getNienKhoa()<<endl;
         }
     }
 }
-void ListClasses::hieuChinh(){
-    int lop, luachon1, luachon2, b;
-    string a;
-    do{
-    cout<<"Nhap lua chon cua ban: "<<endl;
-    cout<<"1-Them lop"<<endl;
-    cout<<"2-Xoa Lop"<<endl;
-    cout<<"3-Hieu chinh"<<endl;
-    cout<<"4-Thoat"<<endl;
-    switch(luachon1){
-        case 1: ListClasses::themLopVaoDanhSach(List, soluong);
-        break;
-        case 2: ListClasses::xoaLopTrongDanhSach(List,soluong);
-        break;
+
+void DanhSachLopHoc::hieuChinh(){
+    int luachon1, luachon2;
+    string _tenlop, _malop, _nienkhoa;
+    string a, lop;
+    do
+    {
+        cout << "Nhap lua chon cua ban: " << endl;
+        cout << "1-Them lop" << endl;
+        cout << "2-Xoa Lop" << endl;
+        cout << "3-Hieu chinh" << endl;
+        cout << "4-Thoat" << endl;
+        cin >> luachon1;
+        cin.ignore();
+        switch (luachon1)
+        {
+        case 1:
+            cout << "Nhap ma lop: ";
+            getline(cin, _malop);
+            cout << "Nhap ten lop: ";
+            getline(cin, _tenlop);
+            cout << "Nhap nien khoa: ";
+            getline(cin, _nienkhoa);
+            insert(new Lop{_malop, _tenlop, _nienkhoa});
+            break;
+        case 2:
+            cout << "Nhap ma lop can xoa: ";
+            getline(cin, a);
+            removeClass(a);
+            break;
         case 3:
-            cout<<"Nhap lop can hieu chinh: ";
-            cin>>lop;
-            do{
-                cout<<"1-Ma Lop"<<endl;
-                cout<<"2-Ten Lop"<<endl;
-                cout<<"3-Nien Khoa"<<endl;
-                cout<<"4-Thoat"<<endl;
-            switch(luachon2){
-            case 1: cout<<"Nhap ma lop: ";
-                    getline(cin,a);
-                    List[lop]->setMaLop(a);
-                    cout<<endl;
+            cout << "Nhap lop can hieu chinh: ";
+            getline(cin, lop);
+            do
+            {
+                cout << "1-Ma Lop" << endl;
+                cout << "2-Ten Lop" << endl;
+                cout << "3-Nien Khoa" << endl;
+                cout << "4-Thoat" << endl;
+                cin >> luachon2;
+                cin.ignore();
+                switch (luachon2)
+                {
+                case 1:
+                    cout << "Nhap ma lop: ";
+                    getline(cin, a);
+                    (*this)[lop].setMaLop(a);
+                    cout << endl;
                     break;
-            case 2: cout<<"Nhap ten lop: ";
-                    getline(cin,a);
-                    List[lop]->setTenLop(a);
-                    cout<<endl;
+                case 2:
+                    cout << "Nhap ten lop: ";
+                    getline(cin, a);
+                    (*this)[lop].setTenLop(a);
+                    cout << endl;
                     break;
-            case 3: cout<<"Nhap nien khoa: ";
-                    cin>>b;
-                    List[lop]->setNienKhoa(b);
-                    cout<<endl;
+                case 3:
+                    cout << "Nhap nien khoa: ";
+                    cin >> a;
+                    (*this)[lop].setNienKhoa(a);
+                    cout << endl;
                     break;
-            default:
-                    cout<<"INVALID NUMBER"<<endl;
+                default:
+                    cout << "INVALID NUMBER" << endl;
+                }
+            } while (luachon2 != 4);
+            break;
+        default:
+            cout << "INVALID NUMBER" << endl;
         }
-    }while(luachon2==4);
-        break;
-        default: cout<<"INVALID NUMBER"<<endl;
-    }
-    }while(luachon1==4);
+    } while (luachon1 != 4);
 }
 
-danhSachLopHoc::danhSachLopHoc(std::string path):danhSachLopHoc(){
+DanhSachLopHoc::DanhSachLopHoc(std::string path):DanhSachLopHoc(){
     ifstream input(path);
     if(!input.is_open()){
         string error = "Không thể mở file!: "+ path;
@@ -172,50 +192,27 @@ danhSachLopHoc::danhSachLopHoc(std::string path):danhSachLopHoc(){
         getline(_line,MALOP, '|');
         getline(_line,TENLOP, '|');
         getline(_line,NIENKHOA, '|');
-        int NIEN_KHOA = stoi(NIENKHOA);
-        insert(new Lop{MALOP,TENLOP,NIEN_KHOA});
+        // int NIEN_KHOA = stoi(NIENKHOA);
+        insert(new Lop{MALOP,TENLOP,NIENKHOA});
     }
 }
 
-void danhSachLopHoc::insert(Lop *lop_hoc){ 
+void DanhSachLopHoc::insert(Lop *lop_hoc){ 
     if(soluong == MAX_DSL){
         throw "Danh sách lớp đã đầy";
         return;
     }
+
     if(searchClass(lop_hoc->getMaLop() ) != -1){
         std::string error = "Mã lớp đã tồn tại: " + std::string(lop_hoc->getMaLop());
         throw error;
         return;
-    } 
-    for(int i = 0; i<soluong; i++){
-        if(strcmp(List[i]->getMaLop().c_str(), lop_hoc->getMaLop().c_str()) > 0){
-            this->move(i, 1);
-            List[i] = lop_hoc;
-            soluong++;
-            return;
-        }
     }
+
     List[soluong++] = lop_hoc;
 }
-void danhSachLopHoc::move(int index, int offset){
-    if(offset == 1){
-        Lop *temp1 = List[index];
-        for(int i = index + offset; i <= soluong; i++){
-            Lop *temp2 = List[i];
-            List[i] = temp1;
-            temp1 = temp2;
-        }
-    }
-    else{
-        Lop *temp1 = List[soluong - 1];
-        for(int i = soluong - 2; i >= index; i--){
-            Lop *temp2 = List[i];
-            List[i] = temp1;
-            temp1 = temp2;
-        }
-    }
-}
-int danhSachLopHoc::searchClass(string malop){
+
+int DanhSachLopHoc::searchClass(string malop){
     for(int i = 0; i<soluong; i++){
         if(strcmp(List[i]->getMaLop().c_str(), malop.c_str()) == 0){
             return i;
@@ -223,16 +220,22 @@ int danhSachLopHoc::searchClass(string malop){
     }
     return -1;
 }
-void danhSachLopHoc::update(){
-    std::ofstream output("../data/DANHSACHLOP.txt", std::ios::app);
-    if(!output.is_open()){
-        throw "Không thể mở file";
-        return;
-    }
+void DanhSachLopHoc::update(){
+    std::ofstream output("../data/DANHSACHLOP.txt");
     for(int i=0;i<soluong;i++){
-        output<<List[i]<<endl;
+        output<<List[i]->getMaLop()<<"|"<<List[i]->getTenLop()<<"|"<<List[i]->getNienKhoa()<<endl;
     }
     output.close();
 }
 
+Lop& DanhSachLopHoc::operator[](int index){
+    return *List[index];
+}
 
+Lop& DanhSachLopHoc::operator[](string malop){
+    int index = searchClass(malop);
+    if(index == -1){
+        throw "Không tìm thấy lớp";
+    }
+    return *List[index];
+}

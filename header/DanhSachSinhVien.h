@@ -17,16 +17,11 @@ class DanhSachSinhVien{
             string TEN;
             string Phai; // Nam = 0, Nu = 1
             string password;
-            DanhSachDiemThi::DTPtr ptr ; //Con trỏ quản lý danh sách điểm thi
+            DanhSachDiemThi diem; //Con trỏ quản lý danh sách điểm thi
        
-        struct Date{
-                int ngay, thang, nam;
-                Date();
-                Date(int ngay, int thang, int nam);
-            };
            SinhVien();
            SinhVien(string MASV, string HO, string TEN, string Phai, string password);
-           friend ostream &operator<<(std::ostream &out, SinhVien sinh_vien);
+        //    friend ostream &operator<<(std::ostream &out, SinhVien sinh_vien);
         };
 
         struct SinhVienNode{
@@ -38,19 +33,27 @@ class DanhSachSinhVien{
         DanhSachSinhVien();
         ~DanhSachSinhVien();
         DanhSachSinhVien(string path);
- //       void inSinhVienRaFile(SVPtr FirstSV);
+        DanhSachSinhVien &operator=(const DanhSachSinhVien &dssv);
+        DanhSachSinhVien(const DanhSachSinhVien &dssv);
+        // void inSinhVienRaFile(SVPtr FirstSV);
         void insertFirst(SinhVien sv);
-        void insertSV(SinhVien sv);
+        // void insertSV(SinhVien sv);
         void insertAfter(SVPtr FirstSV, SinhVien sv);
         void insertLast(SinhVien sv);
+        void setPath(string path);
+        string getPath();
+        bool isEmpty();
         SVPtr &getFirst() { 
             return FirstSV; 
         }
-        SinhVien &operator[](int index);
+
+        void update();
+        // SinhVien &operator[](int index);
     private:
         int length;
         SVPtr FirstSV;
-        void move(int index, int offset);
+        std::string path;
+        // void move(int index, int offset);
 };
 
 #endif

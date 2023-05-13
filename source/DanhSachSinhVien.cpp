@@ -2,24 +2,18 @@
 
 DanhSachSinhVien::SinhVien::SinhVien(){
      MASV = HO = TEN = Phai = password = "";
-
 }
+
 DanhSachSinhVien::SinhVien::SinhVien(string MASV, string HO, string TEN, string Phai, string password){
     this->MASV = MASV;
     this->HO = HO;
     this->TEN = TEN;
-    this->password = password;
     this->Phai = Phai;
+    this->password = password;
 }
-DanhSachSinhVien::SinhVien::Date::Date(){
-    ngay = thang = nam = -1;
-}
-DanhSachSinhVien::SinhVien::Date::Date(int ngay, int thang, int nam){
-    this->ngay = ngay;
-    this->thang = thang;
-    this->nam = nam;
-}
+
 DanhSachSinhVien::DanhSachSinhVien(){
+    length = 0;
     FirstSV = nullptr;
 }
 DanhSachSinhVien::~DanhSachSinhVien(){ 
@@ -49,7 +43,7 @@ void DanhSachSinhVien::insertAfter(SVPtr p, SinhVien sv){
     p->next = q;
 }
 
-void DanhSachSinhVien::insertSV(SinhVien sv){
+void DanhSachSinhVien::insertLast(SinhVien sv){
     if (FirstSV == NULL){
         insertFirst(sv);
         return;
@@ -62,22 +56,80 @@ void DanhSachSinhVien::insertSV(SinhVien sv){
         }
         insertAfter(p, sv);
     }
+
+    length++;
 }
+void DanhSachSinhVien::setPath(string path)
+{
+    this->path = path;
+}
+
+string DanhSachSinhVien::getPath()
+{
+    return path;
+}
+
+bool DanhSachSinhVien::isEmpty(){
+    return FirstSV == NULL;
+}
+
 DanhSachSinhVien::DanhSachSinhVien(std::string path):DanhSachSinhVien(){
-    ifstream input(path);
-      if(!input.is_open()){
-        std::string error = "Không thể mở file: " + path;
-        throw error;
+    this->path = path;
+    ifstream input(this->path);
+    if(!input.is_open()){
+        ofstream output(this->path);
+        output.close();
+        return;
     }
     string line;
     while(getline(input,line)){
         stringstream _line(line);
         string Ma_SV, Ho, Ten, PHAI, PASSWORD;
+
         getline(_line,Ma_SV,'|');
-        getline(_line,Ho, '|');
-        getline(_line,Ten,'|');
+        getline(_line,Ho,'|');
+        Ten = Ho.substr(Ho.find(" ")+1);
+        Ho = Ho.substr(0,Ho.find(" "));
         getline(_line,PHAI,'|');
         getline(_line,PASSWORD,'|');
-        insertSV(SinhVien(Ma_SV, Ho, Ten, PHAI, PASSWORD));
+        string temp;
+        stringstream __line(PASSWORD);
+        PASSWORD = "";
+        while(getline(__line,temp,'/')) PASSWORD += temp;
+
+        insertLast(SinhVien(Ma_SV, Ho, Ten, PHAI, PASSWORD));
     }
+}
+
+DanhSachSinhVien &DanhSachSinhVien::operator=(const DanhSachSinhVien &dssv){
+    if(this == &dssv){
+        return *this;
+    }
+    this->~DanhSachSinhVien();
+    SVPtr p = dssv.FirstSV;
+    path = dssv.path;
+    while(p != NULL){
+        insertLast(p->sv_data);
+        p = p->next;
+    }
+    return *this;
+}
+
+DanhSachSinhVien::DanhSachSinhVien(const DanhSachSinhVien &dssv){
+    SVPtr p = dssv.FirstSV;
+    path = dssv.path;
+    while(p != NULL){
+        insertLast(p->sv_data);
+        p = p->next;
+    }
+}
+
+void DanhSachSinhVien::update(){
+    ofstream output(path);
+    SVPtr p = FirstSV;
+    while(p != NULL){
+        output << p->sv_data.MASV << "|" << p->sv_data.HO << " " << p->sv_data.TEN << "|" << p->sv_data.Phai << "|" << p->sv_data.password << endl;
+        p = p->next;
+    }
+    output.close();
 }
