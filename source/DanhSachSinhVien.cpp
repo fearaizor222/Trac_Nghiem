@@ -117,10 +117,10 @@ DanhSachSinhVien::DanhSachSinhVien(std::string path):DanhSachSinhVien(){
         Ho = Ho.substr(0,Ho.find(" "));
         getline(_line,PHAI,'|');
         getline(_line,PASSWORD,'|');
-        string temp;
-        stringstream __line(PASSWORD);
-        PASSWORD = "";
-        while(getline(__line,temp,'/')) PASSWORD += temp;
+        // string temp;
+        // stringstream __line(PASSWORD);
+        // PASSWORD = "";
+        // while(getline(__line,temp,'/')) PASSWORD += temp;
 
         insertLast(SinhVien(Ma_SV, Ho, Ten, PHAI, PASSWORD));
     }
