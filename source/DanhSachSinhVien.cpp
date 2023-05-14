@@ -59,6 +59,31 @@ void DanhSachSinhVien::insertLast(SinhVien sv){
 
     length++;
 }
+
+//Xoá SV theo mã sinh viên
+void DanhSachSinhVien::deleteSV(string MASV){
+    SVPtr p = FirstSV;
+    SVPtr q = NULL;
+    while(p != NULL){
+        if(strcmp(p->sv_data.MASV.c_str(),MASV.c_str()) == 0){
+            if(q == NULL){
+                FirstSV = p->next;
+                delete p;
+                p = FirstSV;
+            }
+            else{
+                q->next = p->next;
+                delete p;
+                p = q->next;
+            }
+        }
+        else{
+            q = p;
+            p = p->next;
+        }
+    }
+}
+
 void DanhSachSinhVien::setPath(string path)
 {
     this->path = path;
