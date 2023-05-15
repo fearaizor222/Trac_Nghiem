@@ -7,6 +7,54 @@ using namespace std;
 DanhSachDiemThi::DanhSachDiemThi(){
     // khoiTaoDTPtr(&First);
     First = nullptr;
+    _path = "";
+}
+
+DanhSachDiemThi::DanhSachDiemThi(string path){
+    First = nullptr;
+    _path = path;
+    ifstream in(_path);
+    if (!in){
+        ofstream out(_path);
+        out.close();
+        in.open(_path);
+    }
+
+    string line = "";
+    while(getline(in, line)){
+        stringstream ss(line);
+        string _maMon, _diem;
+        getline(ss, _maMon, '|');
+        getline(ss, _diem, '|');
+        insertFirst(DiemThi((char*)_maMon.c_str(), stof(_diem)));
+    }
+    in.close();
+}
+
+DanhSachDiemThi::DanhSachDiemThi(const DanhSachDiemThi &dsdt){
+    First = nullptr;
+    _path = dsdt._path;
+    DTPtr p = dsdt.First;
+    while(p != nullptr){
+        insertFirst(p->data);
+        p = p->next;
+    }
+}
+
+DanhSachDiemThi& DanhSachDiemThi::operator=(const DanhSachDiemThi &dsdt){
+    if(this == &dsdt){
+        return *this;
+    }
+
+    this->~DanhSachDiemThi();
+    First = nullptr;
+    _path = dsdt._path;
+    DTPtr p = dsdt.First;
+    while(p != nullptr){
+        insertFirst(p->data);
+        p = p->next;
+    }
+    return *this;
 }
 
 DanhSachDiemThi::~DanhSachDiemThi(){

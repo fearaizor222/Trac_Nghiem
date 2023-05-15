@@ -30,7 +30,10 @@ class DanhSachDiemThi{
         typedef DiemThiNode *DTPtr;
 
         DanhSachDiemThi();
+        DanhSachDiemThi(string path);
         ~DanhSachDiemThi();
+        DanhSachDiemThi(const DanhSachDiemThi &dsdt);
+        DanhSachDiemThi &operator=(const DanhSachDiemThi &dsdt);
         void xuatFileDanhSachDiemThi();
         static int demMonHocDaThi(DTPtr First);
         void insertFirst (DiemThi dt);
@@ -44,6 +47,7 @@ class DanhSachDiemThi{
         }
     private:
         DTPtr First;
+        string _path;
 };
 
 #endif

@@ -10,6 +10,7 @@ DanhSachSinhVien::SinhVien::SinhVien(string MASV, string HO, string TEN, string 
     this->TEN = TEN;
     this->Phai = Phai;
     this->password = password;
+    this->diem = DanhSachDiemThi("../data/DSDT/" + MASV + ".txt");
 }
 
 DanhSachSinhVien::DanhSachSinhVien(){
