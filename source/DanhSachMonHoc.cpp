@@ -139,6 +139,10 @@ MonHoc &DanhSachMonHoc::operator[](int index){
     return data[index];
 }
 
+short DanhSachMonHoc::getLength(){
+    return length;
+}
+
 DanhSachMonHoc::~DanhSachMonHoc(){
     update();
 }

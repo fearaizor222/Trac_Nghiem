@@ -18,7 +18,8 @@ class DanhSachMonHoc{
         DanhSachMonHoc();
         DanhSachMonHoc(std::string path);
         void insert(MonHoc mon_hoc);  
-        int search(char ma_mon_hoc[]);  
+        int search(char ma_mon_hoc[]);
+        short getLength();
         void remove(char ma_mon_hoc[]);
         void update();
         void output();
