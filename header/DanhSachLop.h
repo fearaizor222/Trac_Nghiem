@@ -10,7 +10,7 @@ class Lop{
         string malop;
         string tenlop;
         string nienkhoa;
-        DanhSachSinhVien dssv;
+        DanhSachSinhVien *dssv;
     public:
         Lop();
         Lop(string ma_lop, string ten_lop, string nien_khoa );

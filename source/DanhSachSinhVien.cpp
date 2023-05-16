@@ -1,7 +1,8 @@
 #include "../header/DanhSachSinhVien.h"
 
 DanhSachSinhVien::SinhVien::SinhVien(){
-     MASV = HO = TEN = Phai = password = "";
+    MASV = HO = TEN = Phai = password = "";
+    diem = nullptr;
 }
 
 DanhSachSinhVien::SinhVien::SinhVien(string MASV, string HO, string TEN, string Phai, string password){
@@ -10,7 +11,7 @@ DanhSachSinhVien::SinhVien::SinhVien(string MASV, string HO, string TEN, string 
     this->TEN = TEN;
     this->Phai = Phai;
     this->password = password;
-    this->diem = DanhSachDiemThi("../data/DSDT/" + MASV + ".txt");
+    this->diem = new DanhSachDiemThi("../data/DSDT/" + MASV + ".txt");
 }
 
 DanhSachSinhVien::DanhSachSinhVien(){

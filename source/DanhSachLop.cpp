@@ -7,10 +7,11 @@
 
 Lop::Lop(){
     malop = tenlop = nienkhoa = "N/A";
+    dssv = nullptr;
 }
 
 void Lop::setMaLop(string malop){
-    updatePath(dssv.getPath(), "../data/DSSV/" + malop + "-" + this->nienkhoa + ".txt");
+    updatePath(dssv->getPath(), "../data/DSSV/" + malop + "-" + this->nienkhoa + ".txt");
 
     this->malop = malop;
 }
@@ -28,7 +29,7 @@ string Lop::getTenLop(){
 }
 
 void Lop::setNienKhoa(string nienkhoa){
-    updatePath(dssv.getPath(), "../data/DSSV/" + this->malop + "-" + nienkhoa + ".txt");
+    updatePath(dssv->getPath(), "../data/DSSV/" + this->malop + "-" + nienkhoa + ".txt");
 
     this->nienkhoa = nienkhoa;
 }
@@ -43,11 +44,11 @@ Lop::Lop(string ma_lop, string ten_lop, string nien_khoa){
     nienkhoa = nien_khoa;
 
     string file_name = "../data/DSSV/" + malop + "-" + nien_khoa + ".txt";
-    dssv = DanhSachSinhVien(file_name);
+    dssv = new DanhSachSinhVien(file_name);
 }
 
 bool Lop::isEmpty(){
-    return dssv.isEmpty();
+    return dssv->isEmpty();
 }
 
 void Lop::updatePath(string old_path, string new_path){
@@ -63,7 +64,7 @@ void Lop::updatePath(string old_path, string new_path){
     output.close();
     remove(old_path.c_str());
 
-    dssv.setPath(new_path);
+    dssv->setPath(new_path);
 }
 
 DanhSachLopHoc::DanhSachLopHoc(){

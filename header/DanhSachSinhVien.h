@@ -17,7 +17,7 @@ class DanhSachSinhVien{
             string TEN;
             string Phai; // Nam = 0, Nu = 1
             string password;
-            DanhSachDiemThi diem; //Con trỏ quản lý danh sách điểm thi
+            DanhSachDiemThi *diem; //Con trỏ quản lý danh sách điểm thi
        
            SinhVien();
            SinhVien(string MASV, string HO, string TEN, string Phai, string password);
