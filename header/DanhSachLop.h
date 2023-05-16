@@ -23,6 +23,8 @@ class Lop{
         string getNienKhoa();
         void updatePath(string old_path, string new_path);
         bool isEmpty();
+
+        SinhVien &operator[](string _mssv);
 };
 
 class DanhSachLopHoc{
@@ -43,6 +45,7 @@ class DanhSachLopHoc{
        void update();
        Lop &operator[](int index); 
        Lop &operator[](string malop); 
+       
 };
 
 #endif

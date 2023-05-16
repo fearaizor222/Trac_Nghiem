@@ -67,6 +67,9 @@ void Lop::updatePath(string old_path, string new_path){
     dssv->setPath(new_path);
 }
 
+SinhVien &Lop::operator[](string _mssv){
+    return (*dssv)[_mssv];
+}
 
 Lop::~Lop(){
     delete dssv;

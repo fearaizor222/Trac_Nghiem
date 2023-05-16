@@ -43,6 +43,7 @@ DanhSachSinhVien::DanhSachSinhVien(){
     length = 0;
     FirstSV = nullptr;
 }
+
 DanhSachSinhVien::~DanhSachSinhVien(){ 
     SVPtr p = FirstSV;
     while(p != NULL){
@@ -50,6 +51,21 @@ DanhSachSinhVien::~DanhSachSinhVien(){
         p = p->next;
         delete q;
     }
+}
+
+SVPtr &DanhSachSinhVien::getFirst(){
+    return FirstSV;
+}
+
+SinhVien &DanhSachSinhVien::operator[](string _MASV){
+    SVPtr p = FirstSV;
+    while(p != NULL){
+        if(strcmp(p->sv_data.MASV.c_str(),_MASV.c_str()) == 0){
+            return p->sv_data;
+        }
+        p = p->next;
+    }
+    return p->sv_data;
 }
 
 void DanhSachSinhVien::insertFirst(SinhVien sv){

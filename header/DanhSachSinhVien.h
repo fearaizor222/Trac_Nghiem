@@ -24,7 +24,6 @@ class DanhSachSinhVien{
             SinhVien(const SinhVien &sv);
             SinhVien &operator=(const SinhVien &sv);
             ~SinhVien();
-            //    friend ostream &operator<<(std::ostream &out, SinhVien sinh_vien);
         };
 
         struct SinhVienNode
@@ -48,13 +47,12 @@ class DanhSachSinhVien{
         void setPath(string path);
         string getPath();
         bool isEmpty();
-        SVPtr &getFirst()
-        {
-            return FirstSV;
-        }
+        SVPtr &getFirst();
 
         void update();
         // SinhVien &operator[](int index);
+
+        SinhVien &operator[](string _MASV);
     private:
         int length;
         SVPtr FirstSV;
@@ -63,5 +61,6 @@ class DanhSachSinhVien{
 };
 
 typedef DanhSachSinhVien::SinhVien SinhVien;
+typedef DanhSachSinhVien::SVPtr SVPtr;
 
 #endif
