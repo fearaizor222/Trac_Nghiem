@@ -65,7 +65,7 @@ SinhVien &DanhSachSinhVien::operator[](string _MASV){
         }
         p = p->next;
     }
-    return p->sv_data;
+    throw "Không tìm thấy sinh viên";
 }
 
 void DanhSachSinhVien::insertFirst(SinhVien sv){
