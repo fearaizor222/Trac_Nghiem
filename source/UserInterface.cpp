@@ -33,7 +33,7 @@ void Deinitialize(){
     CloseWindow();
 }
 
-int find(std::string str, char c){
+uint64_t find(std::string str, char c){
     for(int i = str.length() - 1; i >= 0; i--){
         if(str[i] == ' '){
             return std::string::npos;
@@ -184,7 +184,7 @@ void InputBox::run(Vector2 &mouse_pos, Vector2 (*location)(), int offset_x, int 
             std::string str_utf8(utf8);
             str_utf8.resize(length);
             if(length > 1){ 
-                int how_many_to_remove = find(text.data, viet_key[str_utf8][0]);
+                uint64_t how_many_to_remove = find(text.data, viet_key[str_utf8][0]);
                 if(how_many_to_remove == std::string::npos) how_many_to_remove = text.data.length();
                 text.data.resize(how_many_to_remove);
                 text.text_layout.resize(how_many_to_remove);
@@ -196,8 +196,8 @@ void InputBox::run(Vector2 &mouse_pos, Vector2 (*location)(), int offset_x, int 
                 for(int i = 0; i<length - 1; i++) text.text_layout.push_back(0);
             }
             
-            if(isBoxFull() && max_length == -1) max_length = text.data.length();
-            else if(!isBoxFull() && max_length != -1) max_length = -1;
+            if(isBoxFull() && max_length == std::string::npos) max_length = text.data.length();
+            else if(!isBoxFull() && max_length != std::string::npos) max_length = std::string::npos;
 
             key = GetCharPressed();
         }

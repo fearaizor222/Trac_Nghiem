@@ -53,7 +53,7 @@ static HashMap viet_key = {
 void Initialize();
 void Deinitialize();
 
-int find(std::string str, char c);
+uint64_t find(std::string str, char c);
 
 Vector2 TopLeft();
 Vector2 TopCenter();
@@ -91,7 +91,7 @@ struct Text{
 struct InputBox{
     Rectangle box;              // Vị trí và kích cỡ
     Text text;                  // Chuỗi đã nhập
-    int max_length;             // Số kí tự tối đa 
+    uint64_t max_length;             // Số kí tự tối đa 
     bool clicked;               // Đã được ấn vào hay chưa
     Color background;           // Màu của cái hộp
     long long frames_count;     // Dùng để cho nhấp nháy con trỏ khi chưa nhập xong
