@@ -71,6 +71,10 @@ SinhVien &Lop::operator[](string _mssv){
     return (*dssv)[_mssv];
 }
 
+void Lop::insert(SinhVien sv){
+    dssv->insertLast(sv);
+}
+
 Lop::~Lop(){
     delete dssv;
 }

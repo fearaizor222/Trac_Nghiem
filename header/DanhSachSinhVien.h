@@ -23,7 +23,10 @@ class DanhSachSinhVien{
             SinhVien(string MASV, string HO, string TEN, string Phai, string password);
             SinhVien(const SinhVien &sv);
             SinhVien &operator=(const SinhVien &sv);
+            void insert(DiemThi dt);
             ~SinhVien();
+            
+            DiemThi &operator[](string _maMH);
         };
 
         struct SinhVienNode
@@ -54,7 +57,6 @@ class DanhSachSinhVien{
 
         SinhVien &operator[](string _MASV);
     private:
-        int length;
         SVPtr FirstSV;
         std::string path;
         // void move(int index, int offset);

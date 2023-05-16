@@ -43,12 +43,16 @@ class DanhSachDiemThi{
         void insertDiem(DTPtr &First, DiemThi dt);
         void xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop);
         void update();
-        DTPtr &getFirst() { 
-            return First; 
-        }
+        DTPtr &getFirst();
+
+        DiemThi &operator[](string _maMH);
+        
     private:
         DTPtr First;
         string _path;
 };
+
+typedef DanhSachDiemThi::DTPtr DTPtr;
+typedef DanhSachDiemThi::DiemThi DiemThi;
 
 #endif

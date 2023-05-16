@@ -35,16 +35,25 @@ SinhVien &SinhVien::operator=(const SinhVien &sv)
     return *this;
 }
 
+void SinhVien::insert(DiemThi dt){
+    diem->insertFirst(dt);
+}
+
+DiemThi &SinhVien::operator[](string _maMH){
+    return (*diem)[_maMH];
+}
+
 SinhVien::~SinhVien(){
     delete diem;
 }
 
 DanhSachSinhVien::DanhSachSinhVien(){
-    length = 0;
     FirstSV = nullptr;
 }
 
-DanhSachSinhVien::~DanhSachSinhVien(){ 
+DanhSachSinhVien::~DanhSachSinhVien(){
+    update();
+
     SVPtr p = FirstSV;
     while(p != NULL){
         SVPtr q = p;
@@ -99,8 +108,6 @@ void DanhSachSinhVien::insertLast(SinhVien sv){
         }
         insertAfter(p, sv);
     }
-
-    length++;
 }
 
 //Xoá SV theo mã sinh viên

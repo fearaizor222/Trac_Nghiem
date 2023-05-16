@@ -61,7 +61,13 @@ string DanhSachDiemThi::getPath(){
     return _path;
 }
 
+DTPtr &DanhSachDiemThi::getFirst(){
+    return First;
+}   
+
 DanhSachDiemThi::~DanhSachDiemThi(){
+    update();
+
     DTPtr p = First;
     while(p != NULL){
         DTPtr q = p;
@@ -198,4 +204,25 @@ void DanhSachDiemThi::xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop){
         p = p->next;
     }
     out.close();
+}
+
+void DanhSachDiemThi::update(){
+    ofstream out(_path);
+    DTPtr p = First;
+
+    while(p != NULL){
+        out<<p->data.Mamh<<"|"<<p->data.Diem<<endl;
+        p = p->next;
+    }
+}
+
+DiemThi &DanhSachDiemThi::operator[](string _maMH){
+    DTPtr p = First;
+    while(p != NULL){
+        if(strcmp(p->data.Mamh, (char*)_maMH.c_str()) == 0){
+            return p->data;
+        }
+        p = p->next;
+    }
+    throw "Không tìm thấy môn học";
 }

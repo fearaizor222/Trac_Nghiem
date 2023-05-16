@@ -24,6 +24,7 @@ class Lop{
         void updatePath(string old_path, string new_path);
         bool isEmpty();
 
+        void insert(SinhVien sv);
         SinhVien &operator[](string _mssv);
 };
 
