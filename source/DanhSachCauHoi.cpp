@@ -37,6 +37,7 @@
 
 //     out.close();
 // }
+Node *temporary = nullptr;
 
 int DanhSachCauHoi::getId(){
     IntPair cur = id.pop();

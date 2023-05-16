@@ -73,6 +73,4 @@ class DanhSachCauHoi{
 typedef typename DanhSachCauHoi::CauHoi CauHoi;
 typedef typename DanhSachCauHoi::Node Node;
 
-static Node *temporary;
-
 #endif
