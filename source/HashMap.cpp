@@ -71,7 +71,7 @@ int HashMap::hashFunction(std::string key)
 {
     uint32_t hash = 5381;
     char c;
-    for (int i = 0; i < key.length(); i++)
+    for (uint32_t i = 0; i < key.length(); i++)
     {
         c = key[i];
         hash = ((hash << 5) + hash) + c;
