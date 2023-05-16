@@ -13,6 +13,7 @@ class Lop{
         DanhSachSinhVien *dssv;
     public:
         Lop();
+        ~Lop();
         Lop(string ma_lop, string ten_lop, string nien_khoa );
         void setMaLop(string malop);
         string getMaLop();

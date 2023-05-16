@@ -34,6 +34,7 @@ class DanhSachDiemThi{
         ~DanhSachDiemThi();
         DanhSachDiemThi(const DanhSachDiemThi &dsdt);
         DanhSachDiemThi &operator=(const DanhSachDiemThi &dsdt);
+        string getPath();
         void xuatFileDanhSachDiemThi();
         static int demMonHocDaThi(DTPtr First);
         void insertFirst (DiemThi dt);

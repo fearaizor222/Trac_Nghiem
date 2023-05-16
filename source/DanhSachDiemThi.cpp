@@ -57,6 +57,10 @@ DanhSachDiemThi& DanhSachDiemThi::operator=(const DanhSachDiemThi &dsdt){
     return *this;
 }
 
+string DanhSachDiemThi::getPath(){
+    return _path;
+}
+
 DanhSachDiemThi::~DanhSachDiemThi(){
     DTPtr p = First;
     while(p != NULL){

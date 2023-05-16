@@ -67,6 +67,11 @@ void Lop::updatePath(string old_path, string new_path){
     dssv->setPath(new_path);
 }
 
+
+Lop::~Lop(){
+    delete dssv;
+}
+
 DanhSachLopHoc::DanhSachLopHoc(){
     soluong = 0;
     for(int i = 0; i<MAX_DSL; i++){

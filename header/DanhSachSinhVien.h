@@ -10,26 +10,30 @@ using namespace std;
 // class DanhSachDiemThi;
 class DanhSachSinhVien{
     public:
-
-        struct SinhVien{
+        struct SinhVien
+        {
             string MASV;
             string HO;
             string TEN;
             string Phai; // Nam = 0, Nu = 1
             string password;
-            DanhSachDiemThi *diem; //Con trỏ quản lý danh sách điểm thi
-       
-           SinhVien();
-           SinhVien(string MASV, string HO, string TEN, string Phai, string password);
-        //    friend ostream &operator<<(std::ostream &out, SinhVien sinh_vien);
+            DanhSachDiemThi *diem; // Con trỏ quản lý danh sách điểm thi
+
+            SinhVien();
+            SinhVien(string MASV, string HO, string TEN, string Phai, string password);
+            SinhVien(const SinhVien &sv);
+            SinhVien &operator=(const SinhVien &sv);
+            ~SinhVien();
+            //    friend ostream &operator<<(std::ostream &out, SinhVien sinh_vien);
         };
 
-        struct SinhVienNode{
+        struct SinhVienNode
+        {
             SinhVien sv_data;
             SinhVienNode *next;
         };
         typedef SinhVienNode *SVPtr;
-       
+
         DanhSachSinhVien();
         ~DanhSachSinhVien();
         DanhSachSinhVien(string path);
@@ -44,8 +48,9 @@ class DanhSachSinhVien{
         void setPath(string path);
         string getPath();
         bool isEmpty();
-        SVPtr &getFirst() { 
-            return FirstSV; 
+        SVPtr &getFirst()
+        {
+            return FirstSV;
         }
 
         void update();
@@ -56,5 +61,7 @@ class DanhSachSinhVien{
         std::string path;
         // void move(int index, int offset);
 };
+
+typedef DanhSachSinhVien::SinhVien SinhVien;
 
 #endif

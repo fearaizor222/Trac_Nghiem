@@ -1,17 +1,42 @@
 #include "../header/DanhSachSinhVien.h"
 
-DanhSachSinhVien::SinhVien::SinhVien(){
+SinhVien::SinhVien(){
     MASV = HO = TEN = Phai = password = "";
     diem = nullptr;
 }
 
-DanhSachSinhVien::SinhVien::SinhVien(string MASV, string HO, string TEN, string Phai, string password){
+SinhVien::SinhVien(string MASV, string HO, string TEN, string Phai, string password){
     this->MASV = MASV;
     this->HO = HO;
     this->TEN = TEN;
     this->Phai = Phai;
     this->password = password;
     this->diem = new DanhSachDiemThi("../data/DSDT/" + MASV + ".txt");
+}
+
+SinhVien::SinhVien(const SinhVien &sv)
+{
+    this->MASV = sv.MASV;
+    this->HO = sv.HO;
+    this->TEN = sv.TEN;
+    this->Phai = sv.Phai;
+    this->password = sv.password;
+    this->diem = new DanhSachDiemThi(sv.diem->getPath());
+}
+
+SinhVien &SinhVien::operator=(const SinhVien &sv)
+{
+    this->MASV = sv.MASV;
+    this->HO = sv.HO;
+    this->TEN = sv.TEN;
+    this->Phai = sv.Phai;
+    this->password = sv.password;
+    this->diem = new DanhSachDiemThi(sv.diem->getPath());
+    return *this;
+}
+
+SinhVien::~SinhVien(){
+    delete diem;
 }
 
 DanhSachSinhVien::DanhSachSinhVien(){
