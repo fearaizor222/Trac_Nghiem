@@ -160,6 +160,7 @@ class LinkedList
 
         type back()
         {
+            if(tail == nullptr) return (type)0;
             return tail->data;
         }
 
