@@ -20,11 +20,7 @@ class Stack
 
         type pop()
         {
-            if (isEmpty())
-            {
-                return Exit;
-            }
-            type temp = list.back();
+            type temp = (type)list.back();
             list.pop_back();
             size--;
             return temp;
@@ -32,10 +28,6 @@ class Stack
 
         type peek()
         {
-            if (isEmpty())
-            {
-                return Exit;
-            }
             return list.back();
         }
 
