@@ -55,3 +55,55 @@ char* Input(bool (*funcptr)(char), bool secure, int64_t *convertible){
     }
     return str;
 }
+
+void ThiTracNghiem(DanhSachCauHoi &list, std::string mon_thi, int so_cau_hoi){
+    CauHoi *list_cau_hoi_thi[so_cau_hoi];
+    for(int i = 0; i<so_cau_hoi; i++) list_cau_hoi_thi[i] = nullptr;
+    int length = 0;
+    list.getQuestionList(list_cau_hoi_thi, length, so_cau_hoi, mon_thi);
+    bool result[length];
+    for(int i = 0; i<length; i++){
+        std::string ans;
+        std::cout<<list_cau_hoi_thi[i]->noi_dung<<std::endl;
+        std::cout<<list_cau_hoi_thi[i]->dap_an_a<<"                        "<<list_cau_hoi_thi[i]->dap_an_b<<std::endl;
+        std::cout<<list_cau_hoi_thi[i]->dap_an_c<<"                        "<<list_cau_hoi_thi[i]->dap_an_d<<std::endl;
+        std::cout<<"chon dap an: ";
+        std::cin>>ans;
+        result[i] = ans.compare(list_cau_hoi_thi[i]->dap_an) == 0;
+    }
+    for(int i = 0; i<length; i++){
+        std::cout<<result[i]<<" ";
+    }
+}
+
+int login(DArray<SinhVien> dssv, string id, string pass)
+{
+    if (id == "GV" && pass == "GV")
+        return 2;
+
+    for (int i = 0; i < dssv.size(); i++)
+    {
+        if (dssv[i].MASV == id && dssv[i].password == pass)
+            return 1;
+    }
+
+    return 0;
+}
+
+uint64_t find(std::string str, char c){
+    for(int i = str.length() - 1; i >= 0; i--){
+        if(str[i] == ' '){
+            return std::string::npos;
+        }
+        if(str[i] == c){
+            if(c == 'u' || c == 'U'){
+                for(int j = i - 1; j >= 0; j--){
+                    if(str[j] == ' ') return i;
+                    if(str[j] == c) return j;
+                }
+            }
+            return i;
+        }
+    }
+    return std::string::npos;
+}
