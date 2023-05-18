@@ -110,6 +110,26 @@ void DanhSachSinhVien::insertLast(SinhVien sv){
     }
 }
 
+void DanhSachSinhVien::insertOrderSV(SVPtr &FirstSV, SinhVien sv, string MASV){
+    SVPtr s, t;
+    SVPtr p = new SinhVienNode;
+    p->sv_data = sv;
+
+    //Tìm vị trí chèn
+    for (s = FirstSV; s != NULL && strcmp(s->sv_data.MASV.c_str(),MASV.c_str()) != 0; t = s, s = s->next);
+
+    //Chèn vào đầu danh sách
+    if (s == FirstSV){
+        p->next = FirstSV;
+        FirstSV = p;
+    }
+    //Chèn vào cuối danh sách
+    else{
+        p->next = s;
+        t->next = p;
+    }
+}
+
 //Xoá SV theo mã sinh viên
 void DanhSachSinhVien::deleteSV(string MASV){
     SVPtr p = FirstSV;
