@@ -41,7 +41,7 @@ class DanhSachDiemThi{
         void insertAfterDT (DiemThi dt, DTPtr First);
         static bool kiemTraDaThi(DTPtr First, char Mamh[15]);
         void insertDiem(DTPtr &First, DiemThi dt);
-        void insertOrderDT(DTPtr &First, DiemThi dt, string Mamh);
+        void insertOrderDT(DiemThi dt);
         void xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop);
         void update();
         DTPtr &getFirst();

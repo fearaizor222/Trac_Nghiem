@@ -26,7 +26,7 @@ DanhSachDiemThi::DanhSachDiemThi(string path){
         string _maMon, _diem;
         getline(ss, _maMon, '|');
         getline(ss, _diem, '|');
-        insertFirst(DiemThi((char*)_maMon.c_str(), stof(_diem)));
+        insertOrderDT(DiemThi((char*)_maMon.c_str(), stof(_diem)));
     }
     in.close();
 }
@@ -36,7 +36,7 @@ DanhSachDiemThi::DanhSachDiemThi(const DanhSachDiemThi &dsdt){
     _path = dsdt._path;
     DTPtr p = dsdt.First;
     while(p != nullptr){
-        insertFirst(p->data);
+        insertOrderDT(p->data);
         p = p->next;
     }
 }
@@ -51,7 +51,7 @@ DanhSachDiemThi& DanhSachDiemThi::operator=(const DanhSachDiemThi &dsdt){
     _path = dsdt._path;
     DTPtr p = dsdt.First;
     while(p != nullptr){
-        insertFirst(p->data);
+        insertOrderDT(p->data);
         p = p->next;
     }
     return *this;
@@ -141,13 +141,12 @@ void DanhSachDiemThi::insertDiem(DTPtr &First, DiemThi dt){
     }
 }
 
-void DanhSachDiemThi::insertOrderDT(DTPtr &First, DiemThi dt, string Mamh) {
+void DanhSachDiemThi::insertOrderDT(DiemThi dt) {
     DTPtr s, t;
     DTPtr p = new DiemThiNode;
     p->data = dt;
-
     // Tìm vị trí chèn của nút mới trong danh sách liên kết
-    for (s = First; s != NULL && strcmp(s->data.Mamh, Mamh.c_str()) != 0; t = s, s = s->next);
+    for (s = First; s != NULL && strcmp(s->data.Mamh, p->data.Mamh) < 0; t = s, s = s->next);
 
     //Chèn đầu danh sách
     if (s == First) {

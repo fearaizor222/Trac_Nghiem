@@ -36,7 +36,7 @@ SinhVien &SinhVien::operator=(const SinhVien &sv)
 }
 
 void SinhVien::insert(DiemThi dt){
-    diem->insertFirst(dt);
+    diem->insertOrderDT(dt);
 }
 
 DiemThi &SinhVien::operator[](string _maMH){
@@ -110,13 +110,13 @@ void DanhSachSinhVien::insertLast(SinhVien sv){
     }
 }
 
-void DanhSachSinhVien::insertOrderSV(SVPtr &FirstSV, SinhVien sv, string MASV){
+void DanhSachSinhVien::insertOrderSV(SinhVien sv){
     SVPtr s, t;
     SVPtr p = new SinhVienNode;
     p->sv_data = sv;
 
     //Tìm vị trí chèn
-    for (s = FirstSV; s != NULL && strcmp(s->sv_data.MASV.c_str(),MASV.c_str()) != 0; t = s, s = s->next);
+    for (s = FirstSV; s != NULL && strcmp(s->sv_data.MASV.c_str(), p->sv_data.MASV.c_str()) < 0; t = s, s = s->next);
 
     //Chèn vào đầu danh sách
     if (s == FirstSV){
@@ -192,7 +192,7 @@ DanhSachSinhVien::DanhSachSinhVien(std::string path):DanhSachSinhVien(){
         // PASSWORD = "";
         // while(getline(__line,temp,'/')) PASSWORD += temp;
 
-        insertLast(SinhVien(Ma_SV, Ho, Ten, PHAI, PASSWORD));
+        insertOrderSV(SinhVien(Ma_SV, Ho, Ten, PHAI, PASSWORD));
     }
 }
 
@@ -204,7 +204,7 @@ DanhSachSinhVien &DanhSachSinhVien::operator=(const DanhSachSinhVien &dssv){
     SVPtr p = dssv.FirstSV;
     path = dssv.path;
     while(p != NULL){
-        insertLast(p->sv_data);
+        insertOrderSV(p->sv_data);
         p = p->next;
     }
     return *this;
@@ -214,7 +214,7 @@ DanhSachSinhVien::DanhSachSinhVien(const DanhSachSinhVien &dssv){
     SVPtr p = dssv.FirstSV;
     path = dssv.path;
     while(p != NULL){
-        insertLast(p->sv_data);
+        insertOrderSV(p->sv_data);
         p = p->next;
     }
 }

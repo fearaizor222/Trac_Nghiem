@@ -46,7 +46,7 @@ class DanhSachSinhVien{
         // void insertSV(SinhVien sv);
         void insertAfter(SVPtr FirstSV, SinhVien sv);
         void insertLast(SinhVien sv);
-        void insertOrderSV(SVPtr &FirstSV, SinhVien sv, string MASV);
+        void insertOrderSV(SinhVien sv);
         void deleteSV(string MASV);
         void setPath(string path);
         string getPath();
