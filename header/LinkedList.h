@@ -3,14 +3,6 @@
 
 #include <iostream>
 
-enum Scene
-{
-    Login = 0,
-    Main_SV,
-    Main_GV,
-    Exit
-};
-
 struct IntPair{
     int first;
     int second;
@@ -168,6 +160,7 @@ class LinkedList
 
         type back()
         {
+            if(tail == nullptr) return (type)0;
             return tail->data;
         }
 

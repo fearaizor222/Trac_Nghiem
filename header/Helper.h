@@ -4,6 +4,9 @@
 #include <string>
 #include <fstream>
 #include <cstdint>
+#include "DanhSachCauHoi.h"
+#include "DanhSachSinhVien.h"
+#include "DArray.h"
 
 #define ENTER 13
 #define BACKSPACE 8
@@ -14,5 +17,11 @@ extern bool Word(char);
 extern bool All(char);
 
 extern char* Input(bool (*funcptr)(char) = All, bool secure = false, int64_t *convertible = nullptr);
+
+extern void ThiTracNghiem(DanhSachCauHoi &list, std::string mon_thi, int so_cau_hoi);
+
+extern int login(DArray<SinhVien> dssv, string id, string pass);
+
+extern uint64_t find(std::string str, char c);
 
 #endif
