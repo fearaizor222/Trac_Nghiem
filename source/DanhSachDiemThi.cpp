@@ -141,25 +141,46 @@ void DanhSachDiemThi::insertDiem(DTPtr &First, DiemThi dt){
     }
 }
 
-void DanhSachDiemThi::xuatFileDanhSachDiemThi(){
-    ofstream out("../data/DIEMTHI.txt", ios::app); // Mở file DiemThi.csv để ghi
-    if (!out) {
-        cout << "Khong mo duoc file";
-        return;
+void DanhSachDiemThi::insertOrderDT(DTPtr &First, DiemThi dt, string Mamh) {
+    DTPtr s, t;
+    DTPtr p = new DiemThiNode;
+    p->data = dt;
+
+    // Tìm vị trí chèn của nút mới trong danh sách liên kết
+    for (s = First; s != NULL && strcmp(s->data.Mamh, Mamh.c_str()) != 0; t = s, s = s->next);
+
+    //Chèn đầu danh sách
+    if (s == First) {
+        p->next = First;
+        First = p;
     }
-    DTPtr p = First;
-    while (p != NULL) {
-        out << p->data.Mamh << "|"; 
-        if (kiemTraDaThi(First ,p->data.Mamh) == false) {
-            out << "Chua thi"; // Nếu chưa thi thì ghi "Chua thi"
-        } else {
-            out << p->data.Diem; 
-        }
-        out << endl;
-        p = p->next;
+    //Chèn giữa danh sách
+    else {
+        p->next = s;
+        t->next = p;
     }
-    out.close();
 }
+
+
+// void DanhSachDiemThi::xuatFileDanhSachDiemThi(){
+//     ofstream out("../data/DIEMTHI.txt", ios::app); // Mở file DiemThi.csv để ghi
+//     if (!out) {
+//         cout << "Khong mo duoc file";
+//         return;
+//     }
+//     DTPtr p = First;
+//     while (p != NULL) {
+//         out << p->data.Mamh << "|"; 
+//         if (kiemTraDaThi(First ,p->data.Mamh) == false) {
+//             out << "Chua thi"; // Nếu chưa thi thì ghi "Chua thi"
+//         } else {
+//             out << p->data.Diem; 
+//         }
+//         out << endl;
+//         p = p->next;
+//     }
+//     out.close();
+// }
 
 
 // Hàm in điểm theo lớp
