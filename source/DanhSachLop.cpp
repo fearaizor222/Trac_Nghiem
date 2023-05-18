@@ -75,6 +75,11 @@ void Lop::insert(SinhVien sv){
     dssv->insertLast(sv);
 }
 
+DanhSachSinhVien *Lop::getDSSV()
+{
+    return dssv;
+}
+
 Lop::~Lop(){
     delete dssv;
 }
@@ -251,4 +256,19 @@ Lop& DanhSachLopHoc::operator[](string malop){
         throw "Không tìm thấy lớp";
     }
     return *List[index];
+}
+
+DArray<SinhVien> DanhSachLopHoc::getAllSV()
+{
+    DArray<SinhVien> dssv;
+    for (int i = 0; i < soluong; i++)
+    {
+        SVPtr ptr = List[i]->getDSSV()->getFirst();
+        while (ptr != NULL)
+        {
+            dssv.push_back(ptr->sv_data);
+            ptr = ptr->next;
+        }
+    }
+    return dssv;
 }

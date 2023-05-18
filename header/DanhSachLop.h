@@ -1,6 +1,7 @@
 #ifndef DANHSACHLOP_H
 #define DANHSACHLOP_H
 #include <string>
+#include "DArray.h"
 #include "DanhSachSinhVien.h"
 #define MAX_DSL 500
 using namespace std;
@@ -15,6 +16,7 @@ class Lop{
         Lop();
         ~Lop();
         Lop(string ma_lop, string ten_lop, string nien_khoa );
+        DanhSachSinhVien *getDSSV();
         void setMaLop(string malop);
         string getMaLop();
         void setTenLop(string tenlop);
@@ -34,19 +36,20 @@ class DanhSachLopHoc{
         Lop *List[MAX_DSL];
 
     public:
-       DanhSachLopHoc();
-       ~DanhSachLopHoc();
-       DanhSachLopHoc(string path);
-       int getSoLuong();
-       void removeClass(string malop);
-       void inLopTheoNienKhoa(string nienkhoa);
-       void hieuChinh();
-       void insert(Lop *lop_hoc);
-       int searchClass(string malop);
-       void update();
-       Lop &operator[](int index); 
-       Lop &operator[](string malop); 
-       
+        DanhSachLopHoc();
+        ~DanhSachLopHoc();
+        DanhSachLopHoc(string path);
+        int getSoLuong();
+        void removeClass(string malop);
+        void inLopTheoNienKhoa(string nienkhoa);
+        void hieuChinh();
+        void insert(Lop *lop_hoc);
+        int searchClass(string malop);
+        void update();
+        Lop &operator[](int index);
+        Lop &operator[](string malop);
+        DArray<SinhVien> getAllSV();
+        
 };
 
 #endif
