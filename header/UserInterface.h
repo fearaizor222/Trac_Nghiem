@@ -14,6 +14,15 @@
 #define WIDTH 480
 #define HEIGHT 640
 
+enum Scene
+{
+    Login = 0,
+    Main_SV,
+    Main_GV,
+    Testing,
+    Exit
+};
+
 extern Vector2 global_mouse_pos;
 extern Font font;
 extern Image logo;
@@ -52,8 +61,6 @@ static HashMap viet_key = {
 
 void Initialize();
 void Deinitialize();
-
-uint64_t find(std::string str, char c);
 
 Vector2 TopLeft();
 Vector2 TopCenter();

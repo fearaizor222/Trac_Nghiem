@@ -1,5 +1,6 @@
 #include "../header/UserInterface.h"
 #include <iostream>
+#include "../header/Helper.h"
 
 Vector2 global_mouse_pos;
 Font font;
@@ -33,23 +34,6 @@ void Deinitialize(){
     CloseWindow();
 }
 
-uint64_t find(std::string str, char c){
-    for(int i = str.length() - 1; i >= 0; i--){
-        if(str[i] == ' '){
-            return std::string::npos;
-        }
-        if(str[i] == c){
-            if(c == 'u' || c == 'U'){
-                for(int j = i - 1; j >= 0; j--){
-                    if(str[j] == ' ') return i;
-                    if(str[j] == c) return j;
-                }
-            }
-            return i;
-        }
-    }
-    return std::string::npos;
-}
 
 Vector2 TopLeft(){
     return {0, 0};
