@@ -38,16 +38,16 @@ class DanhSachLopHoc{
     public:
         DanhSachLopHoc();
         ~DanhSachLopHoc();
-        DanhSachLopHoc(string path);
         int getSoLuong();
+        DanhSachLopHoc(string path);
         void removeClass(string malop);
         void inLopTheoNienKhoa(string nienkhoa);
         void hieuChinh();
         void insert(Lop *lop_hoc);
         int searchClass(string malop);
         void update();
-        Lop &operator[](int index);
-        Lop &operator[](string malop);
+        Lop *operator[](int index);
+        Lop *operator[](string malop);
         DArray<SinhVien> getAllSV();
         
 };

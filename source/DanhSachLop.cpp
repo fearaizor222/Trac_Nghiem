@@ -126,76 +126,76 @@ void DanhSachLopHoc::inLopTheoNienKhoa(string nienkhoa){
     }
 }
 
-void DanhSachLopHoc::hieuChinh(){
-    int luachon1, luachon2;
-    string _tenlop, _malop, _nienkhoa;
-    string a, lop;
-    do
-    {
-        cout << "Nhap lua chon cua ban: " << endl;
-        cout << "1-Them lop" << endl;
-        cout << "2-Xoa Lop" << endl;
-        cout << "3-Hieu chinh" << endl;
-        cout << "4-Thoat" << endl;
-        cin >> luachon1;
-        cin.ignore();
-        switch (luachon1)
-        {
-        case 1:
-            cout << "Nhap ma lop: ";
-            getline(cin, _malop);
-            cout << "Nhap ten lop: ";
-            getline(cin, _tenlop);
-            cout << "Nhap nien khoa: ";
-            getline(cin, _nienkhoa);
-            insert(new Lop{_malop, _tenlop, _nienkhoa});
-            break;
-        case 2:
-            cout << "Nhap ma lop can xoa: ";
-            getline(cin, a);
-            removeClass(a);
-            break;
-        case 3:
-            cout << "Nhap lop can hieu chinh: ";
-            getline(cin, lop);
-            do
-            {
-                cout << "1-Ma Lop" << endl;
-                cout << "2-Ten Lop" << endl;
-                cout << "3-Nien Khoa" << endl;
-                cout << "4-Thoat" << endl;
-                cin >> luachon2;
-                cin.ignore();
-                switch (luachon2)
-                {
-                case 1:
-                    cout << "Nhap ma lop: ";
-                    getline(cin, a);
-                    (*this)[lop].setMaLop(a);
-                    cout << endl;
-                    break;
-                case 2:
-                    cout << "Nhap ten lop: ";
-                    getline(cin, a);
-                    (*this)[lop].setTenLop(a);
-                    cout << endl;
-                    break;
-                case 3:
-                    cout << "Nhap nien khoa: ";
-                    cin >> a;
-                    (*this)[lop].setNienKhoa(a);
-                    cout << endl;
-                    break;
-                default:
-                    cout << "INVALID NUMBER" << endl;
-                }
-            } while (luachon2 != 4);
-            break;
-        default:
-            cout << "INVALID NUMBER" << endl;
-        }
-    } while (luachon1 != 4);
-}
+// void DanhSachLopHoc::hieuChinh(){
+//     int luachon1, luachon2;
+//     string _tenlop, _malop, _nienkhoa;
+//     string a, lop;
+//     do
+//     {
+//         cout << "Nhap lua chon cua ban: " << endl;
+//         cout << "1-Them lop" << endl;
+//         cout << "2-Xoa Lop" << endl;
+//         cout << "3-Hieu chinh" << endl;
+//         cout << "4-Thoat" << endl;
+//         cin >> luachon1;
+//         cin.ignore();
+//         switch (luachon1)
+//         {
+//         case 1:
+//             cout << "Nhap ma lop: ";
+//             getline(cin, _malop);
+//             cout << "Nhap ten lop: ";
+//             getline(cin, _tenlop);
+//             cout << "Nhap nien khoa: ";
+//             getline(cin, _nienkhoa);
+//             insert(new Lop{_malop, _tenlop, _nienkhoa});
+//             break;
+//         case 2:
+//             cout << "Nhap ma lop can xoa: ";
+//             getline(cin, a);
+//             removeClass(a);
+//             break;
+//         case 3:
+//             cout << "Nhap lop can hieu chinh: ";
+//             getline(cin, lop);
+//             do
+//             {
+//                 cout << "1-Ma Lop" << endl;
+//                 cout << "2-Ten Lop" << endl;
+//                 cout << "3-Nien Khoa" << endl;
+//                 cout << "4-Thoat" << endl;
+//                 cin >> luachon2;
+//                 cin.ignore();
+//                 switch (luachon2)
+//                 {
+//                 case 1:
+//                     cout << "Nhap ma lop: ";
+//                     getline(cin, a);
+//                     (*this)[lop].setMaLop(a);
+//                     cout << endl;
+//                     break;
+//                 case 2:
+//                     cout << "Nhap ten lop: ";
+//                     getline(cin, a);
+//                     (*this)[lop].setTenLop(a);
+//                     cout << endl;
+//                     break;
+//                 case 3:
+//                     cout << "Nhap nien khoa: ";
+//                     cin >> a;
+//                     (*this)[lop].setNienKhoa(a);
+//                     cout << endl;
+//                     break;
+//                 default:
+//                     cout << "INVALID NUMBER" << endl;
+//                 }
+//             } while (luachon2 != 4);
+//             break;
+//         default:
+//             cout << "INVALID NUMBER" << endl;
+//         }
+//     } while (luachon1 != 4);
+// }
 
 DanhSachLopHoc::DanhSachLopHoc(std::string path):DanhSachLopHoc(){
     ifstream input(path);
@@ -246,16 +246,16 @@ void DanhSachLopHoc::update(){
     output.close();
 }
 
-Lop& DanhSachLopHoc::operator[](int index){
-    return *List[index];
+Lop *DanhSachLopHoc::operator[](int index){
+    return List[index];
 }
 
-Lop& DanhSachLopHoc::operator[](string malop){
+Lop *DanhSachLopHoc::operator[](string malop){
     int index = searchClass(malop);
     if(index == -1){
         throw "Không tìm thấy lớp";
     }
-    return *List[index];
+    return List[index];
 }
 
 DArray<SinhVien> DanhSachLopHoc::getAllSV()
