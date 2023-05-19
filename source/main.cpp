@@ -1,50 +1,68 @@
 #include "../header/raylib.h"
 #include "../header/UserInterface.h"
-//#include "../header/DanhSachSinhVien.h"
-//#include "../header/LoginByID.h"
+#include "../header/Helper.h"
 
-void LoginScene(){
-    Texture2D login_logo = LoadTextureFromImage(logo);
+void MainSceneSV(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
+{
+    const int MAIN_SV_WIDTH = 1500;
+    const int MAIN_SV_HEIGHT = 800;
+    SetWindowSize(MAIN_SV_WIDTH, MAIN_SV_HEIGHT);
+    SetWindowPosition(GetMonitorWidth(0)/2 - MAIN_SV_WIDTH/2, GetMonitorHeight(0)/2 - MAIN_SV_HEIGHT/2);
+    InputBox input_ma_mon{{0, 0, 200, 50}, BLACK, BLUE, LIGHTGRAY, font, false};
+    Rectangle box = {5, 100, 1490, 600};
+    Button next{{BotRight().x - 110, BotRight().y - 90, 100, 50}, "Next", WHITE, BLUE, font};
+    Button prev{{BotRight().x - 220, BotRight().y - 90, 100, 50}, "Prev", WHITE, BLUE, font};
+    bool is_button_next_pressed = false;
+    bool is_button_prev_pressed = false;
 
-    Text ID("ID:", BLACK, BLACK, font, 30, 5);
-    Text Pass("Pass:", BLACK, BLACK, font, 30, 5);
-    InputBox box1({(WIDTH/2 - 225/2) - 8, (HEIGHT/2 - 50/2) + 100, 240, 50}, BLACK, BLACK, WHITE, font);
-    InputBox box2({(WIDTH/2 - 225/2) - 8, (HEIGHT/2 - 50/2) + 160, 240, 50}, BLACK, BLACK, WHITE, font, true);
-    Button button1({(WIDTH/2 - 150/2), (HEIGHT/2 - 50/2) + 220, 150, 50}, "login", LIGHTGRAY, GRAY, font);
-
-    bool is_button1_clicked = false;
-
-    while(!is_button1_clicked){
-        int wid_win = GetRenderWidth();
-        int hei_win = GetRenderHeight();
-
+    while(!is_close_icon_pressed){
         BeginDrawing();
             ClearBackground(WHITE);
-            DrawTexture(login_logo, wid_win/2 - 250/2 + 5, hei_win/2 - 50/2 - 240 + 50, WHITE);
-            ID.render(MidCenter, -160, 100);
-            Pass.render(MidCenter, -175, 160);
-            box1.run(global_mouse_pos,MidCenter, 0, 100);
-            box2.run(global_mouse_pos,MidCenter, 0, 160);
-            button1.run(is_button1_clicked, MidCenter, 0, 220);
+
+            input_ma_mon.run(global_mouse_pos, TopLeft, 150, 50);
+            DrawRectangleLinesEx(box, 3, BLACK);
+            next.run(is_button_next_pressed);
+            prev.run(is_button_prev_pressed);
+            if(input_ma_mon.text.data == "" && !input_ma_mon.clicked)
+                DrawTextEx(font, "Mã môn", (Vector2){input_ma_mon.box.x + 50, input_ma_mon.box.y + 10}, 30, 0, BLACK);
+
+            for(int i = 0; i < 8; i++){
+                DrawLineEx(Vector2{5, 175 + 75 * i}, Vector2{1490, 175 + 75 * i}, 2, BLACK);
+            }
+
+            DrawTextEx(font, "STT", {(5 + 100)/2 - (MeasureTextEx(font, "STT", 30, 3).x / 2), 124}, 30, 3, BLACK);
+            DrawTextEx(font, "Mã môn", {(100 + 273)/2 - (MeasureTextEx(font, "Mã môn", 30, 3).x / 2), 124}, 30, 3, BLACK);
+            DrawTextEx(font, "Tên môn học", {786 - (MeasureTextEx(font, "Tên môn học", 30, 3).x / 2), 124}, 30, 3, BLACK);
+            DrawTextEx(font, "Điểm", {(1300 + 1490)/2 - (MeasureTextEx(font, "Điểm", 30, 3).x / 2), 124}, 30, 3, BLACK);
+            DrawLineEx({100, 100}, {100, 700}, 2, BLACK);
+            DrawLineEx({273, 100}, {273, 700}, 2, BLACK);
+            DrawLineEx({1300, 100}, {1300, 700}, 2, BLACK);
+
+            for(int i = 0; i<dsmh.getLength(); i++)
+                if(i < 7)
+                    DrawTextEx(font, std::to_string(i+1).c_str(), {(5 + 100)/2 - (MeasureTextEx(font, std::to_string(i+1).c_str(), 30, 3).x / 2), 199 + 75*i}, 30, 3, BLACK);
+        
+
         EndDrawing();
 
-        if(WindowShouldClose()){
-            current_scene = Exit;
+        if (WindowShouldClose())
+        {
+            is_close_icon_pressed = true;
+        }
+
+        if(IsKeyPressed(KEY_ESCAPE)){
             break;
         }
     }
-
-    if(current_scene != Exit) current_scene = Main;
-
-    UnloadTexture(login_logo);
 }
+
 void GiaoDienDanhSachLop(){
     const int screenWidth = 1500;
-    const int screenHeight = 1000;
-    InitWindow(screenWidth,screenHeight,"ListClassAfterClick");
-    SetTargetFPS(60);
+    const int screenHeight = 800;
+    SetWindowPosition(GetMonitorWidth(0)/2 - screenWidth/2, GetMonitorHeight(0)/2 - screenHeight/2);
+    SetWindowSize(screenWidth, screenHeight);
  
-    while(!WindowShouldClose()){
+    while(!is_close_icon_pressed){
         BeginDrawing();
         ClearBackground(RAYWHITE);
         DrawRectangle(0,0,1500,100,Fade(GRAY, 0.5f));  
@@ -104,34 +122,60 @@ void GiaoDienDanhSachLop(){
         DrawText("Previous",620,915,15,BLACK);
         DrawText("Next",830,915,15,BLACK);
         EndDrawing();
+
+        if (WindowShouldClose())
+        {
+            is_close_icon_pressed = true;
+        }
+
+        if(IsKeyPressed(KEY_ESCAPE)){
+            break;
+        }
     }
-    CloseWindow();
 }
-int main(){
-   Initialize();
 
-    while(current_scene != Exit){
-        switch(current_scene){
-            case Login:
-                LoginScene();
-                break;
+int main()
+{
+    Initialize();
 
-            case Main:
-                BeginDrawing();
-                    ClearBackground(WHITE);
-                    DrawText("Main", 10, 10, 20, BLACK);
-                EndDrawing();
+    DanhSachLopHoc dslh("../data/DANHSACHLOP.txt");
+    DanhSachMonHoc dsmh("../data/DANHSACHMON.txt");
+    DanhSachCauHoi dsch("../data/DANHSACHCAUHOI.txt");
 
-                if(IsKeyPressed(KEY_ESCAPE)){
-                    current_scene = Login;
-                }
-                break;
+    current_scene = scene_stack.pop();
+    while (current_scene != Exit || is_close_icon_pressed)
+    {
+        switch (current_scene)
+        {
+        case Login:
+            LoginScene(dslh);
+            current_scene = scene_stack.pop();
+            break;
 
-            case Exit:
-                break;
+        case Main_SV:
+            MainSceneSV(dslh, dsmh, dsch);
+            current_scene = scene_stack.pop();
+            break;
+
+        case Main_GV:
+            GiaoDienDanhSachLop();
+            current_scene = scene_stack.pop();
+            break;
+
+        case Testing:
+            // TestingScene(dsch);
+            current_scene = scene_stack.pop();
+            break;
+
+        case Exit:
+            goto exit_tag;
         }
     }
 
+exit_tag:
     Deinitialize();
     return 0;
 }
+
+
+
