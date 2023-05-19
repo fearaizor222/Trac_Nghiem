@@ -139,6 +139,10 @@ MonHoc &DanhSachMonHoc::operator[](int index){
     return data[index];
 }
 
+MonHoc &DanhSachMonHoc::operator[](char _ma_mon_hoc[]){
+    return data[search(_ma_mon_hoc)];
+}
+
 short DanhSachMonHoc::getLength(){
     return length;
 }

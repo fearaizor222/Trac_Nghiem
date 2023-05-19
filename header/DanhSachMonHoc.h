@@ -25,6 +25,7 @@ class DanhSachMonHoc{
         void output();
 
         MonHoc &operator[](int index);
+        MonHoc &operator[](char ma_mon_hoc[]);
 
         ~DanhSachMonHoc();
 
