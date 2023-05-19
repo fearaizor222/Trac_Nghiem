@@ -91,6 +91,11 @@ class DArray
             capacity = new_size;
         }
 
+        void clear()
+        {
+            count = 0;
+        }
+
     private:
         type *data;
         int capacity;
