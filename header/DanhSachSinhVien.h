@@ -26,7 +26,7 @@ class DanhSachSinhVien{
             void insert(DiemThi dt);
             ~SinhVien();
             
-            DiemThi &operator[](string _maMH);
+            DTPtr operator[](string _maMH);
         };
 
         struct SinhVienNode

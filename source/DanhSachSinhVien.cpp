@@ -39,7 +39,7 @@ void SinhVien::insert(DiemThi dt){
     diem->insertOrderDT(dt);
 }
 
-DiemThi &SinhVien::operator[](string _maMH){
+DTPtr SinhVien::operator[](string _maMH){
     return (*diem)[_maMH];
 }
 
