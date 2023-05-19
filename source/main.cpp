@@ -2,10 +2,12 @@
 #include "../header/UserInterface.h"
 #include "../header/Helper.h"
 
-void MainSceneSV(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
+void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
 {
     const int MAIN_SV_WIDTH = 1500;
     const int MAIN_SV_HEIGHT = 800;
+    int page = 1;
+    int index = 0;
     SetWindowSize(MAIN_SV_WIDTH, MAIN_SV_HEIGHT);
     SetWindowPosition(GetMonitorWidth(0)/2 - MAIN_SV_WIDTH/2, GetMonitorHeight(0)/2 - MAIN_SV_HEIGHT/2);
     InputBox input_ma_mon{{0, 0, 200, 50}, BLACK, BLUE, LIGHTGRAY, font, false};
@@ -19,10 +21,14 @@ void MainSceneSV(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsc
         BeginDrawing();
             ClearBackground(WHITE);
 
-            input_ma_mon.run(global_mouse_pos, TopLeft, 150, 50);
-            DrawRectangleLinesEx(box, 3, BLACK);
             next.run(is_button_next_pressed);
             prev.run(is_button_prev_pressed);
+            if(is_button_next_pressed && page < dsmh.getLength() / 7 + 1) page++;
+            if(is_button_prev_pressed && page > 1) page--;
+            index = 7 * (page - 1);
+
+            input_ma_mon.run(global_mouse_pos, TopLeft, 150, 50);
+            DrawRectangleLinesEx(box, 3, BLACK);
             if(input_ma_mon.text.data == "" && !input_ma_mon.clicked)
                 DrawTextEx(font, "Mã môn", (Vector2){input_ma_mon.box.x + 50, input_ma_mon.box.y + 10}, 30, 0, BLACK);
 
@@ -38,11 +44,23 @@ void MainSceneSV(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsc
             DrawLineEx({273, 100}, {273, 700}, 2, BLACK);
             DrawLineEx({1300, 100}, {1300, 700}, 2, BLACK);
 
-            for(int i = 0; i<dsmh.getLength(); i++)
-                if(i < 7)
-                    DrawTextEx(font, std::to_string(i+1).c_str(), {(5 + 100)/2 - (MeasureTextEx(font, std::to_string(i+1).c_str(), 30, 3).x / 2), 199 + 75*i}, 30, 3, BLACK);
-        
 
+            for (int place = 0; index < 7 * page && index < dsmh.getLength(); index++, place++)
+            {
+                DTPtr dt = nullptr;
+                dt = (*sv->diem)[string(dsmh[index].ma_mon_hoc)];
+                std::string output_mark;
+                if(dt == nullptr){
+                    output_mark = "Chưa thi";
+                }
+                else{
+                    output_mark = std::to_string(dt->data.Diem).substr(0, std::to_string(dt->data.Diem).find(".") + 2);
+                }
+                DrawTextEx(font, std::to_string(index + 1).c_str(), {(5 + 100) / 2 - (MeasureTextEx(font, std::to_string(index + 1).c_str(), 30, 3).x / 2), 199 + 75 * place}, 30, 3, BLACK);
+                DrawTextEx(font, dsmh[index].ma_mon_hoc, Vector2{100 + 5, 199 + 75 * place}, 30, 3, BLACK);
+                DrawTextEx(font, (char *)dsmh[index].ten_mon_hoc.c_str(), Vector2{273 + 5, 199 + 75 * place}, 30, 3, BLACK);
+                DrawTextEx(font, (char*)output_mark.c_str(), Vector2{(1490 + 1300)/2 - MeasureTextEx(font, (char*)output_mark.c_str(), 30, 3).x/2, 199 + 75 * place}, 30, 3, BLACK);
+            }
         EndDrawing();
 
         if (WindowShouldClose())
@@ -53,6 +71,9 @@ void MainSceneSV(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsc
         if(IsKeyPressed(KEY_ESCAPE)){
             break;
         }
+
+        is_button_next_pressed = false;
+        is_button_prev_pressed = false;
     }
 }
 
@@ -141,6 +162,7 @@ int main()
     DanhSachLopHoc dslh("../data/DANHSACHLOP.txt");
     DanhSachMonHoc dsmh("../data/DANHSACHMON.txt");
     DanhSachCauHoi dsch("../data/DANHSACHCAUHOI.txt");
+    SinhVien *sv = nullptr;
 
     current_scene = scene_stack.pop();
     while (current_scene != Exit || is_close_icon_pressed)
@@ -148,12 +170,13 @@ int main()
         switch (current_scene)
         {
         case Login:
-            LoginScene(dslh);
+            LoginScene(dslh, sv);
+            // std::cout<<(sv == nullptr)<<std::endl;
             current_scene = scene_stack.pop();
             break;
 
         case Main_SV:
-            MainSceneSV(dslh, dsmh, dsch);
+            MainSceneSV(sv, dsmh, dsch);
             current_scene = scene_stack.pop();
             break;
 
