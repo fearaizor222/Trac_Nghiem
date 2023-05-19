@@ -236,13 +236,13 @@ void DanhSachDiemThi::update(){
     }
 }
 
-DiemThi &DanhSachDiemThi::operator[](string _maMH){
+DTPtr DanhSachDiemThi::operator[](string _maMH){
     DTPtr p = First;
     while(p != NULL){
         if(strcmp(p->data.Mamh, (char*)_maMH.c_str()) == 0){
-            return p->data;
+            return p;
         }
         p = p->next;
     }
-    throw "Không tìm thấy môn học";
+    return p;
 }

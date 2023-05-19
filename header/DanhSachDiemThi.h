@@ -46,7 +46,7 @@ class DanhSachDiemThi{
         void update();
         DTPtr &getFirst();
 
-        DiemThi &operator[](string _maMH);
+        DTPtr operator[](string _maMH);
         
     private:
         DTPtr First;
