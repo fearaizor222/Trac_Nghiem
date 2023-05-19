@@ -7,6 +7,10 @@
 #include "DArray.h"
 #include "HashMap.h"
 #include "Stack.h"
+#include "Helper.h"
+#include "DanhSachLop.h"
+#include "DanhSachMonHoc.h"
+#include "DanhSachCauHoi.h"
 
 #define SIZE_DASH_NORMAL 15
 #define FONT_PATH "../style/TimesNewRoman.ttf"
@@ -133,9 +137,13 @@ struct Button{
         Color _hightlight = BLUE, 
         Font _font = GetFontDefault());
 
-    void render(Vector2 (*location)() = TopLeft, int offset_x = 0, int offset_y = 0);
+    void render();
 
-    void run(bool &clicked, Vector2 (*location)() = TopLeft, int offset_x = 0, int offset_y = 0);
+    void run(bool &clicked);
 };
+
+void LoginScene(DanhSachLopHoc &dslh, SinhVien *&sv);
+void TestingScene(DanhSachCauHoi &dsch);
+Rectangle Popup(std::string message, std::string lable);
 
 #endif
