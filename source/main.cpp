@@ -1,7 +1,7 @@
 #include "../header/raylib.h"
 #include "../header/UserInterface.h"
-// #include "../header/DanhSachSinhVien.h"
-// #include "../header/LoginByID.h"
+//#include "../header/DanhSachSinhVien.h"
+//#include "../header/LoginByID.h"
 
 void LoginScene(){
     Texture2D login_logo = LoadTextureFromImage(logo);
@@ -38,9 +38,77 @@ void LoginScene(){
 
     UnloadTexture(login_logo);
 }
+void GiaoDienDanhSachLop(){
+    const int screenWidth = 1500;
+    const int screenHeight = 1000;
+    InitWindow(screenWidth,screenHeight,"ListClassAfterClick");
+    SetTargetFPS(60);
+ 
+    while(!WindowShouldClose()){
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        DrawRectangle(0,0,1500,100,Fade(GRAY, 0.5f));  
+        for(int i=0;i<5;i++){
+           if(i<3){
+            DrawRectangle(10+(340*i),10,300,40,WHITE);
+            DrawRectangleLines(10+(340*i),10,300,40,BLACK);
+           }else if(i==3){
+            DrawRectangle(1030,10,140,40,DARKBLUE);
+            DrawRectangleLines(1030,10,140,40,BLACK);
+           }else if(i==4){
+            DrawRectangle(1210,10,140,40,DARKBLUE);
+            DrawRectangleLines(1210,10,140,40,BLACK);
+           }
+        }
+        DrawText("Nhap tu khoa tim kiem",50,20,20,GRAY);
+        DrawText("--Chon nien khoa--",400,20,20,BLACK);
+        DrawText("--Chon lop hoc--",750,20,20,BLACK);
+        DrawText("Tim kiem",1060,20,20,WHITE);
+        DrawText("MENU",1250,20,20,WHITE);
+        for(int i=0;i<3;i++){
+            if(i!=2){
+                DrawRectangle(10+(150*i),55,80,40,DARKBLUE);
+                DrawRectangleLines(10+(150*i),55,80,40,BLACK);
+            }else if(i==2){
+                DrawRectangle(10+(150*i),55,300,40,DARKBLUE);
+                DrawRectangleLines(10+(150*i),55,300,40,BLACK);
+            }
+        }
+        DrawText("Them",20,65,20,WHITE);
+        DrawText("Xoa",180,65,20,WHITE);
+        DrawText("Hieu Chinh Thong Tin",360, 65,20,WHITE);
+        for(int j=1;j<17;j++){
+            if(j==1){
+                for(int i=0;i<3;i++){
+                DrawRectangle(0,100,80,50,BLUE);
+                DrawRectangle(80+(480*i),100,480,50,BLUE);
+                DrawRectangleLines(0,100*j,80,50,BLACK);
+                DrawRectangleLines(80+(480*i), 100*j, 480, 50, BLACK);
+                }
+            }else if(j>=3){
+            for(int i=0;i<3;i++){
+                DrawRectangleLines(0,100*j-(50*j),80,50,BLACK);
+                DrawRectangleLines(80+(480*i), 100*j-(50*j), 480, 50, BLACK);
+            }
+            }
+        }
+        DrawText("STT",20,120,20,BLACK);
+        DrawText("Mã lớp",290,120,20,BLACK);
+        DrawText("Tên lớp",770,120,20,BLACK);
+        DrawText("Niên khóa",1250,120,20,BLACK);
 
+        DrawRectangleLines(600,900,100,40,BLACK);
+        DrawRectangleLines(800,900,100,40,BLACK);
+        DrawRectangle(600,900,100,40,Fade(BLUE,0.3f));
+        DrawRectangle(800,900,100,40,Fade(BLUE,0.3f));
+        DrawText("Previous",620,915,15,BLACK);
+        DrawText("Next",830,915,15,BLACK);
+        EndDrawing();
+    }
+    CloseWindow();
+}
 int main(){
-    Initialize();
+   Initialize();
 
     while(current_scene != Exit){
         switch(current_scene){
