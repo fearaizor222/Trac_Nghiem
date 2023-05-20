@@ -296,31 +296,23 @@ void LoginScene(DanhSachLopHoc &dslh, SinhVien *&sv)
 
         if (is_button1_clicked)
         {
-            if (box1.text.data == "GV" && box2.text.data == "GV")
+            int res = login(dslh, sv, box1.text.data, box2.text.data);
+            if (res == 2)
             {
                 scene_stack.push(current_scene);
                 scene_stack.push(Main_GV);
                 break;
             }
+            else if(res == 1)
+            {
+                scene_stack.push(current_scene);
+                scene_stack.push(Main_SV);
+                break;
+            }
             else
             {
-                for(int i = 0 ; i<dslh.getSoLuong(); i++){
-                    Lop *curr = dslh[i];
-                    SVPtr curr_sv = curr->getDSSV()->getFirst();
-                    for(; curr_sv != nullptr; curr_sv = curr_sv->next){
-                        if(box1.text.data == curr_sv->sv_data.MASV && box2.text.data == curr_sv->sv_data.password){
-                            sv = &curr_sv->sv_data;
-                            scene_stack.push(current_scene);
-                            scene_stack.push(Main_SV);
-                            goto out;
-                        }
-                    }
-                }
-                out:
-                if(sv == nullptr) is_error = true;
-
-                break;
-            }   
+                is_error = true;
+            }
         }
 
         if (IsKeyPressed(KEY_ESCAPE))
