@@ -76,20 +76,6 @@ void ThiTracNghiem(DanhSachCauHoi &list, std::string mon_thi, int so_cau_hoi){
     }
 }
 
-int login(DArray<SinhVien> dssv, string id, string pass)
-{
-    if (id == "GV" && pass == "GV")
-        return 2;
-
-    for (int i = 0; i < dssv.size(); i++)
-    {
-        if (dssv[i].MASV == id && dssv[i].password == pass)
-            return 1;
-    }
-
-    return 0;
-}
-
 uint64_t find(std::string str, char c){
     for(int i = str.length() - 1; i >= 0; i--){
         if(str[i] == ' '){
@@ -106,4 +92,23 @@ uint64_t find(std::string str, char c){
         }
     }
     return std::string::npos;
+}
+
+int login(DanhSachLopHoc &dslh, SinhVien *&sv, string id, string pass){
+    if(id == "GV" && pass == "GV") return 2;
+
+    for(int i = 0; i<dslh.getSoLuong(); i++){
+        DanhSachSinhVien *dssv = dslh[i]->getDSSV();
+        SVPtr first = dssv->getFirst();
+
+        while(first != nullptr){
+            if(first->sv_data.MASV == id && first->sv_data.password == pass){
+                sv = &(first->sv_data);
+                return 1;
+            }
+            first = first->next;
+        }
+    }
+
+    return 0;
 }
