@@ -80,6 +80,7 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
 void GiaoDienDanhSachLop(){
     const int screenWidth = 1500;
     const int screenHeight = 800;
+ //   int khoangcach = 160; 
     SetWindowPosition(GetMonitorWidth(0)/2 - screenWidth/2, GetMonitorHeight(0)/2 - screenHeight/2);
     SetWindowSize(screenWidth, screenHeight);
  
@@ -99,11 +100,14 @@ void GiaoDienDanhSachLop(){
             DrawRectangleLines(1210,10,140,40,BLACK);
            }
         }
-        DrawText("Nhap tu khoa tim kiem",50,20,20,GRAY);
-        DrawText("--Chon nien khoa--",400,20,20,BLACK);
-        DrawText("--Chon lop hoc--",750,20,20,BLACK);
-        DrawText("Tim kiem",1060,20,20,WHITE);
-        DrawText("MENU",1250,20,20,WHITE);
+
+        DrawTextEx(font, "Nhập từ khóa tìm kiếm",{47.5,20},20,3,GRAY);
+        DrawTextEx(font,"--Chọn niên khóa--",{390,17.5},25,3,BLACK);
+        DrawTextEx(font,"--Chọn lớp học--",{745,17.5},25,3,BLACK);
+        DrawTextEx(font,"Tìm kiếm",{1050,17.5},25,3,WHITE);
+        DrawTextEx(font,"MENU",{1240,15},30,3,WHITE);
+
+
         for(int i=0;i<3;i++){
             if(i!=2){
                 DrawRectangle(10+(150*i),55,80,40,DARKBLUE);
@@ -113,10 +117,10 @@ void GiaoDienDanhSachLop(){
                 DrawRectangleLines(10+(150*i),55,300,40,BLACK);
             }
         }
-        DrawText("Them",20,65,20,WHITE);
-        DrawText("Xoa",180,65,20,WHITE);
-        DrawText("Hieu Chinh Thong Tin",360, 65,20,WHITE);
-        for(int j=1;j<17;j++){
+        DrawTextEx(font,"Thêm",{20,62.5},25,3,WHITE);
+        DrawTextEx(font,"Xóa",{180,62.5},25,3,WHITE);
+        DrawTextEx(font,"Hiệu chỉnh thông tin",{340,62.5},25,3,WHITE);
+        for(int j=1;j<13;j++){
             if(j==1){
                 for(int i=0;i<3;i++){
                 DrawRectangle(0,100,80,50,BLUE);
@@ -126,22 +130,26 @@ void GiaoDienDanhSachLop(){
                 }
             }else if(j>=3){
             for(int i=0;i<3;i++){
-                DrawRectangleLines(0,100*j-(50*j),80,50,BLACK);
-                DrawRectangleLines(80+(480*i), 100*j-(50*j), 480, 50, BLACK);
+                DrawRectangleLines(0,50*j,80,50,BLACK);
+                DrawRectangleLines(80+(480*i), 50*j, 480, 50, BLACK);
             }
             }
         }
-        DrawText("STT",20,120,20,BLACK);
-        DrawText("Mã lớp",290,120,20,BLACK);
-        DrawText("Tên lớp",770,120,20,BLACK);
-        DrawText("Niên khóa",1250,120,20,BLACK);
-
-        DrawRectangleLines(600,900,100,40,BLACK);
-        DrawRectangleLines(800,900,100,40,BLACK);
-        DrawRectangle(600,900,100,40,Fade(BLUE,0.3f));
-        DrawRectangle(800,900,100,40,Fade(BLUE,0.3f));
-        DrawText("Previous",620,915,15,BLACK);
-        DrawText("Next",830,915,15,BLACK);
+        DrawRectangleLines(600,700,100,40,BLACK);
+        DrawRectangleLines(800,700,100,40,BLACK);
+        DrawRectangle(600,700,100,40,Fade(BLUE,0.3f));
+        DrawRectangle(800,700,100,40,Fade(BLUE,0.3f));
+        DrawTextEx(font,"Trang trước",{604,712},15,3,BLACK);
+        DrawTextEx(font,"Trang sau",{810,712},15,3,BLACK);
+        DrawTextEx(font,"STT",{15,110},30,3,BLACK);
+        DrawTextEx(font,"Mã lớp",{270,110},30,3,BLACK);
+        DrawTextEx(font,"Tên lớp",{750,110},30,3,BLACK);
+        DrawTextEx(font,"Niên khóa",{1230,110},30,3,BLACK);
+        // for(int i=1;i<11;i++){
+        //     DrawTextEx(font,ListClasses[i]->getMaLop,{33,khoangcach},30,3,BLACK);
+        //     khoangcach+=50;
+        // }
+        // cs = 50;
         EndDrawing();
 
         if (WindowShouldClose())
@@ -154,10 +162,9 @@ void GiaoDienDanhSachLop(){
         }
     }
 }
-
 int main()
 {
-    Initialize();
+     Initialize();
 
     DanhSachLopHoc dslh("../data/DANHSACHLOP.txt");
     DanhSachMonHoc dsmh("../data/DANHSACHMON.txt");
@@ -194,10 +201,10 @@ int main()
             goto exit_tag;
         }
     }
+    exit_tag:
+   Deinitialize();
+   return 0;
 
-exit_tag:
-    Deinitialize();
-    return 0;
 }
 
 
