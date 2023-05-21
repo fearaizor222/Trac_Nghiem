@@ -90,22 +90,22 @@ void GiaoDienDanhSachLop(){
         DrawRectangle(0,0,1500,100,Fade(GRAY, 0.5f));  
         for(int i=0;i<5;i++){
            if(i<3){
-            DrawRectangle(10+(340*i),10,300,40,WHITE);
-            DrawRectangleLines(10+(340*i),10,300,40,BLACK);
+            DrawRectangle(10+(340*i),10,320,40,WHITE);
+            DrawRectangleLines(10+(340*i),10,320,40,BLACK);
            }else if(i==3){
             DrawRectangle(1030,10,140,40,DARKBLUE);
             DrawRectangleLines(1030,10,140,40,BLACK);
            }else if(i==4){
-            DrawRectangle(1210,10,140,40,DARKBLUE);
-            DrawRectangleLines(1210,10,140,40,BLACK);
+            DrawRectangle(1350,10,120,40,DARKBLUE);
+            DrawRectangleLines(1350,10,120,40,BLACK);
            }
         }
 
-        DrawTextEx(font, "Nhập từ khóa tìm kiếm",{47.5,20},20,3,GRAY);
-        DrawTextEx(font,"--Chọn niên khóa--",{390,17.5},25,3,BLACK);
-        DrawTextEx(font,"--Chọn lớp học--",{745,17.5},25,3,BLACK);
-        DrawTextEx(font,"Tìm kiếm",{1050,17.5},25,3,WHITE);
-        DrawTextEx(font,"MENU",{1240,15},30,3,WHITE);
+        DrawTextEx(font, "Nhập từ khóa tìm kiếm",{20,15},30,3,GRAY);
+        DrawTextEx(font,"--Chọn niên khóa--",{380,15},30,3,BLACK);
+        DrawTextEx(font,"--Chọn lớp học--",{735,15},30,3,BLACK);
+        DrawTextEx(font,"Tìm kiếm",{1040,15},30,3,WHITE);
+        DrawTextEx(font,"MENU",{1367.5,15},30,3,WHITE);
 
 
         for(int i=0;i<3;i++){
@@ -117,9 +117,9 @@ void GiaoDienDanhSachLop(){
                 DrawRectangleLines(10+(150*i),55,300,40,BLACK);
             }
         }
-        DrawTextEx(font,"Thêm",{20,62.5},25,3,WHITE);
-        DrawTextEx(font,"Xóa",{180,62.5},25,3,WHITE);
-        DrawTextEx(font,"Hiệu chỉnh thông tin",{340,62.5},25,3,WHITE);
+        DrawTextEx(font,"Thêm",{13.5,60},30,3,WHITE);
+        DrawTextEx(font,"Xóa",{174.5,60},30,3,WHITE);
+        DrawTextEx(font,"Hiệu chỉnh thông tin",{325,60},30,3,WHITE);
         for(int j=1;j<13;j++){
             if(j==1){
                 for(int i=0;i<3;i++){
@@ -135,16 +135,16 @@ void GiaoDienDanhSachLop(){
             }
             }
         }
-        DrawRectangleLines(600,700,100,40,BLACK);
-        DrawRectangleLines(800,700,100,40,BLACK);
-        DrawRectangle(600,700,100,40,Fade(BLUE,0.3f));
-        DrawRectangle(800,700,100,40,Fade(BLUE,0.3f));
-        DrawTextEx(font,"Trang trước",{604,712},15,3,BLACK);
-        DrawTextEx(font,"Trang sau",{810,712},15,3,BLACK);
         DrawTextEx(font,"STT",{15,110},30,3,BLACK);
         DrawTextEx(font,"Mã lớp",{270,110},30,3,BLACK);
         DrawTextEx(font,"Tên lớp",{750,110},30,3,BLACK);
-        DrawTextEx(font,"Niên khóa",{1230,110},30,3,BLACK);
+        DrawTextEx(font,"Niên khóa",{1210,110},30,3,BLACK);
+        DrawRectangle(480,700,170,40,Fade(BLUE,0.2f));
+        DrawRectangle(850,700,170,40,Fade(BLUE,0.2f));
+        DrawRectangleLines(480,700,170,40,BLACK);
+        DrawRectangleLines(850,700,170,40,BLACK);
+        DrawTextEx(font,"Trang trước",{485,705},30,3,BLACK);
+        DrawTextEx(font,"Trang sau",{870,705},30,3,BLACK);
         // for(int i=1;i<11;i++){
         //     DrawTextEx(font,ListClasses[i]->getMaLop,{33,khoangcach},30,3,BLACK);
         //     khoangcach+=50;
@@ -161,6 +161,102 @@ void GiaoDienDanhSachLop(){
             break;
         }
     }
+}
+void GiaoDienDanhSachSinhVien(){
+    const int screenWidth = 1500;
+    const int screenHeight = 800;
+    SetWindowPosition(GetMonitorWidth(0)/2 - screenWidth/2, GetMonitorHeight(0)/2 - screenHeight/2);
+    SetWindowSize(screenWidth, screenHeight);
+    while(!is_close_icon_pressed){
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        DrawRectangle(0,0,1500,100,Fade(GRAY, 0.5f));  
+         for(int i=0;i<5;i++){
+           if(i<2){
+            DrawRectangle(10+(390*i),10,350,40,WHITE);
+            DrawRectangleLines(10+(390*i),10,350,40,BLACK);
+           }else if(i==2){
+            DrawRectangle(10+(390*i),10,280,40,WHITE);
+            DrawRectangleLines(10+(390*i),10,280,40,BLACK);
+           }else if(i==3){
+            DrawRectangle(1100,10,140,40,DARKBLUE);
+            DrawRectangleLines(1100,10,140,40,BLACK);
+           }else if(i==4){
+            DrawRectangle(1350,10,120,40,DARKBLUE);
+            DrawRectangleLines(1350,10,120,40,BLACK);
+           }
+        }
+        DrawTextEx(font, "Nhập từ khóa tìm kiếm",{32.5,15},30,3,GRAY);
+        DrawTextEx(font,"Nhập mã số sinh viên",{432.5,15},30,3,BLACK);
+        DrawTextEx(font,"--Chọn niên khóa--",{805,15},30,3,BLACK);
+        DrawTextEx(font,"Tìm kiếm",{1105,15},30,3,WHITE);
+        DrawTextEx(font,"MENU",{1367.5,15},30,3,WHITE);
+        for(int i=0;i<3;i++){
+            if(i!=2){
+                DrawRectangle(10+(150*i),55,90,40,DARKBLUE);
+                DrawRectangleLines(10+(150*i),55,90,40,BLACK);
+            }else if(i==2){
+                DrawRectangle(10+(150*i),55,300,40,DARKBLUE);
+                DrawRectangleLines(10+(150*i),55,300,40,BLACK);
+            }
+        }
+        DrawTextEx(font,"Thêm",{18.5,60},30,3,WHITE);
+        DrawTextEx(font,"Xóa",{179.5,60},30,3,WHITE);
+        DrawTextEx(font,"Hiệu chỉnh thông tin",{325,60},30,3,WHITE);
+        
+        DrawRectangle(0,100,55,40,DARKBLUE);//STT
+        DrawRectangle(55,100,170,40,DARKBLUE);//MSSV
+        DrawRectangle(225,100,350,40,DARKBLUE);//Họ tên
+        DrawRectangle(575,100,80,40,DARKBLUE);//Giới tín
+        DrawRectangle(655,100,140,40,DARKBLUE);//Ngày sinh
+        DrawRectangle(795,100,170,40,DARKBLUE);//Lớp
+        DrawRectangle(965,100,370,40,DARKBLUE);//Tên lớp
+        DrawRectangle(1335,100,170,40,DARKBLUE);//Niên khóa
+    for(int i=0;i<=15;i++){
+        if(i==0){
+        DrawRectangleLines(0,100,55,40,BLACK);//STT
+        DrawRectangleLines(55,100,170,40,BLACK);//MSSV
+        DrawRectangleLines(225,100,350,40,BLACK);//Họ tên
+        DrawRectangleLines(575,100,80,40,BLACK);//Giới tính
+        DrawRectangleLines(655,100,140,40,BLACK);//Ngày sinh
+        DrawRectangleLines(795,100,170,40,BLACK);//Lớp
+        DrawRectangleLines(965,100,370,40,BLACK);//Tên lớp
+        DrawRectangleLines(1335,100,170,40,BLACK);//Niên khóa   
+        }else if(i>=1){
+        DrawRectangleLines(0,100+40*i,55,40,BLACK);//STT
+        DrawRectangleLines(55,100+40*i,170,40,BLACK);//MSSV
+        DrawRectangleLines(225,100+40*i,350,40,BLACK);//Họ tên
+        DrawRectangleLines(575,100+40*i,80,40,BLACK);//Giới tính
+        DrawRectangleLines(655,100+40*i,140,40,BLACK);//Ngày sinh
+        DrawRectangleLines(795,100+40*i,170,40,BLACK);//Lớp
+        DrawRectangleLines(965,100+40*i,370,40,BLACK);//Tên lớp
+        DrawRectangleLines(1335,100+40*i,170,40,BLACK);//Niên khóa   
+        } 
+    }
+        DrawTextEx(font,"STT",{0,105},30,3,BLACK);
+        DrawTextEx(font,"MSSV",{95,105},30,3,BLACK);
+        DrawTextEx(font,"Họ và tên",{340,105},30,3,BLACK);
+        DrawTextEx(font,"Phái",{585,105},30,3,BLACK);
+        DrawTextEx(font,"Ngày sinh",{660,105},30,3,BLACK);
+        DrawTextEx(font,"Lớp",{855,105},30,3,BLACK);
+        DrawTextEx(font,"Tên lớp",{1105,105},30,3,BLACK);
+        DrawTextEx(font,"Niên khóa",{1355,105},30,3,BLACK);
+        DrawRectangle(480,750,170,40,Fade(BLUE,0.2f));
+        DrawRectangle(850,750,170,40,Fade(BLUE,0.2f));
+        DrawRectangleLines(480,750,170,40,BLACK);
+        DrawRectangleLines(850,750,170,40,BLACK);
+        DrawTextEx(font,"Trang trước",{485,755},30,3,BLACK);
+        DrawTextEx(font,"Trang sau",{870,755},30,3,BLACK);
+        EndDrawing();
+         if (WindowShouldClose())
+        {
+            is_close_icon_pressed = true;
+        }
+
+        if(IsKeyPressed(KEY_ESCAPE)){
+            break;
+        }
+}
 }
 int main()
 {
@@ -201,7 +297,7 @@ int main()
             goto exit_tag;
         }
     }
-    exit_tag:
+   exit_tag:
    Deinitialize();
    return 0;
 
