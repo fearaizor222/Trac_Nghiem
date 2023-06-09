@@ -77,16 +77,26 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
     }
 }
 
-void GiaoDienDanhSachLop(){
+void GiaoDienDanhSachLop(DanhSachLopHoc &dslh){
     const int screenWidth = 1500;
     const int screenHeight = 800;
  //   int khoangcach = 160; 
+    int page = 1;
+    int index = 0;
     SetWindowPosition(GetMonitorWidth(0)/2 - screenWidth/2, GetMonitorHeight(0)/2 - screenHeight/2);
     SetWindowSize(screenWidth, screenHeight);
- 
+    Button next{{485,705,180,45},"Trang trước",Fade(BLUE,0.2f),BLUE,font};
+    Button prev{{850,705,180,45},"Trang sau",Fade(BLUE,0.2f),BLUE,font};
+    bool is_button_next_pressed = false;
+    bool is_button_prev_pressed = false;
     while(!is_close_icon_pressed){
         BeginDrawing();
         ClearBackground(RAYWHITE);
+            next.run(is_button_next_pressed);
+            prev.run(is_button_prev_pressed);
+            if(is_button_next_pressed && page < 11) page++;
+            if(is_button_prev_pressed && page > 1) page--;
+            index = 10 * (page - 1);
         DrawRectangle(0,0,1500,100,Fade(GRAY, 0.5f));  
         for(int i=0;i<5;i++){
            if(i<3){
@@ -123,34 +133,48 @@ void GiaoDienDanhSachLop(){
         for(int j=1;j<13;j++){
             if(j==1){
                 for(int i=0;i<3;i++){
-                DrawRectangle(0,100,80,50,BLUE);//ô STT
-                DrawRectangle(80+(480*i),100,480,50,BLUE);//các ô còn lại cùng hàng ô stt
+                  DrawRectangle(0,100,80,50,BLUE);//ô STT
+                if(i==0){//mã lớp
+                DrawRectangle(80+(260*i),100*j,260,50,BLUE);
+                DrawRectangleLines(0,100*j,80,50,BLACK);
+                DrawRectangleLines(80+(260*i), 100*j, 260, 50, BLACK);
+                }else if(i==1){//Tên lớp
+                DrawRectangle(80+(260*i),100*j,700,50,BLUE);
+                DrawRectangleLines(0,100*j,80,50,BLACK);
+                DrawRectangleLines(80+(260*i), 100*j, 700, 50, BLACK);
+                }else{//Niên khóa
+                DrawRectangle(80+(480*i),100*j,480,50,BLUE);
                 DrawRectangleLines(0,100*j,80,50,BLACK);
                 DrawRectangleLines(80+(480*i), 100*j, 480, 50, BLACK);
                 }
+                }
             }else if(j>=3){
             for(int i=0;i<3;i++){
+                if(i==0){//mã lớp
+                DrawRectangleLines(0,50*j,80,50,BLACK);
+                DrawRectangleLines(80+(480*i), 50*j, 260, 50, BLACK);
+                }else if(i==1){//tên lớp
                 DrawRectangleLines(0,50*j,80,50,BLACK);//vẽ các khung đen
-                DrawRectangleLines(80+(480*i), 50*j, 480, 50, BLACK);
+                DrawRectangleLines(80+(260*i), 50*j, 700, 50, BLACK);
+                }else{//niên khóa
+                DrawRectangleLines(0,50*j,80,50,BLACK);
+                DrawRectangleLines(80+(480*i), 50*j, 480, 50, BLACK);  
+                }
+               
             }
             }
         }
+        
         DrawTextEx(font,"STT",{15,110},30,3,BLACK);
-        DrawTextEx(font,"Mã lớp",{270,110},30,3,BLACK);
-        DrawTextEx(font,"Tên lớp",{750,110},30,3,BLACK);
+        DrawTextEx(font,"Mã lớp",{165,110},30,3,BLACK);
+        DrawTextEx(font,"Tên lớp",{640,110},30,3,BLACK);
         DrawTextEx(font,"Niên khóa",{1210,110},30,3,BLACK);
-        //còn lại là vẽ trang trước và trang sau
-        DrawRectangle(480,700,170,40,Fade(BLUE,0.2f));
-        DrawRectangle(850,700,170,40,Fade(BLUE,0.2f));
-        DrawRectangleLines(480,700,170,40,BLACK);
-        DrawRectangleLines(850,700,170,40,BLACK);
-        DrawTextEx(font,"Trang trước",{485,705},30,3,BLACK);
-        DrawTextEx(font,"Trang sau",{870,705},30,3,BLACK);
-        // for(int i=1;i<11;i++){
-        //     DrawTextEx(font,ListClasses[i]->getMaLop,{33,khoangcach},30,3,BLACK);
-        //     khoangcach+=50;
-        // }
-        // cs = 50;
+        for(int place = 0; index < 7 * page && index < dslh.getSoLuong(); index++, place++){
+              DrawTextEx(font,to_string(index+1).c_str(),{30,160+70*place+20*(-place)},30,3,BLACK);//STT
+              DrawTextEx(font,(char*)dslh[place]->getMaLop().c_str(),Vector2{90,160+70*place+20*(-place)},30,3,BLACK);// Mã lớp
+              DrawTextEx(font,(char*)dslh[place]->getTenLop().c_str(),Vector2{350,160+70*place+20*(-place)},30,3,BLACK);//tên lớp
+              DrawTextEx(font,(char*)dslh[place]->getNienKhoa().c_str(),Vector2{1200,160+70*place+20*(-place)},30,3,BLACK);//niên khóa
+        }
         EndDrawing();
 
         if (WindowShouldClose())
@@ -163,14 +187,26 @@ void GiaoDienDanhSachLop(){
         }
     }
 }
-void GiaoDienDanhSachSinhVien(){
+void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh){
     const int screenWidth = 1500;
     const int screenHeight = 800;
+    int page = 1;
+    int index = 0;
+    SVPtr sv = dslh["D21CQAT01-N"]->getDSSV()->getFirst();
     SetWindowPosition(GetMonitorWidth(0)/2 - screenWidth/2, GetMonitorHeight(0)/2 - screenHeight/2);
     SetWindowSize(screenWidth, screenHeight);
+    Button next{{480,750,180,45},"Trang trước",Fade(BLUE,0.2f),BLUE,font};
+    Button prev{{850,750,180,45},"Trang sau",Fade(BLUE,0.2f),BLUE,font};
+    bool is_button_next_pressed = false;
+    bool is_button_prev_pressed = false;
     while(!is_close_icon_pressed){
         BeginDrawing();
         ClearBackground(RAYWHITE);
+            next.run(is_button_next_pressed);
+            prev.run(is_button_prev_pressed);
+            if(is_button_next_pressed && page < 16) page++;
+            if(is_button_prev_pressed && page > 1) page--;
+            index = 15 * (page - 1);
         DrawRectangle(0,0,1500,100,Fade(GRAY, 0.5f));  //vẽ bản màu xám
          for(int i=0;i<5;i++){
            if(i<2){
@@ -206,48 +242,53 @@ void GiaoDienDanhSachSinhVien(){
         DrawTextEx(font,"Hiệu chỉnh thông tin",{325,60},30,3,WHITE);
         
         DrawRectangle(0,100,55,40,DARKBLUE);//STT
-        DrawRectangle(55,100,170,40,DARKBLUE);//MSSV
-        DrawRectangle(225,100,350,40,DARKBLUE);//Họ tên
-        DrawRectangle(575,100,80,40,DARKBLUE);//Giới tín
-        DrawRectangle(655,100,140,40,DARKBLUE);//Ngày sinh
-        DrawRectangle(795,100,170,40,DARKBLUE);//Lớp
-        DrawRectangle(965,100,370,40,DARKBLUE);//Tên lớp
-        DrawRectangle(1335,100,170,40,DARKBLUE);//Niên khóa
+        DrawRectangle(55,100,190,40,DARKBLUE);//MSSV
+        DrawRectangle(245,100,370,40,DARKBLUE);//Họ tên
+        DrawRectangle(615,100,80,40,DARKBLUE);//Giới tín
+        DrawRectangle(695,100,195,40,DARKBLUE);//Lớp
+        DrawRectangle(890,100,390,40,DARKBLUE);//Tên lớp
+        DrawRectangle(1280,100,220,40,DARKBLUE);//Niên khóa
     for(int i=0;i<=15;i++){
         if(i==0){
         DrawRectangleLines(0,100,55,40,BLACK);//STT
-        DrawRectangleLines(55,100,170,40,BLACK);//MSSV
-        DrawRectangleLines(225,100,350,40,BLACK);//Họ tên
-        DrawRectangleLines(575,100,80,40,BLACK);//Giới tính
-        DrawRectangleLines(655,100,140,40,BLACK);//Ngày sinh
-        DrawRectangleLines(795,100,170,40,BLACK);//Lớp
-        DrawRectangleLines(965,100,370,40,BLACK);//Tên lớp
-        DrawRectangleLines(1335,100,170,40,BLACK);//Niên khóa   
+        DrawRectangleLines(55,100,190,40,BLACK);//MSSV
+        DrawRectangleLines(245,100,370,40,BLACK);//Họ tên
+        DrawRectangleLines(615,100,80,40,BLACK);//Giới tính
+        DrawRectangleLines(695,100,195,40,BLACK);//Lớp
+        DrawRectangleLines(890,100,390,40,BLACK);//Tên lớp
+        DrawRectangleLines(1280,100,220,40,BLACK);//Niên khóa   
         }else if(i>=1){
         DrawRectangleLines(0,100+40*i,55,40,BLACK);//STT
-        DrawRectangleLines(55,100+40*i,170,40,BLACK);//MSSV
-        DrawRectangleLines(225,100+40*i,350,40,BLACK);//Họ tên
-        DrawRectangleLines(575,100+40*i,80,40,BLACK);//Giới tính
-        DrawRectangleLines(655,100+40*i,140,40,BLACK);//Ngày sinh
-        DrawRectangleLines(795,100+40*i,170,40,BLACK);//Lớp
-        DrawRectangleLines(965,100+40*i,370,40,BLACK);//Tên lớp
-        DrawRectangleLines(1335,100+40*i,170,40,BLACK);//Niên khóa   
+        DrawRectangleLines(55,100+40*i,190,40,BLACK);//MSSV
+        DrawRectangleLines(245,100+40*i,370,40,BLACK);//Họ tên
+        DrawRectangleLines(615,100+40*i,80,40,BLACK);//Giới tính
+        DrawRectangleLines(695,100+40*i,195,40,BLACK);//Lớp
+        DrawRectangleLines(890,100+40*i,390,40,BLACK);//Tên lớp
+        DrawRectangleLines(1280,100+40*i,220,40,BLACK);//Niên khóa   
         } 
     }
         DrawTextEx(font,"STT",{0,105},30,3,BLACK);
-        DrawTextEx(font,"MSSV",{95,105},30,3,BLACK);
-        DrawTextEx(font,"Họ và tên",{340,105},30,3,BLACK);
-        DrawTextEx(font,"Phái",{585,105},30,3,BLACK);
-        DrawTextEx(font,"Ngày sinh",{660,105},30,3,BLACK);
-        DrawTextEx(font,"Lớp",{855,105},30,3,BLACK);
-        DrawTextEx(font,"Tên lớp",{1105,105},30,3,BLACK);
-        DrawTextEx(font,"Niên khóa",{1355,105},30,3,BLACK);
-        DrawRectangle(480,750,170,40,Fade(BLUE,0.2f));// vẽ ô của trang trước
-        DrawRectangle(850,750,170,40,Fade(BLUE,0.2f));// vẽ ô của trang sau
-        DrawRectangleLines(480,750,170,40,BLACK);// vẽ viền của trang trước
-        DrawRectangleLines(850,750,170,40,BLACK);// vẽ viền của trang sau
-        DrawTextEx(font,"Trang trước",{485,755},30,3,BLACK);
-        DrawTextEx(font,"Trang sau",{870,755},30,3,BLACK);
+        DrawTextEx(font,"MSSV",{110,105},30,3,BLACK);
+        DrawTextEx(font,"Họ và tên",{370,105},30,3,BLACK);
+        DrawTextEx(font,"Phái",{630,105},30,3,BLACK);
+        DrawTextEx(font,"Lớp",{770,105},30,3,BLACK);
+        DrawTextEx(font,"Tên lớp",{1045,105},30,3,BLACK);
+        DrawTextEx(font,"Niên khóa",{1325,105},30,3,BLACK);
+        for (int place = 0; index < 15 * page && index < dslh.getSoLuong(); index++, place++)
+            {
+        //     DrawTextEx(font,(char *)dslh[index]->getMaLop().c_str(),Vector2{700, 150 +50* place+10*(-place)}, 28, 1, BLACK);// hiển thị mã lớp, lưu ý: đây chỉ là để tính toán vị trí trước
+                DrawTextEx(font,to_string(index+1).c_str(),{10,150+50*place+10*(-place)},30,3,BLACK);//STT
+            //  while(sv!=nullptr){
+            //     DrawTextEx(font,(char*)sv->sv_data.MASV.c_str(),Vector2{60,150+50*place+10*(-place)},30,1,BLACK);
+            //     DrawTextEx(font,(char*)sv->sv_data.HO.c_str(),Vector2{250,150+50*place+10*(-place)},30,3,BLACK);
+            //     DrawTextEx(font,(char*)sv->sv_data.TEN.c_str(),Vector2{350,150+50*place+10*(-place)},30,3,BLACK);
+            //     DrawTextEx(font,(char*)sv->sv_data.Phai.c_str(),Vector2{635,150+50*place+10*(-place)},30,3,BLACK);
+            //     sv = sv->next;
+            // }
+            }
+            
+  
+           
         EndDrawing();
          if (WindowShouldClose())
         {
@@ -318,7 +359,7 @@ int main()
             break;
 
         case Main_GV:
-            GiaoDienDanhSachLop();
+            GiaoDienDanhSachLop(dslh);
             current_scene = scene_stack.pop();
             break;
 
@@ -332,6 +373,7 @@ int main()
         }
     }
    exit_tag:
+
    Deinitialize();
    return 0;
 
