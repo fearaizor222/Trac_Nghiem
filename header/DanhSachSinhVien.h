@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <string.h>
+#include "DArray.h"
 using namespace std;
 
 // class DanhSachDiemThi;
@@ -17,10 +18,11 @@ class DanhSachSinhVien{
             string TEN;
             string Phai; // Nam = 0, Nu = 1
             string password;
+            DArray<int> question_id;
             DanhSachDiemThi *diem; // Con trỏ quản lý danh sách điểm thi
 
             SinhVien();
-            SinhVien(string MASV, string HO, string TEN, string Phai, string password);
+            SinhVien(string MASV, string HO, string TEN, string Phai, string password, DArray<int> question_id);
             SinhVien(const SinhVien &sv);
             SinhVien &operator=(const SinhVien &sv);
             void insert(DiemThi dt);

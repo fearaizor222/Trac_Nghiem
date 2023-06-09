@@ -5,12 +5,13 @@ SinhVien::SinhVien(){
     diem = nullptr;
 }
 
-SinhVien::SinhVien(string MASV, string HO, string TEN, string Phai, string password){
+SinhVien::SinhVien(string MASV, string HO, string TEN, string Phai, string password, DArray<int> question_id){
     this->MASV = MASV;
     this->HO = HO;
     this->TEN = TEN;
     this->Phai = Phai;
     this->password = password;
+    this->question_id = question_id;
     this->diem = new DanhSachDiemThi("../data/DSDT/" + MASV + ".txt");
 }
 
@@ -21,6 +22,7 @@ SinhVien::SinhVien(const SinhVien &sv)
     this->TEN = sv.TEN;
     this->Phai = sv.Phai;
     this->password = sv.password;
+    this->question_id = sv.question_id; 
     this->diem = new DanhSachDiemThi(sv.diem->getPath());
 }
 
@@ -31,6 +33,7 @@ SinhVien &SinhVien::operator=(const SinhVien &sv)
     this->TEN = sv.TEN;
     this->Phai = sv.Phai;
     this->password = sv.password;
+    this->question_id = sv.question_id; 
     this->diem = new DanhSachDiemThi(sv.diem->getPath());
     return *this;
 }
@@ -179,7 +182,7 @@ DanhSachSinhVien::DanhSachSinhVien(std::string path):DanhSachSinhVien(){
     string line;
     while(getline(input,line)){
         stringstream _line(line);
-        string Ma_SV, Ho, Ten, PHAI, PASSWORD;
+        string Ma_SV, Ho, Ten, PHAI, PASSWORD, line_question_id;
 
         getline(_line,Ma_SV,'|');
         getline(_line,Ho,'|');
@@ -187,12 +190,20 @@ DanhSachSinhVien::DanhSachSinhVien(std::string path):DanhSachSinhVien(){
         Ho = Ho.substr(0,Ho.find(" "));
         getline(_line,PHAI,'|');
         getline(_line,PASSWORD,'|');
+        getline(_line,line_question_id,'|');
+
+        string temp;
+        DArray<int> int_question_id;
+        stringstream __line(line_question_id);
+        while(getline(__line, temp, ',')){
+            int_question_id.push_back(stoi(temp));
+        }
         // string temp;
         // stringstream __line(PASSWORD);
         // PASSWORD = "";
         // while(getline(__line,temp,'/')) PASSWORD += temp;
 
-        insertOrderSV(SinhVien(Ma_SV, Ho, Ten, PHAI, PASSWORD));
+        insertOrderSV(SinhVien(Ma_SV, Ho, Ten, PHAI, PASSWORD, int_question_id));
     }
 }
 
@@ -223,7 +234,11 @@ void DanhSachSinhVien::update(){
     ofstream output(path);
     SVPtr p = FirstSV;
     while(p != NULL){
-        output << p->sv_data.MASV << "|" << p->sv_data.HO << " " << p->sv_data.TEN << "|" << p->sv_data.Phai << "|" << p->sv_data.password << endl;
+        string temp;
+        for(int i = 0; i<p->sv_data.question_id.size(); i++){
+            temp += to_string(p->sv_data.question_id[i]) + ",";
+        }
+        output << p->sv_data.MASV << "|" << p->sv_data.HO << " " << p->sv_data.TEN << "|" << p->sv_data.Phai << "|" << p->sv_data.password <<"|"<< temp << endl;
         p = p->next;
     }
     output.close();
