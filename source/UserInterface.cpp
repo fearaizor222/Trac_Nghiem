@@ -122,17 +122,15 @@ InputBox::InputBox(Rectangle _box,
     secure_text = {"", _normal, _hightlight, _font};
 }
 
-void InputBox::render(Vector2 (*location)(), int offset_x, int offset_y){  // Chỉ vẽ khung
-    box.x = location().x - box.width/2 + offset_x; 
-    box.y = location().y - box.height/2 + offset_y; 
+void InputBox::render(){  // Chỉ vẽ khung 
     if (clicked) frames_count++;
     else frames_count = 0;
 
     if (clicked){
         DrawRectangleRec(box, background);
-        DrawRectangleLinesEx(box, 3, text.highlight);
+        DrawRectangleLinesEx(box, 1, text.highlight);
     }
-    else DrawRectangleLinesEx(box, 3, text.normal); 
+    else DrawRectangleLinesEx(box, 1, text.normal); 
 
     Text display_text;
     if(secure) display_text = secure_text;
@@ -160,7 +158,7 @@ void InputBox::render(Vector2 (*location)(), int offset_x, int offset_y){  // Ch
     }
 }
 
-void InputBox::run(Vector2 &mouse_pos, Vector2 (*location)(), int offset_x, int offset_y){
+void InputBox::run(Vector2 &mouse_pos){
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) mouse_pos = GetMousePosition();
 
     if (CheckCollisionPointRec(mouse_pos, box)) clicked = true;
@@ -201,7 +199,7 @@ void InputBox::run(Vector2 &mouse_pos, Vector2 (*location)(), int offset_x, int 
         }
     }
     
-    render(location, offset_x, offset_y);
+    render();
 }
 
 bool InputBox::isBoxFull(){      
@@ -266,8 +264,8 @@ void LoginScene(DanhSachLopHoc &dslh, SinhVien *&sv)
             DrawTexture(login_logo, MidCenter().x - 250 / 2 + 5, MidCenter().y - 50 / 2 - 240 + 50, WHITE);
             ID.render(MidCenter, -160, 100);
             Pass.render(MidCenter, -175, 160);
-            box1.run(global_mouse_pos, MidCenter, 0, 100);
-            box2.run(global_mouse_pos, MidCenter, 0, 160);
+            box1.run(global_mouse_pos);
+            box2.run(global_mouse_pos);
             button1.run(is_button1_clicked);
             if (is_error)
             {
@@ -322,6 +320,7 @@ void LoginScene(DanhSachLopHoc &dslh, SinhVien *&sv)
 
         if (WindowShouldClose())
             is_close_icon_pressed = true;
+
         is_button1_clicked = false;
     }
 
@@ -329,9 +328,10 @@ void LoginScene(DanhSachLopHoc &dslh, SinhVien *&sv)
 }
 
 Rectangle Popup(std::string message, std::string lable){
-    Vector2 measure = MeasureTextEx(font, (char *)message.c_str(), 30, 5);
-    measure.x = MidCenter().x - measure.x / 2;
-    measure.y = MidCenter().y - measure.y / 4;
+    Vector2 measure_msg = MeasureTextEx(font, (char *)message.c_str(), 30, 5);
+    Vector2 measure_lable = MeasureTextEx(font, (char *)lable.c_str(), 30, 5);
+    // measure.x = MidCenter().x - measure.x / 2;
+    // measure.y = MidCenter().y - measure.y / 4;
     Rectangle main_popup = {MidCenter().x - 400 / 2, MidCenter().y - 300 / 2, 400, 300};
     Rectangle close_button = {main_popup.x + 350, main_popup.y, 50, 50};
     DrawRectangleRec(main_popup, WHITE);
@@ -340,8 +340,8 @@ Rectangle Popup(std::string message, std::string lable){
     DrawRectangleLines(main_popup.x, main_popup.y, main_popup.width, main_popup.height, BLACK);
     DrawLine(main_popup.x, main_popup.y + 50, main_popup.x + main_popup.width, main_popup.y + 50, BLACK);
     DrawLine(main_popup.x + 350, main_popup.y, main_popup.x + 350, main_popup.y + 50, BLACK);
-    DrawTextEx(font, (char *)message.c_str(), measure, 30, 5, BLACK);
-    DrawTextEx(font, (char*)lable.c_str(), {MidCenter().x - 50, MidCenter().y - 140}, 30, 5, BLACK);
+    DrawTextEx(font, (char *)message.c_str(), Vector2{main_popup.x + main_popup.width/2 - measure_msg.x/2, main_popup.y + main_popup.height/2 - measure_msg.y/2}, 30, 5, BLACK);
+    DrawTextEx(font, (char*)lable.c_str(), Vector2{main_popup.x + main_popup.width/2 - measure_lable.x/2, (main_popup.y * 2 + 50)/2 - measure_lable.y/2}, 30, 5, BLACK);
 
     return close_button;
 }

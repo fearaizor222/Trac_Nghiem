@@ -116,9 +116,9 @@ struct InputBox{
             Font _font = GetFontDefault(),
             bool _secure = false);
 
-    void render(Vector2 (*location)() = TopLeft, int offset_x = 0, int offset_y = 0);
+    void render();
 
-    void run(Vector2 &mouse_pos, Vector2 (*location)() = TopLeft, int offset_x = 0, int offset_y = 0);
+    void run(Vector2 &mouse_pos);
 
     bool isBoxFull();
 };
