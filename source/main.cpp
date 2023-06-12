@@ -25,6 +25,7 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
     string thoi_gian_thi = "";
 
     global_mouse_pos = GetMousePosition();
+    int offset = 0;
 
     while(!is_close_icon_pressed){
 
@@ -33,11 +34,20 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
 
             next.run(is_button_next_pressed);
             prev.run(is_button_prev_pressed);
-            if(is_button_next_pressed && page < dsmh.getLength() / 7 + 1) page++;
+            if(is_button_next_pressed && page < (dsmh.getLength() - offset) / 7 + 1) page++;
             if(is_button_prev_pressed && page > 1) page--;
+
+            DrawTextEx(font, std::to_string(page).c_str(), {(BotRight().x - 110 + BotRight().x - 220) / 2 - (MeasureTextEx(font, std::to_string(page).c_str(), 30, 3).x / 2) - 200, BotRight().y - 90 + 10}, 30, 3, BLACK);
+            DrawTextEx(font, std::to_string((dsmh.getLength() - offset) / 7 + 1).c_str(), {(BotRight().x - 110 + BotRight().x - 220) / 2 - (MeasureTextEx(font, std::to_string((dsmh.getLength() - offset) / 7 + 1).c_str(), 30, 3).x / 2) - 100, BotRight().y - 90 + 10}, 30, 3, BLACK); 
+            
             index = 7 * (page - 1);
+            offset = 0;
 
             input_ma_mon.run(global_mouse_pos);
+            if(CheckCollisionPointRec(GetMousePosition(), input_ma_mon.box) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+                page = 1;
+            }
+            DrawRectangleLinesEx(input_ma_mon.box, 3, BLACK);
             DrawRectangleLinesEx(box, 3, BLACK);
             if(input_ma_mon.text.data == "" && !input_ma_mon.clicked)
                 DrawTextEx(font, "Mã môn", (Vector2){input_ma_mon.box.x + 50, input_ma_mon.box.y + 10}, 30, 0, BLACK);
@@ -54,14 +64,18 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
             DrawLineEx({273, 100}, {273, 700}, 2, BLACK);
             DrawLineEx({1300, 100}, {1300, 700}, 2, BLACK);
 
-            for (int place = 0, offset = 0; index < dsmh.getLength(); index++, place++)
+
+            for (int place = 0; place < 7 && index < dsmh.getLength(); index++)
             {
                 if(input_ma_mon.text.data != ""){
-                    if(strstr(dsmh[index].ma_mon_hoc, input_ma_mon.text.data.c_str()) == nullptr){
+                    if(strstr(dsmh[index].ma_mon_hoc, input_ma_mon.text.data.c_str()) == nullptr &&
+                        strstr(standardization(dsmh[index].ten_mon_hoc).c_str(), standardization(input_ma_mon.text.data).c_str()) == nullptr){
                         offset++;
                         continue;
                     }
                 }
+                // if(index - offset >= 7 * page) place = 1000;
+
                 Rectangle rec = {5, 175 + 75 * place, 1490, 75};
                 DTPtr dt = nullptr;
                 dt = (*sv->diem)[string(dsmh[index].ma_mon_hoc)];
@@ -72,10 +86,10 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
                 else{
                     output_mark = std::to_string(dt->data.Diem).substr(0, std::to_string(dt->data.Diem).find(".") + 2);
                 }
-                DrawTextEx(font, std::to_string(index + 1 - offset).c_str(), {(5 + 100) / 2 - (MeasureTextEx(font, std::to_string(index + 1 - offset).c_str(), 30, 3).x / 2), 199 + 75 * (place - offset)}, 30, 3, BLACK);
-                DrawTextEx(font, dsmh[index].ma_mon_hoc, Vector2{100 + 5, 199 + 75 * (place - offset)}, 30, 3, BLACK);
-                DrawTextEx(font, (char *)dsmh[index].ten_mon_hoc.c_str(), Vector2{273 + 5, 199 + 75 * (place - offset)}, 30, 3, BLACK);
-                DrawTextEx(font, (char*)output_mark.c_str(), Vector2{(1490 + 1300)/2 - MeasureTextEx(font, (char*)output_mark.c_str(), 30, 3).x/2, 199 + 75 * (place - offset)}, 30, 3, BLACK);
+                DrawTextEx(font, std::to_string(index + 1 - offset).c_str(), {(5 + 100) / 2 - (MeasureTextEx(font, std::to_string(index + 1 - offset).c_str(), 30, 3).x / 2), 199 + 75 * (place)}, 30, 3, BLACK);
+                DrawTextEx(font, dsmh[index].ma_mon_hoc, Vector2{100 + 5, 199 + 75 * (place)}, 30, 3, BLACK);
+                DrawTextEx(font, (char *)dsmh[index].ten_mon_hoc.c_str(), Vector2{273 + 5, 199 + 75 * (place)}, 30, 3, BLACK);
+                DrawTextEx(font, (char*)output_mark.c_str(), Vector2{(1490 + 1300)/2 - MeasureTextEx(font, (char*)output_mark.c_str(), 30, 3).x/2, 199 + 75 * (place)}, 30, 3, BLACK);
 
                 if(CheckCollisionPointRec(GetMousePosition(), rec)){
                     DrawRectangleLinesEx(rec, 3, GREEN);
@@ -87,6 +101,8 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
                         }
                     }
                 }
+
+                place++;
             }
 
             if(press_flag){
@@ -607,43 +623,40 @@ int main()
     DanhSachCauHoi dsch("../data/DANHSACHCAUHOI.txt");
     SinhVien *sv = nullptr;
 
-//     current_scene = scene_stack.pop();
-//     while (current_scene != Exit || is_close_icon_pressed)
-//     {
-//         switch (current_scene)
-//         {
-//         case Login:
-//             LoginScene(dslh, sv);
-//             // std::cout<<(sv == nullptr)<<std::endl;
-//             current_scene = scene_stack.pop();
-//             break;
+    current_scene = scene_stack.pop();
+    while (current_scene != Exit || is_close_icon_pressed)
+    {
+        switch (current_scene)
+        {
+        case Login:
+            LoginScene(dslh, sv);
+            // std::cout<<(sv == nullptr)<<std::endl;
+            current_scene = scene_stack.pop();
+            break;
 
-//         case Main_SV:
-//             MainSceneSV(sv, dsmh, dsch);
-//             current_scene = scene_stack.pop();
-//             break;
+        case Main_SV:
+            MainSceneSV(sv, dsmh, dsch);
+            current_scene = scene_stack.pop();
+            break;
 
-//         case Main_GV:
-//             GiaoDienDanhSachLop(dslh);
-//             current_scene = scene_stack.pop();
-//             break;
+        case Main_GV:
+            GiaoDienDanhSachLop(dslh);
+            current_scene = scene_stack.pop();
+            break;
 
-//         case Testing:
-//             // TestingScene(dsch);
-//             current_scene = scene_stack.pop();
-//             break;
+        case Testing:
+            // TestingScene(dsch);
+            current_scene = scene_stack.pop();
+            break;
 
-//         case Exit:
-//             goto exit_tag;
-//         }
-//     }
-//    exit_tag:
-    GiaoDienDanhSachLop(dslh);
+        case Exit:
+            goto exit_tag;
+        }
+    }
+   exit_tag:
+    // GiaoDienDanhSachLop(dslh);
   //  GiaoDienDanhSachSinhVien(dslh);
    Deinitialize();
    return 0;
 
 }
-
-
-
