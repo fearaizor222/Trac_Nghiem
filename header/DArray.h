@@ -79,6 +79,10 @@ class DArray
 
         void resize(int new_size)
         {
+            if(new_size <= 0){
+                clear();
+                return;
+            }
             type *temp = new type[new_size];
 
             count = new_size > count ? count : new_size;

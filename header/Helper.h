@@ -25,4 +25,6 @@ extern int login(DanhSachLopHoc &dslh, SinhVien *&sv, string id, string pass);
 
 extern uint64_t find(std::string str, char c);
 
+extern std::string standardization(std::string str);
+
 #endif

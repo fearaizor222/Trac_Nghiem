@@ -112,3 +112,25 @@ int login(DanhSachLopHoc &dslh, SinhVien *&sv, string id, string pass){
 
     return 0;
 }
+
+std::string standardization(std::string input) {
+    for (char& c : input) {
+        c = std::tolower(c);
+    }
+
+    std::string output;
+    bool last_char_was_space = false;
+    for (char c : input) {
+        if (c == ' ') {
+            if (!last_char_was_space) {
+                output += '-';
+                last_char_was_space = true;
+            }
+        } else {
+            output += c;
+            last_char_was_space = false;
+        }
+    }
+
+    return output;
+}
