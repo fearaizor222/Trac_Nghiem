@@ -394,7 +394,7 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh){
                     for(int i=0;i<=dslh.getSoLuong();i++){
                         if(dslh[i]->getMaLop()==box_ma_lop.text.data){
                             DrawRectangle(500,300,300,200,RED);
-                        }else{ //do anh chay cai len nay nhieu lan ne, nen no bi trung, nen bao loi
+                        }else{ 
                             dslh.insert(new Lop{box_ma_lop.text.data, box_ten_lop.text.data ,box_nien_khoa.text.data});
                             // break;
                         }
@@ -502,9 +502,10 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a){
     bool press_Add_Save_Button = false;
     InputBox box_add(Rectangle{10,10,90,40}, BLACK, BLACK, WHITE, font);
     InputBox box_nien_khoa(Rectangle{550, 410, 190, 50}, BLACK, BLACK, WHITE, font);
-    InputBox box_MSSV(Rectangle{480,235,210,40}, BLACK, BLACK, WHITE, font);
-    InputBox box_Ho_Ten(Rectangle{500,325,550,40}, BLACK, BLACK, WHITE, font);
-    InputBox box_Phai(Rectangle{540,415,100,40}, BLACK, BLACK, WHITE, font);
+    InputBox box_MSSV(Rectangle{480,185,210,40}, BLACK, BLACK, WHITE, font);
+    InputBox box_Ho_Ten(Rectangle{500,275,550,40}, BLACK, BLACK, WHITE, font);
+    InputBox box_Phai(Rectangle{540,365,100,40}, BLACK, BLACK, WHITE, font);
+    InputBox box_Password(Rectangle{540,455,150,40}, BLACK, BLACK, WHITE, font);
     SetWindowPosition(GetMonitorWidth(0)/2 - screenWidth/2, GetMonitorHeight(0)/2 - screenHeight/2);
     SetWindowSize(screenWidth, screenHeight);
     Button prev{{480,750,180,45},"Trang trước",Fade(BLUE,0.2f),BLUE,font};
@@ -569,8 +570,8 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a){
                     
                    
         //      }
-
-            for(SVPtr q = dslh[(char*)a.c_str()]->getDSSV()->getFirst(); index<15*page && q!=NULL; index++, q=q->next){
+        SVPtr sv = dslh[(char*)a.c_str()]->getDSSV()->getFirst();
+            for(SVPtr q = dslh[(char*)a.c_str()]->getDSSV()->getFirst(); index<15*page && q!=nullptr; index++,q = q ->next){
 
                 string ho_ten = q->sv_data.HO + " " + q->sv_data.TEN;
                 DrawTextEx(font,(char*)q->sv_data.MASV.c_str(),Vector2{60,line+40*index-(40*(index/15))*15},30,1,BLACK);
@@ -586,8 +587,9 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a){
                      DrawTextEx(font,(char*)q->sv_data.Phai.c_str(),Vector2{1380,line+40*index-(40*(index/15))*15},30,3,BLACK);
                     }
                     count++;
+                
             }
-
+                    
  
         if(CheckCollisionPointRec(GetMousePosition(),{10,10,90,40})){
             DrawRectangleLinesEx({10,10,90,40},3,YELLOW);
@@ -606,22 +608,30 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a){
                 DrawRectangleLinesEx(save_button, 3,BLACK);
                 DrawRectangleLinesEx(main_popup, 3,BLACK);
                 DrawTextEx(font, "X", {close_button.x + 15, close_button.y + 10}, 30, 5, WHITE);
-                DrawTextEx(font, "MSSV:", Vector2{main_popup.x + 20, main_popup.y + 90}, 30, 5, BLACK);
-                DrawTextEx(font, "Họ tên:", Vector2{main_popup.x + 20, main_popup.y + 180}, 30, 5, BLACK);
-                DrawTextEx(font,"Giới tính: ",Vector2{main_popup.x + 20, main_popup.y + 270},30,5,BLACK);
+                DrawTextEx(font, "MSSV:", Vector2{main_popup.x + 20, main_popup.y + 40}, 30, 5, BLACK);
+                DrawTextEx(font, "Họ tên:", Vector2{main_popup.x + 20, main_popup.y + 130}, 30, 5, BLACK);
+                DrawTextEx(font,"Giới tính: ",Vector2{main_popup.x + 20, main_popup.y + 220},30,5,BLACK);
+                DrawTextEx(font,"Ngày sinh: ",Vector2{main_popup.x + 20, main_popup.y +310},30 , 5, BLACK);
                 DrawTextEx(font,"Lưu",Vector2{725,505},30,3,BLACK);
                 box_MSSV.run(global_mouse_pos);
                 box_Ho_Ten.run(global_mouse_pos);
                 box_Phai.run(global_mouse_pos);
-                string save_Button = "Lưu";
+                box_Password.run(global_mouse_pos);
+
         if(CheckCollisionPointRec(GetMousePosition(),save_button)){
             if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Add_Save_Button){
-                    if(save_Button == "Lưu"){
                         press_Add_Save_Button = true;
-                    }
             }
         }
         if(press_Add_Save_Button){
+            string ho, ten;
+            DArray<int> question_id;
+            ho = box_Ho_Ten.text.data.substr(0,box_Ho_Ten.text.data.find(' '));
+            ten = box_Ho_Ten.text.data.substr(box_Ho_Ten.text.data.find(' ')+1, box_Ho_Ten.text.data.size());
+            if(box_MSSV.text.data != "" && box_Ho_Ten.text.data != "" && box_Phai.text.data != "" && box_Password.text.data == ""){
+            dslh[(char*)a.c_str()]->getDSSV()->insertOrderSV(SinhVien{box_MSSV.text.data, ho, ten, box_Phai.text.data, box_Password.text.data,question_id});
+            }
+            press_Add_Button = false;
 
         }
         if(CheckCollisionPointRec(global_mouse_pos, close_button)){
