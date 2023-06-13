@@ -573,31 +573,26 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a){
             for(SVPtr q = dslh[(char*)a.c_str()]->getDSSV()->getFirst(); index<15*page && q!=NULL; index++, q=q->next){
 
                 string ho_ten = q->sv_data.HO + " " + q->sv_data.TEN;
-                DrawTextEx(font,(char*)q->sv_data.MASV.c_str(),Vector2{60,line+40*index-(40*count*16)/16},30,1,BLACK);
-                DrawTextEx(font,(char*)ho_ten.c_str(),Vector2{310,line+40*index},30,1,BLACK);
+                DrawTextEx(font,(char*)q->sv_data.MASV.c_str(),Vector2{60,line+40*index-(40*(index/15))*15},30,1,BLACK);
+                DrawTextEx(font,(char*)ho_ten.c_str(),Vector2{310,line+40*index-(40*(index/15))*15},30,1,BLACK);
+                if((index+1)<10){
+                    DrawTextEx(font, (char *)to_string(index+1).c_str(),{20,150+50*index+10*(-index)-5-(40*(index/15))*15},30,3,BLACK);
+                }else{
+                    DrawTextEx(font, (char *)to_string(index+1).c_str(),{10,150+50*index+10*(-index)-5-(40*(index/15))*15},30,3,BLACK);
+                }
                 if(q->sv_data.Phai == "Nam"){
-                     DrawTextEx(font,(char*)q->sv_data.Phai.c_str(),Vector2{1370,line+40*index},30,3,BLACK);
+                     DrawTextEx(font,(char*)q->sv_data.Phai.c_str(),Vector2{1370,line+40*index-(40*(index/15))*15},30,3,BLACK);
                     }else{
-                        DrawTextEx(font,(char*)q->sv_data.Phai.c_str(),Vector2{1380,line+40*index},30,3,BLACK);
+                     DrawTextEx(font,(char*)q->sv_data.Phai.c_str(),Vector2{1380,line+40*index-(40*(index/15))*15},30,3,BLACK);
                     }
                     count++;
             }
-        for(int i=0;i<15;i++){
-            if((i+1)<10){
-                DrawTextEx(font, (char *)to_string(i+1).c_str(),{20,150+50*i+10*(-i)-5},30,3,BLACK);
-            }else{
-                DrawTextEx(font, (char *)to_string(i+1).c_str(),{10,150+50*i+10*(-i)-5},30,3,BLACK);
-            }
-        }
 
  
-            string add_Button = "Thêm";
         if(CheckCollisionPointRec(GetMousePosition(),{10,10,90,40})){
             DrawRectangleLinesEx({10,10,90,40},3,YELLOW);
             if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Add_Button){
-            if(add_Button == "Thêm"){
                 press_Add_Button = true;
-            }
             }
         }
         if(press_Add_Button){
