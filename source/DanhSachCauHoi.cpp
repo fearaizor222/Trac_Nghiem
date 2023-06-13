@@ -287,3 +287,13 @@ void DanhSachCauHoi::getQuestionList(Node *&cur, CauHoi **question_list, int &nu
         getQuestionList(cur->right, question_list, number_of_question, number_of_question_to_get, mon_hoc);
     }
 }
+
+CauHoi &DanhSachCauHoi::getQuestion(int id){
+    return getQuestion(id, root);
+}
+
+CauHoi &DanhSachCauHoi::getQuestion(int id, Node *&cur){
+    if(id == cur->data.Id) return cur->data;
+    else if(id < cur->data.Id) return getQuestion(id, cur->left);
+    else return getQuestion(id, cur->right);
+}

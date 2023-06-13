@@ -54,6 +54,7 @@ class DanhSachCauHoi{
         void remove(int id);
         void output();
         int getId();
+        CauHoi &getQuestion(int id);
         Node *&getRoot();
 
         void getQuestionList(CauHoi **question_list, int &number_of_question, int number_of_question_to_get, std::string mon_hoc);
@@ -68,6 +69,7 @@ class DanhSachCauHoi{
         void insert(Node *&cur, CauHoi _cau_hoi);
         void remove(Node *&cur, int id);
         void removeWithTwoChildren(Node *&cur);
+        CauHoi &getQuestion(int id, Node *&cur);
 };
 
 typedef typename DanhSachCauHoi::CauHoi CauHoi;
