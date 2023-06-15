@@ -1263,7 +1263,9 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh){
                 {
                     int count = 0;
                     dslh.removeClass(box_ma_lop_khi_xoa.text.data);
+                    box_ma_lop_khi_xoa.text.data = "";
                     press_Are_You_Sure_Button = false;
+                    press_Delete_Save_Button = false;
                 }
             }
             if (CheckCollisionPointRec(global_mouse_pos, {820, 300, 100, 40}))
