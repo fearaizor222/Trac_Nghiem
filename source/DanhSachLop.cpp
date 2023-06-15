@@ -105,10 +105,10 @@ void DanhSachLopHoc::removeClass(string malopcanxoa){
     for(int i=0;i<soluong;i++){
         if(malopcanxoa.compare(List[i]->getMaLop()) == 0){
             delete List[i];
-            List[i] = List[soluong-1];
-            List[soluong-1] = nullptr;
+            for(int j=i;j<soluong-1;j++){
+                List[j] = List[j+1];
+            }
             soluong--;
-            break;
         }
     }
 }
