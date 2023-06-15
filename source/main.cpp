@@ -113,7 +113,7 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh){
             }
     for (int place = 0; index < dslh.getSoLuong(); index++)
             {
-                
+                press_Another_Row_By_Row_Correction_Button.push_back(false);
                 if(box_in_danh_sach.text.data != ""){
                     if(strstr((char *)dslh[index]->getNienKhoa().c_str(), (char *)box_in_danh_sach.text.data.c_str()) == nullptr){
                         offset++;
@@ -160,15 +160,15 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh){
         DrawTextEx(font,"X",{710,60},30,3,YELLOW);
         for(int place = 0; index<dslh.getSoLuong(); index++){
            if(place > 9) place = 100000;
-           Rectangle rec3 = {0,50*(place+3),80,50};
-            press_Another_Row_By_Row_Correction_Button.push_back(false);
+           Rectangle rec3 = {0,50*(place+3)-500*(place/10),80,50};
+            
             if(CheckCollisionPointRec(GetMousePosition(), rec3)){
                 DrawRectangleLinesEx(rec3, 3, YELLOW);
                 if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Another_Row_By_Row_Correction_Button[index]){
                     press_Another_Row_By_Row_Correction_Button[index] = true;
-                    ma_lop = dslh[place]->getMaLop();
-                    ten_lop = dslh[place]->getTenLop();
-                    nien_khoa = dslh[place]->getNienKhoa();
+                    ma_lop = dslh[index]->getMaLop();
+                    ten_lop = dslh[index]->getTenLop();
+                    nien_khoa = dslh[index]->getNienKhoa();
                 }
             }
             if(press_Another_Row_By_Row_Correction_Button[index]){
@@ -200,15 +200,15 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh){
                 }
                 if(press_Correction_Save_Button){
                     if(box_ma_lop.text.data != ""){
-                    dslh[place]->setMaLop(box_ma_lop.text.data);
+                    dslh[index]->setMaLop(box_ma_lop.text.data);
                     box_ma_lop.text.data = "";
                     }
                     if(box_ten_lop.text.data != ""){
-                    dslh[place]->setTenLop(box_ten_lop.text.data);
+                    dslh[index]->setTenLop(box_ten_lop.text.data);
                     box_ten_lop.text.data = "";
                     }
                     if(box_nien_khoa.text.data != ""){
-                    dslh[place]->setNienKhoa(box_nien_khoa.text.data);
+                    dslh[index]->setNienKhoa(box_nien_khoa.text.data);
                     box_nien_khoa.text.data = "";
                     }
                     if(CheckCollisionPointRec(global_mouse_pos,save_button)){
@@ -469,10 +469,18 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a){
         if(press_Add_Save_Button){
             string ho, ten;
             DArray<int> question_id;
+            int count = 0;
+            for(SVPtr ex = sv; ex != NULL; ex = ex->next){
+                if(ex->sv_data.MASV==box_MSSV.text.data){
+                    count++;
+                }
+            }
             ho = box_Ho_Ten.text.data.substr(0,box_Ho_Ten.text.data.find(' '));
             ten = box_Ho_Ten.text.data.substr(box_Ho_Ten.text.data.find(' ')+1, box_Ho_Ten.text.data.size());
             if(box_MSSV.text.data != "" && box_Ho_Ten.text.data != "" && box_Phai.text.data != "" && box_Password.text.data != ""){
-            dslh[(char*)a.c_str()]->getDSSV()->insertOrderSV(SinhVien{box_MSSV.text.data, ho, ten, box_Phai.text.data, box_Password.text.data,question_id});
+                if(count==0){
+                    dslh[(char*)a.c_str()]->getDSSV()->insertOrderSV(SinhVien{box_MSSV.text.data, ho, ten, box_Phai.text.data, box_Password.text.data,question_id});
+                }
             }
             box_Ho_Ten.text.data = "";
             box_MSSV.text.data = "";
@@ -795,7 +803,9 @@ void GiaoDienDanhSachMon (DanhSachMonHoc &dsmh){
                 }
                 if(press_Add_Save_Button){
                    if(box_Ma_Mon.text.data != "" && box_Ten_Mon.text.data != ""){
+                    if(dsmh.search((char*)box_Ma_Mon.text.data.c_str())<0){
                     dsmh.insert(MonHoc{(char*)box_Ma_Mon.text.data.c_str(), box_Ten_Mon.text.data});
+                    }
                    }
                     box_Ma_Mon.text.data = box_Ten_Mon.text.data = "";
                     press_Add_Save_Button = false;
@@ -988,10 +998,10 @@ int main()
 //    exit_tag:
 // string a;
 string a;
-  // GiaoDienDanhSachLop(dslh);
+  GiaoDienDanhSachLop(dslh);
 
-      //GiaoDienDanhSachSinhVien(dslh,a);
-        GiaoDienDanhSachMon(dsmh);
+      GiaoDienDanhSachSinhVien(dslh,a);
+        //GiaoDienDanhSachMon(dsmh);
    Deinitialize();
    return 0;
 
