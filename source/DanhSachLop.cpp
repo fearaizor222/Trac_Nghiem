@@ -102,13 +102,18 @@ int DanhSachLopHoc::getSoLuong(){
 }
 
 void DanhSachLopHoc::removeClass(string malopcanxoa){
-    for(int i=0;i<soluong;i++){
-        if(malopcanxoa.compare(List[i]->getMaLop()) == 0){
-            delete List[i];
-            for(int j=i;j<soluong-1;j++){
-                List[j] = List[j+1];
+    for (int i = 0; i < soluong; i++){
+        if (malopcanxoa.compare(List[i]->getMaLop()) == 0){
+            if(!List[i]->isEmpty()){
+                string path = "../data/DSSV/" + List[i]->getMaLop() + "-" + List[i]->getNienKhoa() + ".txt";
+                remove(path.c_str());
+                for (int j = i; j < soluong; j++)
+                {
+                    List[j] = List[j + 1];
+                }
+                soluong--;
+                break;
             }
-            soluong--;
         }
     }
 }
