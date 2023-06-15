@@ -486,7 +486,6 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch, std:
     int page = 1;
     int index = 0;
     int page_in_da_thi = 1;
-    int index_da_thi = 0;
     SetWindowSize(MAIN_SV_WIDTH, MAIN_SV_HEIGHT);
     SetWindowPosition(GetMonitorWidth(0)/2 - MAIN_SV_WIDTH/2, GetMonitorHeight(0)/2 - MAIN_SV_HEIGHT/2);
     InputBox input_ma_mon{{25, 25, 200, 50}, BLACK, BLUE, LIGHTGRAY, font, false};
@@ -502,11 +501,9 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch, std:
     bool is_button_next_pressed = false;
     bool is_button_prev_pressed = false;
     bool press_flag_chua_thi = false;
-    bool press_flag_da_thi = false;
     bool back_button_in_da_thi = false;
     bool is_button_next_pressed_da_thi = false;
     bool is_button_prev_pressed_da_thi = false;
-    bool view_detail_question = false;
     int ma_cau_hoi_duoc_chon;
     string ma_mon_duoc_chon = "";
     string so_cau_thi = "";
@@ -515,6 +512,7 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch, std:
 
     global_mouse_pos = GetMousePosition();
     int offset = 0;
+    bool error = false;
 
     while(!is_close_icon_pressed){
 
@@ -644,20 +642,37 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch, std:
                     testing_button.run(I_WANT_TO_TEST);
 
                     if(I_WANT_TO_TEST){
-                        is_close_icon_pressed = true;
-                        testing_subject = ma_mon_duoc_chon;
-                        time = box_thoi_gian_thi.text.data;
-                        number_of_question = box_so_cau_hoi.text.data;
-                        scene_stack.push(Testing);
+                        if(is_number(box_so_cau_hoi.text.data) && is_number(box_thoi_gian_thi.text.data)){
+                            is_close_icon_pressed = true;
+                            testing_subject = ma_mon_duoc_chon;
+                            time = box_thoi_gian_thi.text.data;
+                            number_of_question = box_so_cau_hoi.text.data;
+                            scene_stack.push(Testing);
+                        }
+                        else{
+                            error = true;
+                        }
                     }
 
-                    if (CheckCollisionPointRec(global_mouse_pos, close_button))
+                    if (CheckCollisionPointRec(global_mouse_pos, close_button) && !error)
                     {
                         DrawRectangleRec(close_button, Fade(RED, 0.5f));
 
                         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
                         {
                             press_flag_chua_thi = false;
+                        }
+                    }
+
+                    if(error){
+                        Rectangle close_button = Popup("Xin hãy nhập số", "Error");
+
+                        if(CheckCollisionPointRec(global_mouse_pos, close_button)){
+                            DrawRectangleRec(close_button, Fade(RED, 0.5f));
+
+                            if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+                                error = false;
+                            }
                         }
                     }
                 }
@@ -806,5 +821,44 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch, std:
         is_button_prev_pressed = false;
         is_button_next_pressed_da_thi = false;
         is_button_prev_pressed_da_thi = false;
+    }
+}
+
+void TestingScene(SinhVien *&sv, DanhSachCauHoi &dsch,DanhSachMonHoc &dsmh, std::string &ma_mon_thi, std::string &time, std::string &number_of_question){
+    SetWindowSize(1500, 800);
+
+    time = standardization(time);
+    number_of_question = standardization(number_of_question);
+    is_close_icon_pressed = false;
+
+    Button test_button = {{MidCenter().x - 200 / 2, MidCenter().y + 100, 200, 50}, "Bắt đầu thi", WHITE, GRAY, font};
+    bool is_test_button_pressed = false;
+
+    while(!is_close_icon_pressed){
+        BeginDrawing();
+            ClearBackground(WHITE);
+
+            if(!is_test_button_pressed){
+                DrawTextEx(font, ("Mã môn thi: " + ma_mon_thi).c_str(), {MidCenter().x - MeasureTextEx(font, ("Mã môn thi: " + ma_mon_thi).c_str(), 30, 3).x / 2, MidCenter().y - 100}, 30, 3, BLACK);
+                DrawTextEx(font, ("Tên môn thi: " + dsmh[(char *)ma_mon_thi.c_str()].ten_mon_hoc).c_str(), {MidCenter().x - MeasureTextEx(font, ("Tên môn thi: " + dsmh[(char *)ma_mon_thi.c_str()].ten_mon_hoc).c_str(), 30, 3).x / 2, MidCenter().y - 50}, 30, 3, BLACK);
+                DrawTextEx(font, ("Thời gian: " + time + " phút").c_str(), {MidCenter().x - MeasureTextEx(font, ("Thời gian: " + time + "phút").c_str(), 30, 3).x / 2, MidCenter().y}, 30, 3, BLACK);
+                DrawTextEx(font, ("Số câu thi: " + number_of_question).c_str(), {MidCenter().x - MeasureTextEx(font, ("Số câu thi: " + number_of_question).c_str(), 30, 3).x / 2, MidCenter().y + 50}, 30, 3, BLACK);
+                test_button.run(is_test_button_pressed);
+            }
+            else{
+                
+            }
+
+        EndDrawing();
+
+        if (WindowShouldClose())
+        {
+            is_close_icon_pressed = true;
+        }
+
+        if(IsKeyPressed(KEY_ESCAPE)){
+            scene_stack.push(Main_SV);
+            break;
+        }
     }
 }

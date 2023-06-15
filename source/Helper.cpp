@@ -114,23 +114,43 @@ int login(DanhSachLopHoc &dslh, SinhVien *&sv, string id, string pass){
 }
 
 std::string standardization(std::string input) {
+    // Convert all characters to lowercase
     for (char& c : input) {
-        c = std::tolower(c);
+        if (c >= 'A' && c <= 'Z') {
+            c += ('a' - 'A');
+        }
     }
 
+    // Remove extra spaces and leading zeros
     std::string output;
     bool last_char_was_space = false;
+    bool leading_zeros = true;
     for (char c : input) {
         if (c == ' ') {
             if (!last_char_was_space) {
-                output += '-';
+                output += ' ';
+                leading_zeros = true;
                 last_char_was_space = true;
             }
+        } else if (std::isdigit(c)) {
+            if (c != '0' || !leading_zeros) {
+                output += c;
+                leading_zeros = false;
+            }
+            last_char_was_space = false;
         } else {
             output += c;
+            leading_zeros = false;
             last_char_was_space = false;
         }
     }
 
     return output;
+}
+
+bool is_number(const std::string& s)
+{
+    std::string::const_iterator it = s.begin();
+    while (it != s.end() && std::isdigit(*it)) ++it;
+    return !s.empty() && it == s.end();
 }

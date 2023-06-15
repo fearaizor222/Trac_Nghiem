@@ -144,7 +144,7 @@ struct Button{
 
 void LoginScene(DanhSachLopHoc &dslh, SinhVien *&sv);
 void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch, std::string &testing_subject, std::string &time, std::string &number_of_question);
-void TestingScene(DanhSachCauHoi &dsch);
+void TestingScene(SinhVien *&sv, DanhSachCauHoi &dsch,DanhSachMonHoc &dsmh, std::string &testing_subject, std::string &time, std::string &number_of_question);
 
 Rectangle Popup(std::string message, std::string lable);
 

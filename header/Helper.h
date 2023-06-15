@@ -27,4 +27,6 @@ extern uint64_t find(std::string str, char c);
 
 extern std::string standardization(std::string str);
 
+bool is_number(const std::string& s);
+
 #endif
