@@ -145,6 +145,10 @@ struct Button{
 void LoginScene(DanhSachLopHoc &dslh, SinhVien *&sv);
 void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch, std::string &testing_subject, std::string &time, std::string &number_of_question);
 void TestingScene(SinhVien *&sv, DanhSachCauHoi &dsch,DanhSachMonHoc &dsmh, std::string &testing_subject, std::string &time, std::string &number_of_question);
+void GiaoDienDanhSachMon (DanhSachMonHoc &dsmh);
+void in_SinhVien_1_Lop(SVPtr FirstSV, float &cur_page, Font font, string malop, DanhSachLopHoc &dslh);
+void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a);
+void GiaoDienDanhSachLop(DanhSachLopHoc &dslh);
 
 Rectangle Popup(std::string message, std::string lable);
 
