@@ -8,6 +8,8 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
     const int MAIN_SV_HEIGHT = 800;
     int page = 1;
     int index = 0;
+    int page_in_da_thi = 1;
+    int index_da_thi = 0;
     SetWindowSize(MAIN_SV_WIDTH, MAIN_SV_HEIGHT);
     SetWindowPosition(GetMonitorWidth(0)/2 - MAIN_SV_WIDTH/2, GetMonitorHeight(0)/2 - MAIN_SV_HEIGHT/2);
     InputBox input_ma_mon{{25, 25, 200, 50}, BLACK, BLUE, LIGHTGRAY, font, false};
@@ -16,11 +18,18 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
     Rectangle box = {5, 100, 1490, 600};
     Button next{{BotRight().x - 110, BotRight().y - 90, 100, 50}, "Next", WHITE, BLUE, font};
     Button prev{{BotRight().x - 220, BotRight().y - 90, 100, 50}, "Prev", WHITE, BLUE, font};
+    Button next_in_da_thi{{BotRight().x - 110, BotRight().y - 90, 100, 50}, "Next", WHITE, BLUE, font};
+    Button prev_in_da_thi{{BotRight().x - 220, BotRight().y - 90, 100, 50}, "Prev", WHITE, BLUE, font};
+    // Button testing{{}};
 
     bool is_button_next_pressed = false;
     bool is_button_prev_pressed = false;
-    bool press_flag = false;
-    string ma_mon_chon_thi = "";
+    bool press_flag_chua_thi = false;
+    bool press_flag_da_thi = false;
+    bool back_button_in_da_thi = false;
+    bool is_button_next_pressed_da_thi = false;
+    bool is_button_prev_pressed_da_thi = false;
+    string ma_mon_duoc_chon = "";
     string so_cau_thi = "";
     string thoi_gian_thi = "";
 
@@ -37,20 +46,21 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
             if(is_button_next_pressed && page < (dsmh.getLength() - offset) / 7 + 1) page++;
             if(is_button_prev_pressed && page > 1) page--;
 
-            DrawTextEx(font, std::to_string(page).c_str(), {(BotRight().x - 110 + BotRight().x - 220) / 2 - (MeasureTextEx(font, std::to_string(page).c_str(), 30, 3).x / 2) - 200, BotRight().y - 90 + 10}, 30, 3, BLACK);
-            DrawTextEx(font, std::to_string((dsmh.getLength() - offset) / 7 + 1).c_str(), {(BotRight().x - 110 + BotRight().x - 220) / 2 - (MeasureTextEx(font, std::to_string((dsmh.getLength() - offset) / 7 + 1).c_str(), 30, 3).x / 2) - 100, BotRight().y - 90 + 10}, 30, 3, BLACK); 
+            DrawTextEx(font, std::to_string(page).c_str(), {(BotRight().x - 110 + BotRight().x - 220) / 2 - (MeasureTextEx(font, std::to_string(page).c_str(), 30, 3).x / 2) - 100, BotRight().y - 90 + 10}, 30, 3, BLACK);
+            DrawTextEx(font, "/", {(BotRight().x - 110 + BotRight().x - 220) / 2 - (MeasureTextEx(font, "/", 30, 3).x / 2) - 87.5, BotRight().y - 90 + 10}, 30, 3, BLACK);
+            DrawTextEx(font, std::to_string((dsmh.getLength() - offset) / 7 + 1).c_str(), {(BotRight().x - 110 + BotRight().x - 220) / 2 - (MeasureTextEx(font, std::to_string((dsmh.getLength() - offset) / 7 + 1).c_str(), 30, 3).x / 2) - 75, BotRight().y - 90 + 10}, 30, 3, BLACK); 
             
             index = 7 * (page - 1);
             offset = 0;
 
-            input_ma_mon.run(global_mouse_pos);
+            if(!press_flag_da_thi) input_ma_mon.run(global_mouse_pos);
             if(CheckCollisionPointRec(GetMousePosition(), input_ma_mon.box) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
                 page = 1;
             }
             DrawRectangleLinesEx(input_ma_mon.box, 3, BLACK);
             DrawRectangleLinesEx(box, 3, BLACK);
             if(input_ma_mon.text.data == "" && !input_ma_mon.clicked)
-                DrawTextEx(font, "Mã môn", (Vector2){input_ma_mon.box.x + 50, input_ma_mon.box.y + 10}, 30, 0, BLACK);
+                DrawTextEx(font, "Tìm kiếm", (Vector2){input_ma_mon.box.x + 50, input_ma_mon.box.y + 10}, 30, 0, BLACK);
 
             for(int i = 0; i < 8; i++){
                 DrawLineEx(Vector2{5, 175 + 75 * i}, Vector2{1490, 175 + 75 * i}, 2, BLACK);
@@ -65,7 +75,7 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
             DrawLineEx({1300, 100}, {1300, 700}, 2, BLACK);
 
 
-            for (int place = 0; place < 7 && index < dsmh.getLength(); index++)
+            for (int place = 0; index < dsmh.getLength() && !press_flag_da_thi; index++)
             {
                 if(input_ma_mon.text.data != ""){
                     if(strstr(dsmh[index].ma_mon_hoc, input_ma_mon.text.data.c_str()) == nullptr &&
@@ -74,7 +84,8 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
                         continue;
                     }
                 }
-                // if(index - offset >= 7 * page) place = 1000;
+                
+                if(place > 6) place = 10000;
 
                 Rectangle rec = {5, 175 + 75 * place, 1490, 75};
                 DTPtr dt = nullptr;
@@ -94,19 +105,104 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
                 if(CheckCollisionPointRec(GetMousePosition(), rec)){
                     DrawRectangleLinesEx(rec, 3, GREEN);
 
-                    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_flag){
-                        if(output_mark == "Chưa thi"){
-                            press_flag = true;
-                            ma_mon_chon_thi = dsmh[index].ma_mon_hoc;
-                        }
+                    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_flag_chua_thi){
+                        if(output_mark == "Chưa thi") press_flag_chua_thi = true;
+                        else press_flag_da_thi = true;
+                        ma_mon_duoc_chon = dsmh[index].ma_mon_hoc;
                     }
                 }
 
                 place++;
             }
 
-            if(press_flag){
-                Vector2 measure_lable = MeasureTextEx(font, (char*)ma_mon_chon_thi.c_str(), 30, 5);
+            if(press_flag_da_thi){
+                Rectangle scene_when_press_da_thi = {0, 0, MAIN_SV_WIDTH, MAIN_SV_HEIGHT};
+                DrawRectangleRec(scene_when_press_da_thi, WHITE);
+                
+                int count = 0;
+                int start = -1;
+                for(int i = 0; i<sv->question_id.size(); i++){
+                    if(string(dsch.getQuestion(sv->question_id[i]).ma_mon_hoc) == ma_mon_duoc_chon){
+                        count++;
+                        if(start == -1) start = i;
+                    }
+                }
+
+                Button back_button = {{5, 5, 100, 50}, "Back", WHITE, GRAY, font};
+
+                DrawRectangleLinesEx(box, 3, BLACK);
+                for (int i = 0; i < 8; i++)
+                {
+                    DrawLineEx(Vector2{5, 175 + 75 * i}, Vector2{1490, 175 + 75 * i}, 2, BLACK);
+                }
+
+                back_button.run(back_button_in_da_thi);   
+                next_in_da_thi.run(is_button_next_pressed_da_thi);
+                prev_in_da_thi.run(is_button_prev_pressed_da_thi);             
+
+                if(is_button_next_pressed_da_thi && page_in_da_thi < (count) / 7 + 1) page_in_da_thi++;
+                if(is_button_prev_pressed_da_thi && page_in_da_thi > 1) page_in_da_thi--;
+
+                // index_ = 7 * (page - 1);
+
+                DrawTextEx(font, std::to_string(page_in_da_thi).c_str(), {(BotRight().x - 110 + BotRight().x - 220) / 2 - (MeasureTextEx(font, std::to_string(page).c_str(), 30, 3).x / 2) - 100, BotRight().y - 90 + 10}, 30, 3, BLACK);
+                DrawTextEx(font, "/", {(BotRight().x - 110 + BotRight().x - 220) / 2 - (MeasureTextEx(font, "/", 30, 3).x / 2) - 87.5, BotRight().y - 90 + 10}, 30, 3, BLACK);
+                DrawTextEx(font, std::to_string((count) / 7 + 1).c_str(), {(BotRight().x - 110 + BotRight().x - 220) / 2 - (MeasureTextEx(font, std::to_string((dsmh.getLength() - offset) / 7 + 1).c_str(), 30, 3).x / 2) - 75, BotRight().y - 90 + 10}, 30, 3, BLACK); 
+
+                DrawTextEx(font, "STT", {(5 + 100) / 2 - (MeasureTextEx(font, "STT", 30, 3).x / 2), 124}, 30, 3, BLACK);
+                DrawTextEx(font, "ID", {(100 + 273) / 2 - (MeasureTextEx(font, "ID", 30, 3).x / 2), 124}, 30, 3, BLACK);
+                DrawTextEx(font, "Câu hỏi", {786 - (MeasureTextEx(font, "Câu hỏi", 30, 3).x / 2), 124}, 30, 3, BLACK);
+                // DrawTextEx(font, "Điểm", {(1300 + 1490)/2 - (MeasureTextEx(font, "Điểm", 30, 3).x / 2), 124}, 30, 3, BLACK);
+                DrawLineEx({100, 100}, {100, 700}, 2, BLACK);
+                DrawLineEx({273, 100}, {273, 700}, 2, BLACK);
+                DrawLineEx({1300, 100}, {1300, 700}, 2, BLACK);
+
+                for (int place = 0, index = 0, tempo = start; tempo < count + start; tempo++, index++)
+                {
+                    if((tempo / (start + 7)) == page_in_da_thi - 1){
+                        if (place > 6)
+                            place = 10000;
+
+                        Rectangle rec = {5, 175 + 75 * place, 1490, 75};
+                        std::string question = dsch.getQuestion(sv->question_id[tempo]).noi_dung;
+
+                        for (int i = 1; i < question.length(); i++)
+                        {
+                            if (MeasureTextEx(font, question.substr(0, i).c_str(), 30, 3).x + 273 > 1250)
+                            {
+                                question = question.substr(0, i - 1);
+                                question += "...";
+                                break;
+                            }
+                        }
+
+                        DrawTextEx(font, std::to_string(index + 1).c_str(), {(5 + 100) / 2 - (MeasureTextEx(font, std::to_string(index + 1).c_str(), 30, 3).x / 2), 199 + 75 * (place)}, 30, 3, BLACK);
+                        DrawTextEx(font, std::to_string(sv->question_id[tempo]).c_str(), Vector2{100 + 5, 199 + 75 * (place)}, 30, 3, BLACK);
+                        DrawTextEx(font, question.c_str(), Vector2{273 + 5, 199 + 75 * (place)}, 30, 3, BLACK);
+
+                        if (CheckCollisionPointRec(GetMousePosition(), rec))
+                        {
+                            DrawRectangleLinesEx(rec, 3, GREEN);
+
+                            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_flag_da_thi)
+                            {
+                            }
+                        }
+
+                        place++;
+                    }
+                }
+
+                if (back_button_in_da_thi)
+                {
+                    press_flag_da_thi = false;
+
+                    back_button_in_da_thi = false;
+                }
+            }
+
+            if(press_flag_chua_thi){
+                Vector2 measure_lable = MeasureTextEx(font, (char*)ma_mon_duoc_chon.c_str(), 30, 5);
                 Rectangle main_popup = {MidCenter().x - 400 / 2, MidCenter().y - 300 / 2, 400, 300};
                 Rectangle close_button = {main_popup.x + 350, main_popup.y, 50, 50};
                 DrawRectangleRec(main_popup, WHITE);
@@ -116,7 +212,7 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
                 DrawLine(main_popup.x, main_popup.y + 50, main_popup.x + main_popup.width, main_popup.y + 50, BLACK);
                 DrawLine(main_popup.x + 350, main_popup.y, main_popup.x + 350, main_popup.y + 50, BLACK);
                 // DrawTextEx(font, (char *)message.c_str(), Vector2{main_popup.x + main_popup.width / 2 - measure_msg.x / 2, main_popup.y + main_popup.height / 2 - measure_msg.y / 2}, 30, 5, BLACK);
-                DrawTextEx(font, (char*)ma_mon_chon_thi.c_str(), Vector2{main_popup.x + main_popup.width / 2 - measure_lable.x / 2, (main_popup.y * 2 + 50) / 2 - measure_lable.y / 2}, 30, 5, BLACK);
+                DrawTextEx(font, (char*)ma_mon_duoc_chon.c_str(), Vector2{main_popup.x + main_popup.width / 2 - measure_lable.x / 2, (main_popup.y * 2 + 50) / 2 - measure_lable.y / 2}, 30, 5, BLACK);
 
                 DrawTextEx(font, "Thời gian:", Vector2{main_popup.x + 20, main_popup.y + 120}, 30, 5, BLACK);
                 DrawTextEx(font, "Số câu:", Vector2{main_popup.x + 20, main_popup.y + 180}, 30, 5, BLACK);
@@ -128,7 +224,7 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
                     DrawRectangleRec(close_button, Fade(RED, 0.5f));
 
                     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
-                        press_flag = false;
+                        press_flag_chua_thi = false;
                     }
                 }
             }
@@ -145,6 +241,8 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
 
         is_button_next_pressed = false;
         is_button_prev_pressed = false;
+        is_button_next_pressed_da_thi = false;
+        is_button_prev_pressed_da_thi = false;
     }
 }
 void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a);
@@ -747,40 +845,40 @@ int main()
     DanhSachCauHoi dsch("../data/DANHSACHCAUHOI.txt");
     SinhVien *sv = nullptr;
 
-//     current_scene = scene_stack.pop();
-//     while (current_scene != Exit || is_close_icon_pressed)
-//     {
-//         switch (current_scene)
-//         {
-//         case Login:
-//             LoginScene(dslh, sv);
-//             // std::cout<<(sv == nullptr)<<std::endl;
-//             current_scene = scene_stack.pop();
-//             break;
+    current_scene = scene_stack.pop();
+    while (current_scene != Exit || is_close_icon_pressed)
+    {
+        switch (current_scene)
+        {
+        case Login:
+            LoginScene(dslh, sv);
+            // std::cout<<(sv == nullptr)<<std::endl;
+            current_scene = scene_stack.pop();
+            break;
 
-//         case Main_SV:
-//             MainSceneSV(sv, dsmh, dsch);
-//             current_scene = scene_stack.pop();
-//             break;
+        case Main_SV:
+            MainSceneSV(sv, dsmh, dsch);
+            current_scene = scene_stack.pop();
+            break;
 
-//         case Main_GV:
-//             GiaoDienDanhSachLop(dslh);
-//             current_scene = scene_stack.pop();
-//             break;
+        case Main_GV:
+            GiaoDienDanhSachLop(dslh);
+            current_scene = scene_stack.pop();
+            break;
 
-//         case Testing:
-//             // TestingScene(dsch);
-//             current_scene = scene_stack.pop();
-//             break;
+        case Testing:
+            // TestingScene(dsch);
+            current_scene = scene_stack.pop();
+            break;
 
-//         case Exit:
-//             goto exit_tag;
-//         }
-//     }
-//    exit_tag:
-string a;
-    GiaoDienDanhSachLop(dslh);
-     GiaoDienDanhSachSinhVien(dslh,a);
+        case Exit:
+            goto exit_tag;
+        }
+    }
+   exit_tag:
+// string a;
+//     GiaoDienDanhSachLop(dslh);
+//      GiaoDienDanhSachSinhVien(dslh,a);
    Deinitialize();
    return 0;
 

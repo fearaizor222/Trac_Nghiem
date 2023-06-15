@@ -146,4 +146,7 @@ void LoginScene(DanhSachLopHoc &dslh, SinhVien *&sv);
 void TestingScene(DanhSachCauHoi &dsch);
 Rectangle Popup(std::string message, std::string lable);
 
+void DrawTextBoxed(Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint);
+void DrawTextBoxedSelectable(Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint, int selectStart, int selectLength, Color selectTint, Color selectBackTint);
+
 #endif
