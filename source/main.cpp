@@ -2,7 +2,6 @@
 #include "../header/UserInterface.h"
 #include "../header/Helper.h"
 
-
 void SauKhiAnVaoNganHangCauHoi(){
     const int screenWidth = 1500;
     const int screenHeight = 800;

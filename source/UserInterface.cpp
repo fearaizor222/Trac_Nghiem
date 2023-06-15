@@ -903,6 +903,10 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh){
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
+        // DrawRectangle(480,705,180,45, Fade(BLUE, 0.2f));
+        // DrawRectangle(850,705,180,45, Fade(BLUE, 0.2f));
+        // DrawTextEx(font, "Trang trước",{490,712.5},30,3,BLACK);
+        // DrawTextEx(font, "Trang sau",{875,712.5},30,3,BLACK);
         DrawRectangle(0, 0, 1500, 100, Fade(GRAY, 0.5f));
         DrawRectangle(10, 10, 320, 40, WHITE); // Vẽô: Nhập từ khóa
         DrawRectangleLines(10, 10, 320, 40, BLACK);
@@ -1010,13 +1014,13 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh){
             DrawTextEx(font, (char *)dslh[index]->getTenLop().c_str(), Vector2{350, 160 + 50 * place}, 30, 3, BLACK);    // tên lớp
             DrawTextEx(font, (char *)dslh[index]->getNienKhoa().c_str(), Vector2{1200, 160 + 50 * place}, 30, 3, BLACK); // niên khóa
 
-            if (CheckCollisionPointRec(GetMousePosition(), {80, 50 * (place + 3), 260, 50}))
+            if (CheckCollisionPointRec(GetMousePosition(), {80, 50 * (place + 3) - 500 * (place / 10), 260, 50}))
             {
-                DrawRectangleLinesEx({80, 50 * (place + 3), 260, 50}, 3, RED);
+                DrawRectangleLinesEx({80, 50 * (place + 3) - 500 * (place / 10), 260, 50}, 3, RED);
                 if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Student_List_Button)
                 {
                     press_Student_List_Button = true;
-                    ma_lop = dslh[place]->getMaLop();
+                    ma_lop = dslh[index]->getMaLop();
                 }
             }
 
@@ -1411,12 +1415,13 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a){
             if(box_MSSV.text.data != "" && box_Ho_Ten.text.data != "" && box_Phai.text.data != "" && box_Password.text.data != ""){
                 if(count==0){
                     dslh[(char*)a.c_str()]->getDSSV()->insertOrderSV(SinhVien{box_MSSV.text.data, ho, ten, box_Phai.text.data, box_Password.text.data,question_id});
+                        box_Ho_Ten.text.data = "";
+                        box_MSSV.text.data = "";
+                        box_Phai.text.data = "";
+                        box_Password.text.data = "";
                 }
             }
-            box_Ho_Ten.text.data = "";
-            box_MSSV.text.data = "";
-            box_Phai.text.data = "";
-            box_Password.text.data = "";
+
            if(CheckCollisionPointRec(global_mouse_pos,save_button)){
                 if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
                     press_Add_Save_Button = false;
