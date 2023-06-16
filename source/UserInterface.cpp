@@ -1087,7 +1087,7 @@ void TestingScene(SinhVien *&sv, DanhSachMonHoc &dsmh, CauHoi **&ptr, std::strin
 
 void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachSinhVien &dsmh);
 void inBangDiemDanhSachSinhVien(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma_lop_muon_in, string ma_mon ,float &cur_page);
-void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh)
+void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
 {
     const int screenWidth = 1500;
     const int screenHeight = 800;
@@ -1253,7 +1253,7 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh)
 
             if (press_Student_List_Button)
             {
-                GiaoDienDanhSachSinhVien(dslh, ma_lop, dsmh);
+                GiaoDienDanhSachSinhVien(dslh, ma_lop, dsmh, dsch);
                 if(IsKeyPressed(KEY_ESCAPE))
                 {
                     press_Student_List_Button = false;
@@ -1531,7 +1531,7 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh)
             }
         }
         if(press_Menu_Button){
-            GiaoDienDanhSachMon(dsmh,dslh);
+            GiaoDienDanhSachMon(dsmh,dslh, dsch);
                 if(IsKeyPressed(KEY_ESCAPE))
                 {
                     press_Menu_Button = false;
@@ -1546,9 +1546,11 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh)
                 press_Cau_Hoi_Button = true;
             }
         }
-        // if(press_Cau_Hoi_Button){
-        //     //Ti add them Giao Dien Cau Hoi
-        // }
+        if(press_Cau_Hoi_Button){
+            //Ti add them Giao Dien Cau Hoi
+            press_Cau_Hoi_Button = false;
+            SauKhiAnVaoNganHangCauHoi(dsch);
+        }
         EndDrawing();
 
         if (WindowShouldClose())
@@ -1565,7 +1567,7 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh)
     }
 }
 void in_SinhVien_1_Lop(SVPtr FirstSV, float &cur_page, Font font, string malop, DanhSachLopHoc &dslh);
-void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachMonHoc &dsmh)
+void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch)
 {
     const int screenWidth = 1500;
     const int screenHeight = 800;
@@ -1805,7 +1807,7 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachMonHoc &ds
             }
         }
         if(press_Back_Button){
-            GiaoDienDanhSachLop(dslh, dsmh);
+            GiaoDienDanhSachLop(dslh, dsmh, dsch);
             press_Back_Button = false;
         }
         if(CheckCollisionPointRec(GetMousePosition(),{10, 55, 150, 40})){
@@ -1815,7 +1817,7 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachMonHoc &ds
             }
         }
         if(press_Mon_Hoc_Button){
-            GiaoDienDanhSachMonSV(dsmh, dslh,a);
+            GiaoDienDanhSachMonSV(dsmh, dslh,a, dsch);
         if(IsKeyPressed(KEY_ESCAPE))
                 {
                     press_Mon_Hoc_Button = false;
@@ -1946,7 +1948,7 @@ void inDanhSachMon(DanhSachMonHoc &dsmh, float &cur_page, int max_item, bool is_
         }
     }
 }
-void GiaoDienDanhSachMon(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh)
+void GiaoDienDanhSachMon(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, DanhSachCauHoi &dsch)
 {
     const int screenWidth = 1500;
     const int screenHeight = 800;
@@ -2260,7 +2262,7 @@ void GiaoDienDanhSachMon(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh)
             }
         }
         if(press_Back_Button){
-            GiaoDienDanhSachLop(dslh, dsmh);
+            GiaoDienDanhSachLop(dslh, dsmh, dsch);
             press_Back_Button = false;
         }
         EndDrawing();
@@ -2274,7 +2276,7 @@ void GiaoDienDanhSachMon(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh)
         }
     }
 }
-void GiaoDienDanhSachMonSV(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma_lop)
+void GiaoDienDanhSachMonSV(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma_lop, DanhSachCauHoi &dsch)
 {
     const int screenWidth = 1500;
     const int screenHeight = 800;
@@ -2354,7 +2356,7 @@ void GiaoDienDanhSachMonSV(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma
             }
         }
         if(press_Back_Button){
-            GiaoDienDanhSachLop(dslh, dsmh);
+            GiaoDienDanhSachLop(dslh, dsmh, dsch);
             if(IsKeyPressed(KEY_ESCAPE)){
             press_Back_Button = false;
             }
@@ -2369,7 +2371,7 @@ void GiaoDienDanhSachMonSV(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma
                     }
                 }
                 if(press_Diem_Thi_Button){
-                    inBangDiemDanhSachSinhVien(dsmh,dslh, ma_lop, ma_mon, cur_page);
+                    inBangDiemDanhSachSinhVien(dsmh,dslh, ma_lop, ma_mon, cur_page, dsch);
                 }
         }
         EndDrawing();
@@ -2383,7 +2385,7 @@ void GiaoDienDanhSachMonSV(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma
         }
     }
 }
-void inBangDiemDanhSachSinhVien(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma_lop_muon_in, string ma_mon ,float &cur_page)
+void inBangDiemDanhSachSinhVien(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma_lop_muon_in, string ma_mon ,float &cur_page, DanhSachCauHoi &dsch)
 {
     const int screenWidth = 1500;
     const int screenHeight = 800;
@@ -2496,7 +2498,7 @@ if (IsKeyPressed(KEY_RIGHT))
         }
     }
     if(press_Back_Button){
-        GiaoDienDanhSachMonSV(dsmh, dslh, ma_lop_muon_in);
+        GiaoDienDanhSachMonSV(dsmh, dslh, ma_lop_muon_in, dsch);
         if(IsKeyPressed(KEY_ESCAPE)){
             press_Back_Button = false;
         }
@@ -2513,4 +2515,332 @@ if (IsKeyPressed(KEY_RIGHT))
         }
     
     }
+}
+void SpecialInputBox(Text &text, Vector2 &mouse_pos, Rectangle box, bool &clicked){
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+        mouse_pos = GetMousePosition();
+
+    if (CheckCollisionPointRec(mouse_pos, box))
+        clicked = true;
+    else
+        clicked = false;
+
+    if (clicked)
+    {
+        DrawRectangleRec({box.x - 5, box.y - 5, box.width + 5, box.height + 5}, LIGHTGRAY);
+        int key = GetCharPressed();
+        while (key > 0)
+        {
+            int length = 0;
+            const char *utf8 = CodepointToUTF8(key, &length);
+            std::string str_utf8(utf8);
+            str_utf8.resize(length);
+            if (length > 1)
+            {
+                uint64_t how_many_to_remove = find(text.data, viet_key[str_utf8][0]);
+                if (how_many_to_remove == std::string::npos)
+                    how_many_to_remove = text.data.length();
+                text.data.resize(how_many_to_remove);
+                text.text_layout.resize(how_many_to_remove);
+            }
+            text.data += str_utf8;
+            text.text_layout.push_back(length);
+            if (length > 1)
+            {
+                for (int i = 0; i < length - 1; i++)
+                    text.text_layout.push_back(0);
+            }
+
+            key = GetCharPressed();
+        }
+
+        if (IsKeyDown(KEY_BACKSPACE) && text.text_layout.size() > 0)
+        {
+            while (text.text_layout.back() == 0)
+                text.text_layout.pop_back();
+            for (int i = 0; i < text.text_layout.back(); i++)
+                text.data.pop_back();
+            text.text_layout.pop_back();
+        }
+    }
+
+    DrawRectangleLinesEx({box.x - 5, box.y - 5, box.width + 5, box.height + 5}, 3, BLACK);
+    DrawTextBoxed(font, text.data.c_str(), box, 30, 3, true, BLACK);
+}
+void SauKhiAnVaoNganHangCauHoi(DanhSachCauHoi &dsch){
+    const int screenWidth = 1500;
+    const int screenHeight = 800;
+    SetWindowPosition(GetMonitorWidth(0)/2 - screenWidth/2, GetMonitorHeight(0)/2 - screenHeight/2);
+    SetWindowSize(screenWidth, screenHeight);
+    Button back_btn_in_NgHCH = {{BotLeft().x + 50, BotLeft().y - 90, 100, 50}, "Back", WHITE, BLUE, font};
+    bool is_back_btn_in_NgHCH_pressed = false;
+
+    Button next_page_btn = {{BotRight().x - 110, BotRight().y - 90, 100, 50}, "Next", WHITE, BLUE, font};
+    bool is_next_page_btn_pressed = false;
+
+    Button previous_page_btn = {{BotRight().x - 220, BotRight().y - 90, 100, 50}, "Prev", WHITE, BLUE, font};
+    bool is_previous_page_btn_pressed = false;
+
+    Button add_btn = {{250, 25, 100, 50}, "Add", WHITE, BLUE, font};
+    bool is_add_btn_pressed = false;
+
+    InputBox search_ma_mon = {{25, 25, 200, 50}, BLACK, BLUE, LIGHTGRAY, font};
+
+    InputBox input_ma_mon = {{25 + MeasureTextEx(font, "Mã môn: ", 30, 3).x, 25, 200, 50}, BLACK, BLUE, LIGHTGRAY, font};
+    InputBox input_dap_an = {{25 + MeasureTextEx(font, "Đáp án: ", 30, 3).x + input_ma_mon.box.width + 200, 25, 200, 50}, BLACK, BLUE, LIGHTGRAY, font};
+
+    int page = 1;
+    Queue<Node*> q;
+    int max_page = 10000;
+    int offset = 0;
+
+    int scene_in_NgHCH = 0;
+    Text text_noi_dung;
+    Text text_cau_a;
+    Text text_cau_b;
+    Text text_cau_c;
+    Text text_cau_d;
+
+    Node *CauHoiDangChon = nullptr;
+
+    while(!is_close_icon_pressed){
+        BeginDrawing();
+            ClearBackground(WHITE);
+            switch(scene_in_NgHCH){
+                case 0:{
+                    q.push(dsch.getRoot());
+
+                    back_btn_in_NgHCH.run(is_back_btn_in_NgHCH_pressed);
+                    next_page_btn.run(is_next_page_btn_pressed);
+                    previous_page_btn.run(is_previous_page_btn_pressed);
+                    search_ma_mon.run(global_mouse_pos);
+                    add_btn.run(is_add_btn_pressed);
+                    DrawRectangleLinesEx(search_ma_mon.box, 3, BLACK);
+                    DrawRectangleLinesEx(add_btn.box, 3, BLACK);
+
+                    if(is_add_btn_pressed){
+                        scene_in_NgHCH = 1;
+                        is_add_btn_pressed = false;
+                    }
+
+                    DrawRectangleLinesEx({5, 100, 1490, 600}, 3, BLACK);
+                    for (int i = 0; i < 8; i++)
+                    {
+                        DrawLineEx(Vector2{5, 175 + 75 * i}, Vector2{1490, 175 + 75 * i}, 2, BLACK);
+                    }
+
+                    DrawTextEx(font, "STT", {(5 + 100) / 2 - (MeasureTextEx(font, "STT", 30, 3).x / 2), 124}, 30, 3, BLACK);
+                    DrawTextEx(font, "Mã môn", {(100 + 273) / 2 - (MeasureTextEx(font, "Mã môn", 30, 3).x / 2), 124}, 30, 3, BLACK);
+                    DrawTextEx(font, "ID", {(273 + 473) / 2 - (MeasureTextEx(font, "ID", 30, 3).x / 2), 124}, 30, 3, BLACK);
+                    DrawTextEx(font, "Câu hỏi", {(473 + 1300) / 2 - (MeasureTextEx(font, "ID", 30, 3).x / 2), 124}, 30, 3, BLACK);
+                    DrawTextEx(font, "Đáp án đúng", {(1300 + 1490) / 2 - (MeasureTextEx(font, "Đáp án đúng", 30, 3).x / 2), 124}, 30, 3, BLACK);
+                    DrawLineEx({100, 100}, {100, 700}, 2, BLACK);
+                    DrawLineEx({273, 100}, {273, 700}, 2, BLACK);
+                    DrawLineEx({473, 100}, {473, 700}, 2, BLACK);
+                    DrawLineEx({1300, 100}, {1300, 700}, 2, BLACK);
+
+                    // int index = 7 * (page - 1);
+                    if (is_next_page_btn_pressed && page < max_page)
+                    {
+                        page++;
+                        // is_next_page_btn_pressed = false;
+                    }
+                    if (is_previous_page_btn_pressed && page > 1)
+                    {
+                        page--;
+                        // is_previous_page_btn_pressed = false;
+                    }
+                    offset = 0;
+
+                    for (int place = 0, index = 1; !q.empty(); index++)
+                    {
+                        Node *temp = q.pop();
+                        if (temp->left != nullptr)
+                        {
+                            q.push(temp->left);
+                        }
+                        if (temp->right != nullptr)
+                        {
+                            q.push(temp->right);
+                        }
+                        if (q.empty())
+                        {
+                            if ((float(index - offset) / 7.0f) == int(float(index - offset) / 7.0f))
+                                max_page = (index - offset) / 7;
+                            else
+                                max_page = (index - offset) / 7 + 1;
+                            // if(max_page - 1 <= )
+                        }
+
+                        if (search_ma_mon.text.data != "")
+                        {
+                            if (strstr(temp->data.ma_mon_hoc, search_ma_mon.text.data.c_str()) == nullptr)
+                            {
+                                offset++;
+                                continue;
+                            }
+                        }
+
+                        if (is_next_page_btn_pressed || is_previous_page_btn_pressed)
+                        {
+                            place = 0;
+                            is_next_page_btn_pressed = is_previous_page_btn_pressed = false;
+                        }
+
+                        std::string question = temp->data.noi_dung;
+                        for (int i = 1; i < question.length(); i++)
+                        {
+                            if (MeasureTextEx(font, question.substr(0, i).c_str(), 30, 3).x + 473 > 1260)
+                            {
+                                question = question.substr(0, i - 1);
+                                question += "...";
+                                break;
+                            }
+                        }
+
+                        if (index - offset >= 7 * (page - 1) + 1 && index - offset <= 7 * page)
+                        {
+                            DrawTextEx(font, std::to_string(index - offset).c_str(), {(5 + 100) / 2 - (MeasureTextEx(font, std::to_string(index - offset).c_str(), 30, 3).x / 2), 199 + 75 * (place % 7)}, 30, 3, BLACK);
+                            DrawTextEx(font, (char *)(temp->data.ma_mon_hoc), Vector2{100 + 5, 199 + 75 * (place % 7)}, 30, 3, BLACK);
+                            DrawTextEx(font, std::to_string(temp->data.Id).c_str(), Vector2{273 + 5, 199 + 75 * (place % 7)}, 30, 3, BLACK);
+                            DrawTextEx(font, question.c_str(), Vector2{473 + 5, 199 + 75 * (place % 7)}, 30, 3, BLACK);
+                            DrawTextEx(font, temp->data.dap_an.c_str(), Vector2{(1300 + 1490) / 2 - MeasureTextEx(font, temp->data.dap_an.c_str(), 30, 3).x / 2, 199 + 75 * (place % 7)}, 30, 3, BLACK);
+                            if (CheckCollisionPointRec(GetMousePosition(), {5, 175 + 75 * (place % 7), 1490, 75}))
+                            {
+                                DrawRectangleLinesEx({5, 175 + 75 * (place % 7), 1490, 75}, 2, GREEN);
+                                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+                                {
+                                    CauHoiDangChon = temp;
+                                    scene_in_NgHCH = 2;
+                                }
+                            }
+                        }
+
+
+                        place++;
+                    }
+
+                    DrawTextEx(font, std::to_string(page).c_str(), {(BotRight().x - 110 + BotRight().x - 220) / 2 - (MeasureTextEx(font, std::to_string(page).c_str(), 30, 3).x / 2) - 110, BotRight().y - 90 + 10}, 30, 3, BLACK);
+                    DrawTextEx(font, "/", {(BotRight().x - 110 + BotRight().x - 220) / 2 - (MeasureTextEx(font, "/", 30, 3).x / 2) - 95, BotRight().y - 90 + 10}, 30, 3, BLACK);
+                    DrawTextEx(font, std::to_string((max_page * 7 + 1) / 7).c_str(), {(BotRight().x - 110 + BotRight().x - 220) / 2 - (MeasureTextEx(font, std::to_string((max_page * 7 + 1) / 7).c_str(), 30, 3).x / 2) - 76, BotRight().y - 90 + 10}, 30, 3, BLACK);
+
+                    if (is_back_btn_in_NgHCH_pressed)
+                    {
+                        scene_stack.push(Main_GV);
+                        goto back_label;
+                        break;
+                    }
+                    break;
+                }
+
+                case 1:{
+                    Rectangle close_button = {TopRight().x - 50, TopRight().y + 10, 40, 40};
+                    DrawRectangleRec(close_button, RED);
+                    DrawRectangleLinesEx(close_button, 2, BLACK);
+                    DrawTextEx(font, "X", {TopRight().x - 50 + 40 / 2 - MeasureTextEx(font, "X", 30, 3).x / 2, TopRight().y + 10 + 40 / 2 - MeasureTextEx(font, "X", 30, 3).y / 2}, 30, 3, BLACK);
+
+                    Rectangle save_button = {BotCenter().x - 100/2, BotCenter().y - 60, 100, 50};
+                    DrawRectangleRec(save_button, GREEN);
+                    DrawRectangleLinesEx(save_button, 2, BLACK);
+                    DrawTextEx(font, "Save", {BotCenter().x - MeasureTextEx(font, "Save", 30, 3).x / 2, BotCenter().y - 60/2 - MeasureTextEx(font, "Lưu", 30, 3).y / 2}, 30, 3, BLACK);
+
+                    bool is_special_noi_dung_clicked = false;
+                    bool is_special_cau_a_clicked = false;
+                    bool is_special_cau_b_clicked = false;
+                    bool is_special_cau_c_clicked = false;
+                    bool is_special_cau_d_clicked = false;
+                    Rectangle noi_dung_text_box = {50, 100, 1490 - 80, 200};
+                    Rectangle cau_a = {50, 350, 1490 - 80, 70};
+                    Rectangle cau_b = {50, 450, 1490 - 80, 70};
+                    Rectangle cau_c = {50, 550, 1490 - 80, 70};
+                    Rectangle cau_d = {50, 650, 1490 - 80, 70};
+
+                    DrawTextEx(font, "Mã môn: ", {25, TopLeft().y + 35}, 30, 3, BLACK);
+                    input_ma_mon.run(global_mouse_pos);
+                    DrawTextEx(font, "Đáp án: ", {25 + 400, TopLeft().y + 35}, 30, 3, BLACK);
+                    input_dap_an.run(global_mouse_pos);
+
+                    SpecialInputBox(text_noi_dung, global_mouse_pos, noi_dung_text_box, is_special_noi_dung_clicked);
+                    SpecialInputBox(text_cau_a, global_mouse_pos, cau_a, is_special_cau_a_clicked);
+                    DrawTextEx(font, "A. ", {15, 350}, 30, 3, BLACK);
+                    SpecialInputBox(text_cau_b, global_mouse_pos, cau_b, is_special_cau_b_clicked);
+                    DrawTextEx(font, "B. ", {15, 450}, 30, 3, BLACK);
+                    SpecialInputBox(text_cau_c, global_mouse_pos, cau_c, is_special_cau_c_clicked);
+                    DrawTextEx(font, "C. ", {15, 550}, 30, 3, BLACK);
+                    SpecialInputBox(text_cau_d, global_mouse_pos, cau_d, is_special_cau_d_clicked);
+                    DrawTextEx(font, "D. ", {15, 650}, 30, 3, BLACK);
+
+                    if(CheckCollisionPointRec(GetMousePosition(), close_button) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+                        scene_in_NgHCH = 0;
+                        break;
+                    }
+
+                    if(CheckCollisionPointRec(GetMousePosition(), save_button) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+                        if(text_noi_dung.data != "" && text_cau_a.data != "" && text_cau_b.data != "" && text_cau_c.data != "" && text_cau_d.data != "" && input_ma_mon.text.data != "" && input_dap_an.text.data != ""){
+                            CauHoi cau_hoi;
+
+                            strncpy(cau_hoi.ma_mon_hoc, input_ma_mon.text.data.c_str(), 15);
+                            cau_hoi.noi_dung = text_noi_dung.data;
+                            cau_hoi.dap_an_a = text_cau_a.data;
+                            cau_hoi.dap_an_b = text_cau_b.data;
+                            cau_hoi.dap_an_c = text_cau_c.data;
+                            cau_hoi.dap_an_d = text_cau_d.data;
+                            cau_hoi.dap_an = input_dap_an.text.data;
+                            dsch.insert(cau_hoi);
+                            scene_in_NgHCH = 0;
+                            break;
+                        }
+                    }
+                    break;
+                }
+                case 2:{
+                    CauHoi question = CauHoiDangChon->data;
+                    Rectangle detail_question_box = {0, 0, 1500, 800};
+                    DrawRectangleRec(detail_question_box, WHITE);
+
+                    bool close_detail_question = false;
+                    Button back_in_detail_question = Button({BotCenter().x - 200 / 2, BotCenter().y - 50 / 2 - 50, 200, 50}, "Back", WHITE, GRAY, font);
+                    back_in_detail_question.run(close_detail_question);
+
+                    Vector2 starting_point = MeasureTextEx(font, (std::to_string(question.Id) + ".").c_str(), 30, 3);
+                    DrawTextEx(font, (std::to_string(question.Id) + ".").c_str(), {25, 25}, 30, 3, BLACK);
+                    DrawRectangleLinesEx({23, 23, 1490 - 23, 800 - 30}, 2, BLACK);
+                    DrawTextBoxed(font, question.noi_dung.c_str(), {starting_point.x + 25 + 5, 25, 1490 - starting_point.x - 10, 150}, 30, 3, true, BLACK);
+
+                    DrawTextEx(font, "A. ", {starting_point.x - 10, 150 + 25 + 5}, 30, 3, BLACK);
+                    DrawTextBoxed(font, question.dap_an_a.c_str(), {starting_point.x + 25 + 5, 150 + 25 + 5, 1490 - starting_point.x - 10, 150}, 30, 3, false, BLACK);
+
+                    DrawTextEx(font, "B. ", {starting_point.x - 10, 300 + 25 + 5}, 30, 3, BLACK);
+                    DrawTextBoxed(font, question.dap_an_b.c_str(), {starting_point.x + 25 + 5, 300 + 25 + 5, 1490 - starting_point.x - 10, 150}, 30, 3, false, BLACK);
+
+                    DrawTextEx(font, "C. ", {starting_point.x - 10, 450 + 25 + 5}, 30, 3, BLACK);
+                    DrawTextBoxed(font, question.dap_an_c.c_str(), {starting_point.x + 25 + 5, 450 + 25 + 5, 1490 - starting_point.x - 10, 150}, 30, 3, false, BLACK);
+
+                    DrawTextEx(font, "D. ", {starting_point.x - 10, 600 + 25 + 5}, 30, 3, BLACK);
+                    DrawTextBoxed(font, question.dap_an_d.c_str(), {starting_point.x + 25 + 5, 600 + 25 + 5, 1490 - starting_point.x - 10, 150}, 30, 3, false, BLACK);
+
+                    if (close_detail_question)
+                    {
+                        close_detail_question = false;
+                        scene_in_NgHCH = 0;
+                    }
+                    break;
+                }
+            }
+         EndDrawing();
+         if (WindowShouldClose())
+        {
+            is_close_icon_pressed = true;
+        }
+
+        if(IsKeyPressed(KEY_ESCAPE)){
+            break;
+        }
+
+        is_next_page_btn_pressed = false;
+        is_previous_page_btn_pressed = false;
+        is_back_btn_in_NgHCH_pressed = false;
+    }
+    back_label:
+    return;
 }

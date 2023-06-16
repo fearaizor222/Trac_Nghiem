@@ -69,7 +69,7 @@ int main()
                 break;
 
             case Main_GV:
-                GiaoDienDanhSachLop(dslh, dsmh);
+                GiaoDienDanhSachLop(dslh, dsmh, dsch);
                 current_scene = scene_stack.pop();
                 break;
 

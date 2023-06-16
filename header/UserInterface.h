@@ -143,14 +143,14 @@ struct Button{
 };
 
 void LoginScene(DanhSachLopHoc &dslh, SinhVien *&sv);
-void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch, std::string &testing_subject, std::string &time, std::string &number_of_question);
-void TestingScene(SinhVien *&sv, DanhSachCauHoi &dsch,DanhSachMonHoc &dsmh, std::string &testing_subject, std::string &time, std::string &number_of_question);
-void GiaoDienDanhSachMon (DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh);
-void GiaoDienDanhSachMonSV (DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma_lop);
-void inBangDiemDanhSachSinhVien(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma_lop_muon_in, string ma_mon ,float &cur_page);
+void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch, std::string &testing_subject, std::string &time_testing, std::string &number_of_question, CauHoi **&ptr);
+void TestingScene(SinhVien *&sv, DanhSachMonHoc &dsmh, CauHoi **&ptr, std::string &ma_mon_thi, std::string &time, std::string &number_of_question);
+void GiaoDienDanhSachMon (DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, DanhSachCauHoi &dsch);
+void GiaoDienDanhSachMonSV (DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma_lop, DanhSachCauHoi &dsch);
+void inBangDiemDanhSachSinhVien(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma_lop_muon_in, string ma_mon ,float &cur_page, DanhSachCauHoi &dsch);
 void in_SinhVien_1_Lop(SVPtr FirstSV, float &cur_page, Font font, string malop, DanhSachLopHoc &dslh);
-void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachMonHoc &dsmh);
-void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh);
+void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch);
+void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch);
 Rectangle Popup(std::string message, std::string lable);
 void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch, std::string &testing_subject, std::string &time, std::string &number_of_question, CauHoi **&ptr);
 void TestingScene(SinhVien *&sv, DanhSachMonHoc &dsmh, CauHoi **&ptr, std::string &testing_subject, std::string &time, std::string &number_of_question);
@@ -158,4 +158,6 @@ void TestingScene(SinhVien *&sv, DanhSachMonHoc &dsmh, CauHoi **&ptr, std::strin
 void DrawTextBoxed(Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint);
 void DrawTextBoxedSelectable(Font font, const char *text, Rectangle rec, float fontSize, float spacing, bool wordWrap, Color tint, int selectStart, int selectLength, Color selectTint, Color selectBackTint);
 
+void SauKhiAnVaoNganHangCauHoi(DanhSachCauHoi &dsch);
+void SpecialInputBox(Text &text, Vector2 &mouse_pos, Rectangle box, bool &clicked);
 #endif
