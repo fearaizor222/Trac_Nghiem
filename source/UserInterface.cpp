@@ -1084,7 +1084,9 @@ void TestingScene(SinhVien *&sv, DanhSachMonHoc &dsmh, CauHoi **&ptr, std::strin
         }
     }
 }
+
 void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachSinhVien &dsmh);
+void inBangDiemDanhSachSinhVien(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma_lop_muon_in, string ma_mon ,float &cur_page);
 void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh)
 {
     const int screenWidth = 1500;
@@ -1136,6 +1138,7 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh)
         DrawRectangleLines(10, 10, 320, 40, BLACK);
         DrawRectangle(1350, 10, 120, 40, DARKBLUE); // Ô menu
         DrawRectangleLines(1350, 10, 120, 40, BLACK);
+        DrawTextEx(font, "Môn Học", {1357.5, 15}, 30, 1, WHITE);
         DrawTextEx(font, "Nhập niên khóa ", {70, 15}, 30, 3, GRAY);
         DrawTextEx(font, "Môn Học", {1357.5, 15}, 30, 1, WHITE);
         for (int i = 0; i < 3; i++)
@@ -1570,6 +1573,7 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachMonHoc &ds
     int index = 0;
     float line = 145;
     int item_per_page = 0;
+    string ma_lop = "";
     SVPtr sv = dslh[(char *)a.c_str()]->getDSSV()->getFirst();
     bool press_Add_Button = false;
     bool press_Add_Save_Button = false;
@@ -1577,6 +1581,8 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachMonHoc &ds
     bool press_Delete_Save_Button = false;
     bool press_Are_You_Sure_Button = false;
     bool press_Back_Button = false;
+    bool press_Mon_Hoc_Button = false;
+    bool press_Show_Subject_Button = false;
     InputBox box_add(Rectangle{10, 10, 90, 40}, BLACK, BLACK, WHITE, font);
     InputBox box_nien_khoa(Rectangle{550, 410, 190, 50}, BLACK, BLACK, WHITE, font);
     InputBox box_MSSV(Rectangle{480, 185, 210, 40}, BLACK, BLACK, WHITE, font);
@@ -1584,6 +1590,7 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachMonHoc &ds
     InputBox box_Phai(Rectangle{540, 365, 100, 40}, BLACK, BLACK, WHITE, font);
     InputBox box_Password(Rectangle{540, 455, 150, 40}, BLACK, BLACK, WHITE, font);
     InputBox box_MSSV_Xoa(Rectangle{695, 320, 240, 50}, BLACK, BLACK, WHITE, font);
+    InputBox box_Ma_Mon(Rectangle{695, 320, 240, 50}, BLACK, BLACK, WHITE, font);
     SetWindowPosition(GetMonitorWidth(0) / 2 - screenWidth / 2, GetMonitorHeight(0) / 2 - screenHeight / 2);
     SetWindowSize(screenWidth, screenHeight);
     bool is_button_next_pressed = false;
@@ -1612,6 +1619,9 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachMonHoc &ds
         DrawRectangle(55, 100, 250, 40, DARKBLUE);   // MSSV
         DrawRectangle(305, 100, 995, 40, DARKBLUE);  // Họ tên
         DrawRectangle(1300, 100, 200, 40, DARKBLUE); // Giới tín
+        DrawRectangle(10, 55, 150, 40, DARKBLUE); // ô điểm
+        DrawRectangleLines(10, 55, 150, 40, BLACK);
+        DrawTextEx(font, "Xem điểm",{17.5,60},30,3,WHITE);
 
         for (int i = 0; i <= 15; i++)
         {
@@ -1797,6 +1807,20 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachMonHoc &ds
         if(press_Back_Button){
             GiaoDienDanhSachLop(dslh, dsmh);
             press_Back_Button = false;
+        }
+        if(CheckCollisionPointRec(GetMousePosition(),{10, 55, 150, 40})){
+            DrawRectangleLinesEx({10, 55, 150, 40}, 3, YELLOW);
+            if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Mon_Hoc_Button){
+                press_Mon_Hoc_Button = true;
+            }
+        }
+        if(press_Mon_Hoc_Button){
+            GiaoDienDanhSachMonSV(dsmh, dslh,a);
+        if(IsKeyPressed(KEY_ESCAPE))
+                {
+                    press_Mon_Hoc_Button = false;
+                }
+            
         }
         EndDrawing();
         if (WindowShouldClose())
@@ -2248,5 +2272,239 @@ void GiaoDienDanhSachMon(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh)
         {
             break;
         }
+    }
+}
+void GiaoDienDanhSachMonSV(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma_lop)
+{
+    const int screenWidth = 1500;
+    const int screenHeight = 800;
+    float cur_page = 0;
+    int max_item = 10;
+    string ma_mon = "";
+    Button next{{850, 705, 180, 45}, "Next", WHITE, BLUE, font};
+    Button prev{{480, 705, 180, 45}, "Prev", WHITE, BLUE, font};
+    global_mouse_pos = GetMousePosition();
+    bool is_button_next_pressed = false;
+    bool is_button_prev_pressed = false;
+    bool press_Xem_Diem_pressed = false;
+    bool press_Back_Button = false;
+    bool press_Diem_Thi_Button = false;
+    
+
+    SetWindowPosition(GetMonitorWidth(0) / 2 - screenWidth / 2, GetMonitorHeight(0) / 2 - screenHeight / 2);
+    while (!is_close_icon_pressed)
+    {
+        BeginDrawing();
+        ClearBackground(WHITE);
+
+        DrawRectangle(480, 705, 180, 45, Fade(BLUE, 0.2f));
+        DrawRectangle(850, 705, 180, 45, Fade(BLUE, 0.2f));
+        DrawTextEx(font, "Trang trước", {490, 712.5}, 30, 3, BLACK);
+        DrawTextEx(font, "Trang sau", {875, 712.5}, 30, 3, BLACK);
+        DrawRectangle(0, 0, 1500, 100, Fade(GRAY, 0.5f));
+        DrawRectangle(1150, 10, 120, 40, DARKBLUE);
+        DrawRectangleLines(1150, 10, 120, 40, BLACK);
+        DrawTextEx(font, "BACK", {1172.5, 15}, 30, 3, WHITE);
+
+
+        for (int j = 1; j < 13; j++)
+        {
+            if (j == 1)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    DrawRectangle(0, 100, 80, 50, BLUE);
+                    DrawRectangleLines(0, 100 * j, 80, 50, BLACK);
+                    if (i == 0)
+                    {
+                        DrawRectangle(80 + (260 * i), 100 * j, 260, 50, BLUE);
+                        DrawRectangleLines(80 + (260 * i), 100 * j, 260, 50, BLACK);
+                    }
+                    else if (i == 1)
+                    {
+                        DrawRectangle(80 + (260 * i), 100 * j, 1160, 50, BLUE);
+                        DrawRectangleLines(80 + (260 * i), 100 * j, 1160, 50, BLACK);
+                    }
+                }
+            }
+            else if (j >= 3)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (i == 0)
+                    {
+                        DrawRectangleLines(0, 50 * j, 80, 50, BLACK);
+                        DrawRectangleLines(80 + (480 * i), 50 * j, 260, 50, BLACK);
+                    }
+                    else if (i == 1)
+                    {
+                        DrawRectangleLines(80 + (260 * i), 50 * j, 1160, 50, BLACK);
+                    }
+                }
+            }
+        }
+        DrawTextEx(font, "STT", {15, 110}, 30, 3, BLACK);
+        DrawTextEx(font, "Mã môn", {155, 110}, 30, 3, BLACK);
+        DrawTextEx(font, "Tên môn học", {840, 110}, 30, 3, BLACK);
+        inDanhSachMon(dsmh, cur_page, max_item, is_button_next_pressed, is_button_prev_pressed);
+        if(CheckCollisionPointRec(GetMousePosition(),{1150, 10, 120, 40})){
+            DrawRectangleLinesEx({1150, 10, 120, 40}, 3, YELLOW);
+            if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Back_Button){
+                press_Back_Button = true;
+            }
+        }
+        if(press_Back_Button){
+            GiaoDienDanhSachLop(dslh, dsmh);
+            if(IsKeyPressed(KEY_ESCAPE)){
+            press_Back_Button = false;
+            }
+        }
+        for(int place = cur_page * max_item; place < dsmh.getLength() && place < (cur_page + 1) * max_item; place++){
+                Rectangle rec3 = {80, 50 * (place + 3) - (50 * (place / 10)) * 10, 260, 50};
+                if(CheckCollisionPointRec(GetMousePosition(),rec3)){
+                    DrawRectangleLinesEx(rec3, 3, YELLOW);
+                    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Diem_Thi_Button){
+                        press_Diem_Thi_Button = true;
+                        ma_mon = dsmh[place].ma_mon_hoc;
+                    }
+                }
+                if(press_Diem_Thi_Button){
+                    inBangDiemDanhSachSinhVien(dsmh,dslh, ma_lop, ma_mon, cur_page);
+                }
+        }
+        EndDrawing();
+        if (WindowShouldClose())
+        {
+            is_close_icon_pressed = true;
+        }
+        if (IsKeyPressed(KEY_ESCAPE))
+        {
+            break;
+        }
+    }
+}
+void inBangDiemDanhSachSinhVien(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma_lop_muon_in, string ma_mon ,float &cur_page)
+{
+    const int screenWidth = 1500;
+    const int screenHeight = 800;
+    SetWindowPosition(GetMonitorWidth(0) / 2 - screenWidth / 2, GetMonitorHeight(0) / 2 - screenHeight / 2);
+    SetWindowSize(screenWidth, screenHeight);
+
+    int item_per_page = 0;
+    float line = 145;
+    int page = 0;
+    int index = 0;
+    bool press_Back_Button = false;
+    SVPtr sv = dslh[ma_lop_muon_in]->getDSSV()->getFirst();
+    SVPtr sv2 = dslh[ma_lop_muon_in]->getDSSV()->getFirst();
+    while (!is_close_icon_pressed)
+    {
+        item_per_page = 0;
+        line = 145;
+        page = 0;
+        index = 0;
+        int dem = -0;
+        BeginDrawing();
+        ClearBackground(WHITE);
+        DrawRectangle(0, 0, 1500, 100, Fade(GRAY, 0.5f)); // vẽ bản màu xám
+        DrawRectangle(10, 10, 90, 40, DARKBLUE);
+        DrawRectangleLines(10, 10, 90, 40, BLACK);
+        DrawTextEx(font, "BACK", {15, 15}, 30, 3, WHITE);
+        DrawRectangle(0, 100, 55, 40, DARKBLUE);     // STT
+        DrawRectangle(55, 100, 250, 40, DARKBLUE);   // MSSV
+        DrawRectangle(305, 100, 995, 40, DARKBLUE);  // Họ tên
+        DrawRectangle(1300, 100, 200, 40, DARKBLUE); // Giới tín
+        for (int i = 0; i <= 15; i++)
+        {
+            if (i == 0)
+            {
+                DrawRectangleLines(0, 100, 55, 40, BLACK);     // STT
+                DrawRectangleLines(55, 100, 250, 40, BLACK);   // MSSV
+                DrawRectangleLines(305, 100, 995, 40, BLACK);  // Họ tên
+                DrawRectangleLines(1300, 100, 200, 40, BLACK); // Giới tính
+            }
+            else if (i >= 1)
+            {
+                DrawRectangleLines(0, 100 + 40 * i, 55, 40, BLACK);     // STT
+                DrawRectangleLines(55, 100 + 40 * i, 250, 40, BLACK);   // MSSV
+                DrawRectangleLines(305, 100 + 40 * i, 995, 40, BLACK);  // Họ tên
+                DrawRectangleLines(1300, 100 + 40 * i, 200, 40, BLACK); // Giới tính
+            }
+        }
+        DrawTextEx(font, "STT", {0, 105}, 30, 3, BLACK);
+        DrawTextEx(font, "MSSV", {140, 105}, 30, 3, BLACK);
+        DrawTextEx(font, "Họ và tên", {760, 105}, 30, 3, BLACK);
+        DrawTextEx(font, "Điểm", {1370, 105}, 30, 3, BLACK);
+        for (SVPtr ptr = sv; ptr != nullptr; ptr = ptr->next)
+        {
+            DTPtr dsdt = ptr->sv_data.diem->getFirst();
+            for (; dsdt != nullptr; dsdt = dsdt->next)
+            {
+                if (strcmp(dsdt->data.Mamh, (char *)ma_mon.c_str()) == 0)
+                {
+
+                    break;
+                }
+            }
+            string ho_ten = ptr->sv_data.HO + " " + ptr->sv_data.TEN;
+            DrawTextEx(font, (char *)ho_ten.c_str(), Vector2{310 + screenWidth * (page - cur_page), line}, 30, 1, BLACK);
+            DrawTextEx(font, ptr->sv_data.MASV.c_str(), Vector2{60 + screenWidth * (page - cur_page), line}, 30, 3, BLACK);
+            DrawTextEx(font, (to_string(index + 1)).c_str(), Vector2{20 + screenWidth * (page - cur_page), line}, 30, 3, BLACK);
+            if (dsdt != nullptr)
+            {
+                DrawTextEx(font, to_string(dsdt->data.Diem).c_str(), Vector2{1360 + screenWidth * (page - cur_page), line}, 30, 3, BLACK);
+            }
+            else
+            {
+                DrawTextEx(font, "Chưa thi", Vector2{1340 + screenWidth * (page - cur_page), line}, 30, 3, BLACK);
+            }
+            index++;
+            item_per_page++;
+            line += 40;
+            dem++;
+            if (item_per_page == 15)
+            {
+                page++;
+                line = 145;
+                item_per_page = 0;
+            }
+            
+        }
+         if (IsKeyPressed(KEY_LEFT))
+    {
+        cur_page--;
+        if (cur_page < 0)
+        {
+            cur_page = 0;
+        }
+    }
+if (IsKeyPressed(KEY_RIGHT))
+    {
+        if (cur_page < dem / 15)
+            cur_page++;
+    }
+    if(CheckCollisionPointRec(GetMousePosition(),{10, 10, 90, 40})){
+        DrawRectangleLinesEx({10, 10, 90, 40}, 3, YELLOW);
+        if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Back_Button){
+            press_Back_Button = true;
+        }
+    }
+    if(press_Back_Button){
+        GiaoDienDanhSachMonSV(dsmh, dslh, ma_lop_muon_in);
+        if(IsKeyPressed(KEY_ESCAPE)){
+            press_Back_Button = false;
+        }
+    }
+        EndDrawing();
+        if (WindowShouldClose())
+        {
+            is_close_icon_pressed = true;
+        }
+
+        if (IsKeyPressed(KEY_ESCAPE))
+        {
+            break;
+        }
+    
     }
 }
