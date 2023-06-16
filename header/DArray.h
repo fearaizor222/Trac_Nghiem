@@ -67,6 +67,14 @@ class DArray
             }
         }
 
+        void remove(int index){
+            if(index < 0 || index >= count) return;
+            for(int i = index; i < count - 1; i++){
+                data[i] = data[i + 1];
+            }
+            count--;
+        }
+
         int back()
         {
             return data[count - 1];

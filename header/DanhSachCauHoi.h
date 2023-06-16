@@ -57,14 +57,14 @@ class DanhSachCauHoi{
         CauHoi &getQuestion(int id);
         Node *&getRoot();
 
-        void getQuestionList(CauHoi **question_list, int &number_of_question, int number_of_question_to_get, std::string mon_hoc);
+        void getQuestionList(DArray<CauHoi*> &list, std::string mon_hoc);
 
     private:
         Node *root;
         Queue<IntPair> id;
 
         void output(Node *cur);
-        void getQuestionList(Node *&cur, CauHoi **question_list, int &number_of_question, int number_of_question_to_get, std::string mon_hoc);
+        void getQuestionList(Node *&cur, DArray<CauHoi*> &list, std::string mon_hoc);
         void update(Queue<Node*> &queue,std::ofstream &out);
         void insert(Node *&cur, CauHoi _cau_hoi);
         void remove(Node *&cur, int id);

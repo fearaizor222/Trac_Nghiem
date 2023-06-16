@@ -272,19 +272,17 @@ void DanhSachCauHoi::output(Node *cur){
     }
 }
 
-void DanhSachCauHoi::getQuestionList(CauHoi **question_list, int &number_of_question, int number_of_question_to_get, std::string mon_hoc){
-    getQuestionList(root, question_list, number_of_question, number_of_question_to_get, mon_hoc);
+void DanhSachCauHoi::getQuestionList(DArray<CauHoi*> &list, std::string mon_hoc){
+    getQuestionList(root, list, mon_hoc);
 }
 
-void DanhSachCauHoi::getQuestionList(Node *&cur, CauHoi **question_list, int &number_of_question, int number_of_question_to_get, std::string mon_hoc){
+void DanhSachCauHoi::getQuestionList(Node *&cur, DArray<CauHoi*> &list, std::string mon_hoc){
     if(cur != nullptr){
-        getQuestionList(cur->left, question_list, number_of_question, number_of_question_to_get, mon_hoc);
+        getQuestionList(cur->left, list, mon_hoc);
         if(strcmp(cur->data.ma_mon_hoc, mon_hoc.c_str()) == 0){
-            question_list[number_of_question] = &cur->data;
-            number_of_question++;
+            list.push_back(&cur->data);
         }
-        if(number_of_question == number_of_question_to_get) return;
-        getQuestionList(cur->right, question_list, number_of_question, number_of_question_to_get, mon_hoc);
+        getQuestionList(cur->right, list, mon_hoc);
     }
 }
 

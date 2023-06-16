@@ -56,25 +56,25 @@ char* Input(bool (*funcptr)(char), bool secure, int64_t *convertible){
     return str;
 }
 
-void ThiTracNghiem(DanhSachCauHoi &list, std::string mon_thi, int so_cau_hoi){
-    CauHoi *list_cau_hoi_thi[so_cau_hoi];
-    for(int i = 0; i<so_cau_hoi; i++) list_cau_hoi_thi[i] = nullptr;
-    int length = 0;
-    list.getQuestionList(list_cau_hoi_thi, length, so_cau_hoi, mon_thi);
-    bool result[length];
-    for(int i = 0; i<length; i++){
-        std::string ans;
-        std::cout<<list_cau_hoi_thi[i]->noi_dung<<std::endl;
-        std::cout<<list_cau_hoi_thi[i]->dap_an_a<<"                        "<<list_cau_hoi_thi[i]->dap_an_b<<std::endl;
-        std::cout<<list_cau_hoi_thi[i]->dap_an_c<<"                        "<<list_cau_hoi_thi[i]->dap_an_d<<std::endl;
-        std::cout<<"chon dap an: ";
-        std::cin>>ans;
-        result[i] = ans.compare(list_cau_hoi_thi[i]->dap_an) == 0;
-    }
-    for(int i = 0; i<length; i++){
-        std::cout<<result[i]<<" ";
-    }
-}
+// void ThiTracNghiem(DanhSachCauHoi &list, std::string mon_thi, int so_cau_hoi){
+//     CauHoi *list_cau_hoi_thi[so_cau_hoi];
+//     for(int i = 0; i<so_cau_hoi; i++) list_cau_hoi_thi[i] = nullptr;
+//     int length = 0;
+//     list.getQuestionList(list_cau_hoi_thi, length, so_cau_hoi, mon_thi);
+//     bool result[length];
+//     for(int i = 0; i<length; i++){
+//         std::string ans;
+//         std::cout<<list_cau_hoi_thi[i]->noi_dung<<std::endl;
+//         std::cout<<list_cau_hoi_thi[i]->dap_an_a<<"                        "<<list_cau_hoi_thi[i]->dap_an_b<<std::endl;
+//         std::cout<<list_cau_hoi_thi[i]->dap_an_c<<"                        "<<list_cau_hoi_thi[i]->dap_an_d<<std::endl;
+//         std::cout<<"chon dap an: ";
+//         std::cin>>ans;
+//         result[i] = ans.compare(list_cau_hoi_thi[i]->dap_an) == 0;
+//     }
+//     for(int i = 0; i<length; i++){
+//         std::cout<<result[i]<<" ";
+//     }
+// }
 
 uint64_t find(std::string str, char c){
     for(int i = str.length() - 1; i >= 0; i--){
