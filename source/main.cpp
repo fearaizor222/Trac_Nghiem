@@ -78,11 +78,12 @@ int main()
 //     }
 //    exit_tag:
 // string a;
-string a;
-  GiaoDienDanhSachLop(dslh);
 
-      GiaoDienDanhSachSinhVien(dslh,a);
-        //GiaoDienDanhSachMon(dsmh);
+string a;
+  GiaoDienDanhSachLop(dslh, dsmh);
+
+      GiaoDienDanhSachSinhVien(dslh,a, dsmh);
+        GiaoDienDanhSachMon(dsmh, dslh);
    Deinitialize();
    return 0;
 
