@@ -1547,10 +1547,7 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh, DanhSachCau
             press_Cau_Hoi_Button = false;
             SauKhiAnVaoNganHangCauHoi(dsch);
         }
-        if (IsKeyPressed(KEY_ESCAPE))
-        {
-            break;
-        }
+
 
         EndDrawing();
 
@@ -1799,18 +1796,18 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachMonHoc &ds
                 }
             }
         }
-        if (CheckCollisionPointRec(GetMousePosition(), {950, 10, 120, 40}))
-        {
-                DrawRectangleLinesEx({950, 10, 120, 40}, 3, YELLOW);
-            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Back_Button)
-            {
-                press_Back_Button = true;
-            }
-        }
-        if(press_Back_Button){
-            GiaoDienDanhSachLop(dslh, dsmh, dsch);
-            press_Back_Button = false;
-        }
+        // if (CheckCollisionPointRec(GetMousePosition(), {950, 10, 120, 40}))
+        // {
+        //         DrawRectangleLinesEx({950, 10, 120, 40}, 3, YELLOW);
+        //     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Back_Button)
+        //     {
+        //         press_Back_Button = true;
+        //     }
+        // }
+        // if(press_Back_Button){
+        //     GiaoDienDanhSachLop(dslh, dsmh, dsch);
+        //     press_Back_Button = false;
+        // }
         if(CheckCollisionPointRec(GetMousePosition(),{10, 55, 150, 40})){
             DrawRectangleLinesEx({10, 55, 150, 40}, 3, YELLOW);
             if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Mon_Hoc_Button){
@@ -2257,19 +2254,19 @@ void GiaoDienDanhSachMon(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, DanhSachCau
                 }
             }
         }
-        if(CheckCollisionPointRec(GetMousePosition(),{1150, 10, 120, 40})){
-            DrawRectangleLinesEx({1150, 10, 120, 40}, 3, YELLOW);
-            if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Back_Button){
-                press_Back_Button = true;
-            }
-        }
-        if(press_Back_Button){
+        // if(CheckCollisionPointRec(GetMousePosition(),{1150, 10, 120, 40})){
+        //     DrawRectangleLinesEx({1150, 10, 120, 40}, 3, YELLOW);
+        //     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Back_Button){
+        //         press_Back_Button = true;
+        //     }
+        // }
+        // if(press_Back_Button){
             
-            GiaoDienDanhSachLop(dslh, dsmh, dsch);
-            if(IsKeyPressed(KEY_ESCAPE)){
-            press_Back_Button = false;
-            }
-        }
+        //     GiaoDienDanhSachLop(dslh, dsmh, dsch);
+        //     if(IsKeyPressed(KEY_ESCAPE)){
+        //     press_Back_Button = false;
+        //     }
+        // }
         EndDrawing();
         if (WindowShouldClose())
         {
@@ -2354,18 +2351,18 @@ void GiaoDienDanhSachMonSV(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma
         DrawTextEx(font, "Mã môn", {155, 110}, 30, 3, BLACK);
         DrawTextEx(font, "Tên môn học", {840, 110}, 30, 3, BLACK);
         inDanhSachMon(dsmh, cur_page, max_item, is_button_next_pressed, is_button_prev_pressed);
-        if(CheckCollisionPointRec(GetMousePosition(),{1150, 10, 120, 40})){
-            DrawRectangleLinesEx({1150, 10, 120, 40}, 3, YELLOW);
-            if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Back_Button){
-                press_Back_Button = true;
-            }
-        }
-        if(press_Back_Button){
-            GiaoDienDanhSachLop(dslh, dsmh, dsch);
-            if(IsKeyPressed(KEY_ESCAPE)){
-            press_Back_Button = false;
-            }
-        }
+        // if(CheckCollisionPointRec(GetMousePosition(),{1150, 10, 120, 40})){
+        //     DrawRectangleLinesEx({1150, 10, 120, 40}, 3, YELLOW);
+        //     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Back_Button){
+        //         press_Back_Button = true;
+        //     }
+        // }
+        // if(press_Back_Button){
+        //     GiaoDienDanhSachLop(dslh, dsmh, dsch);
+        //     if(IsKeyPressed(KEY_ESCAPE)){
+        //     press_Back_Button = false;
+        //     }
+        // }
         for(int place = cur_page * max_item; place < dsmh.getLength() && place < (cur_page + 1) * max_item; place++){
                 Rectangle rec3 = {80, 50 * (place + 3) - (50 * (place / 10)) * 10, 260, 50};
                 if(CheckCollisionPointRec(GetMousePosition(),rec3)){
@@ -2520,18 +2517,18 @@ if (IsKeyPressed(KEY_RIGHT))
         if (cur_page < dem / 15)
             cur_page++;
     }
-    if(CheckCollisionPointRec(GetMousePosition(),{10, 10, 90, 40})){
-        DrawRectangleLinesEx({10, 10, 90, 40}, 3, YELLOW);
-        if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Back_Button){
-            press_Back_Button = true;
-        }
-    }
-    if(press_Back_Button){
-        GiaoDienDanhSachMonSV(dsmh, dslh, ma_lop_muon_in, dsch);
-        if(IsKeyPressed(KEY_ESCAPE)){
-            press_Back_Button = false;
-        }
-    }
+    // if(CheckCollisionPointRec(GetMousePosition(),{10, 10, 90, 40})){
+    //     DrawRectangleLinesEx({10, 10, 90, 40}, 3, YELLOW);
+    //     if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && !press_Back_Button){
+    //         press_Back_Button = true;
+    //     }
+    // }
+    // if(press_Back_Button){
+    //     GiaoDienDanhSachMonSV(dsmh, dslh, ma_lop_muon_in, dsch);
+    //     if(IsKeyPressed(KEY_ESCAPE)){
+    //         press_Back_Button = false;
+    //     }
+    // }
         EndDrawing();
         if (WindowShouldClose())
         {
