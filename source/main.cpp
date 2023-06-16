@@ -46,44 +46,45 @@ int main()
     std::string testing_subject;
     std::string time;
     std::string number_of_questions;
+    CauHoi **ptr = nullptr;
 
-//     current_scene = scene_stack.pop();
-//     while (current_scene != Exit || is_close_icon_pressed)
-//     {
-//         switch (current_scene)
-//         {
-//         case Login:
-//             LoginScene(dslh, sv);
-//             current_scene = scene_stack.pop();
-//             break;
+    current_scene = scene_stack.pop();
+    while (current_scene != Exit || is_close_icon_pressed)
+    {
+        switch (current_scene)
+        {
+        case Login:
+            LoginScene(dslh, sv);
+            current_scene = scene_stack.pop();
+            break;
 
-//         case Main_SV:
-//             MainSceneSV(sv, dsmh, dsch, testing_subject, time, number_of_questions);
-//             current_scene = scene_stack.pop();
-//             break;
+        case Main_SV:
+            MainSceneSV(sv, dsmh, dsch, testing_subject, time, number_of_questions, ptr);
+            current_scene = scene_stack.pop();
+            break;
 
-//         case Main_GV:
-//             GiaoDienDanhSachLop(dslh);
-//             current_scene = scene_stack.pop();
-//             break;
+        case Main_GV:
+            GiaoDienDanhSachLop(dslh, dsmh);
+            current_scene = scene_stack.pop();
+            break;
 
-//         case Testing:
-//             // TestingScene(dsch);
-//             current_scene = scene_stack.pop();
-//             break;
+        case Testing:
+            TestingScene(sv, dsmh, ptr, testing_subject, time, number_of_questions);
+            current_scene = scene_stack.pop();
+            break;
 
-//         case Exit:
-//             goto exit_tag;
-//         }
-//     }
-//    exit_tag:
+        case Exit:
+            goto exit_tag;
+        }
+    }
+   exit_tag:
 // string a;
 
-string a;
-  GiaoDienDanhSachLop(dslh, dsmh);
+// string a;
+//   GiaoDienDanhSachLop(dslh, dsmh);
 
-      GiaoDienDanhSachSinhVien(dslh,a, dsmh);
-        GiaoDienDanhSachMon(dsmh, dslh);
+//       GiaoDienDanhSachSinhVien(dslh,a, dsmh);
+//         GiaoDienDanhSachMon(dsmh, dslh);
    Deinitialize();
    return 0;
 
