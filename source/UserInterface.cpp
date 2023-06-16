@@ -1436,7 +1436,9 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh)
             {
                 if (dslh.searchClass(box_ma_lop.text.data) < 0)
                 {
+                    if(box_ma_lop.text.data != "" && box_ten_lop.text.data != "" && box_nien_khoa.text.data != ""){
                     dslh.insert(new Lop{box_ma_lop.text.data, box_ten_lop.text.data, box_nien_khoa.text.data});
+                    }
                 }
                 box_ma_lop.text.data = "";
                 box_ten_lop.text.data = "";
