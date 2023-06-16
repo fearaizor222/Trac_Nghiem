@@ -1854,7 +1854,7 @@ void in_SinhVien_1_Lop(SVPtr FirstSV, float &cur_page, Font font, string malop, 
         index++;
         dem++;
     }
-    if (IsKeyPressed(KEY_LEFT) || CheckCollisionPointRec(GetMousePosition(), {480, 750, 180, 45}))
+    if (IsKeyPressed(KEY_LEFT))
     {
         cur_page--;
         if (cur_page < 0)
@@ -1862,7 +1862,7 @@ void in_SinhVien_1_Lop(SVPtr FirstSV, float &cur_page, Font font, string malop, 
             cur_page = 0;
         }
     }
-if (IsKeyPressed(KEY_RIGHT) || CheckCollisionPointRec(GetMousePosition(), {850, 750, 180, 45}))
+if (IsKeyPressed(KEY_RIGHT))
     {
         if (cur_page < dem / 15)
             cur_page++;
