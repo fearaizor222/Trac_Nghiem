@@ -46,6 +46,7 @@ int main()
     std::string testing_subject;
     std::string time;
     std::string number_of_questions;
+    std::string ma_lop;
     CauHoi **ptr = nullptr;
 
     current_scene = scene_stack.pop();
