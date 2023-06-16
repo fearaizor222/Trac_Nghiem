@@ -76,6 +76,8 @@ DanhSachDiemThi::~DanhSachDiemThi(){
     }
 }
     
+/*
+Các hàm insert để test chương trình
 void DanhSachDiemThi::insertFirst(DiemThi dt){
     DTPtr p = new DiemThiNode;
     p->data = dt;
@@ -83,7 +85,7 @@ void DanhSachDiemThi::insertFirst(DiemThi dt){
     First = p;
 }
 
-//Hàm thêm điểm thi vào sau nút địa chỉ First
+Hàm thêm điểm thi vào sau nút địa chỉ First
 void DanhSachDiemThi::insertAfterDT (DiemThi dt, DTPtr p){
     if (p == NULL){
         cout << "Khong the them phan tu vao danh sach" << endl;
@@ -96,35 +98,6 @@ void DanhSachDiemThi::insertAfterDT (DiemThi dt, DTPtr p){
         // p = q; //Cập nhật con trỏ đến nút mới chèn vào
     }
 }
-
-// Hàm kiểm tra xem môn học đã thi chưa
-bool DanhSachDiemThi::kiemTraDaThi(DTPtr First,char Mamh[15]){
-    DTPtr p;
-    p = new DiemThiNode;
-    p = First;
-    while(p != NULL){
-        if(strcmp(p->data.Mamh, Mamh) == 0){
-            return true;
-        }
-        p = p->next;
-    }
-    return false;
-}
-
-// Hàm đếm số môn học đã thi
-// int DanhSachDiemThi::demMonHocDaThi(DTPtr First){
-//     int dem = 0;
-//     DTPtr sub_node;
-//     sub_node = new DiemThiNode;
-//     sub_node = First;
-//     while(sub_node != NULL){
-//         if(sub_node->data.Diem != -1){
-//             dem++;
-//         }
-//         sub_node = sub_node->next;
-//     }
-//     return dem;
-// }
 
 void DanhSachDiemThi::insertDiem(DTPtr &First, DiemThi dt){
     if (First==NULL){
@@ -140,6 +113,21 @@ void DanhSachDiemThi::insertDiem(DTPtr &First, DiemThi dt){
         insertAfterDT(dt, p);
     }
 }
+// Hàm kiểm tra xem môn học đã thi chưa
+bool DanhSachDiemThi::kiemTraDaThi(DTPtr First,char Mamh[15]){
+    DTPtr p;
+    p = new DiemThiNode;
+    p = First;
+    while(p != NULL){
+        if(strcmp(p->data.Mamh, Mamh) == 0){
+            return true;
+        }
+        p = p->next;
+    }
+    return false;
+}
+*/
+
 
 void DanhSachDiemThi::insertOrderDT(DiemThi dt) {
     DTPtr s, t;
@@ -161,28 +149,8 @@ void DanhSachDiemThi::insertOrderDT(DiemThi dt) {
 }
 
 
-// void DanhSachDiemThi::xuatFileDanhSachDiemThi(){
-//     ofstream out("../data/DIEMTHI.txt", ios::app); // Mở file DiemThi.csv để ghi
-//     if (!out) {
-//         cout << "Khong mo duoc file";
-//         return;
-//     }
-//     DTPtr p = First;
-//     while (p != NULL) {
-//         out << p->data.Mamh << "|"; 
-//         if (kiemTraDaThi(First ,p->data.Mamh) == false) {
-//             out << "Chua thi"; // Nếu chưa thi thì ghi "Chua thi"
-//         } else {
-//             out << p->data.Diem; 
-//         }
-//         out << endl;
-//         p = p->next;
-//     }
-//     out.close();
-// }
 
-
-// Hàm in điểm theo lớp
+/*Hàm in điểm theo lớp để test
 void DanhSachDiemThi::xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop){
     ofstream out;
 
@@ -191,7 +159,7 @@ void DanhSachDiemThi::xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop){
     //Định dạng và tên file
     strcpy(dinhdang, ".txt");
     strcpy(filename, "../data/DIEM_");
-    //Nối tên file với mã lớp dạng (VD: DIEM_D21CQCN02-N.csv) 
+    //Nối tên file với mã lớp dạng (VD: DIEM_D21CQCN02-N.txt) 
     strcat(filename, Malop);
     strcat(filename, dinhdang);
     out.open(filename, ios::app);
@@ -204,8 +172,6 @@ void DanhSachDiemThi::xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop){
 
         out << p->sv_data.MASV << "|" ;
         out << p->sv_data.HO << " " << p->sv_data.TEN << "|";
-
-        // if (DanhSachDiemThi::demMonHocDaThi(p->sv_data.ptr) != 0){
             DTPtr q = First;
         while (q != NULL){
             out << q->data.Mamh << "|";
@@ -224,7 +190,7 @@ void DanhSachDiemThi::xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop){
         p = p->next;
     }
     out.close();
-}
+}*/
 
 void DanhSachDiemThi::update(){
     ofstream out(_path);

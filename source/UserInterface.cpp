@@ -2414,6 +2414,11 @@ void inBangDiemDanhSachSinhVien(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, stri
         DrawRectangle(55, 100, 250, 40, DARKBLUE);   // MSSV
         DrawRectangle(305, 100, 995, 40, DARKBLUE);  // Họ tên
         DrawRectangle(1300, 100, 200, 40, DARKBLUE); // Giới tín
+        //Viết tên môn header
+        DrawRectangle(10, 55, 300, 40, Fade(SKYBLUE, 0.2f));
+        DrawRectangleLines(10, 55, 300, 40, BLACK);
+        DrawTextEx(font, "Mã môn:", {15, 60}, 30, 4, BLACK);
+        DrawTextEx(font, (char*)ma_mon.c_str(), {140, 60}, 30, 3, RED);
         for (int i = 0; i <= 15; i++)
         {
             if (i == 0)
@@ -2452,7 +2457,8 @@ void inBangDiemDanhSachSinhVien(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, stri
             DrawTextEx(font, (to_string(index + 1)).c_str(), Vector2{20 + screenWidth * (page - cur_page), line}, 30, 3, BLACK);
             if (dsdt != nullptr)
             {
-                DrawTextEx(font, to_string(dsdt->data.Diem).c_str(), Vector2{1360 + screenWidth * (page - cur_page), line}, 30, 3, BLACK);
+                string output_mark = to_string(dsdt->data.Diem).substr(0, std::to_string(dsdt->data.Diem).find(".") + 2);
+                DrawTextEx(font, (char*) output_mark.c_str(), Vector2{1375 + screenWidth * (page - cur_page), line}, 30, 3, BLACK);
             }
             else
             {

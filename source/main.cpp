@@ -53,45 +53,36 @@ int main()
     std::string ma_lop;
     CauHoi **ptr = nullptr;
 
-    //     current_scene = scene_stack.pop();
-    //     while (current_scene != Exit || is_close_icon_pressed)
-    //     {
-    //         switch (current_scene)
-    //         {
-    //         case Login:
-    //             LoginScene(dslh, sv);
-    //             current_scene = scene_stack.pop();
-    //             break;
+        current_scene = scene_stack.pop();
+        while (current_scene != Exit || is_close_icon_pressed)
+        {
+            switch (current_scene)
+            {
+            case Login:
+                LoginScene(dslh, sv);
+                current_scene = scene_stack.pop();
+                break;
 
-    //         case Main_SV:
-    //             MainSceneSV(sv, dsmh, dsch, testing_subject, time, number_of_questions, ptr);
-    //             current_scene = scene_stack.pop();
-    //             break;
+            case Main_SV:
+                MainSceneSV(sv, dsmh, dsch, testing_subject, time, number_of_questions, ptr);
+                current_scene = scene_stack.pop();
+                break;
 
-    //         case Main_GV:
-    //             GiaoDienDanhSachLop(dslh, dsmh);
-    //             current_scene = scene_stack.pop();
-    //             break;
+            case Main_GV:
+                GiaoDienDanhSachLop(dslh, dsmh);
+                current_scene = scene_stack.pop();
+                break;
 
-    //         case Testing:
-    //             TestingScene(sv, dsmh, ptr, testing_subject, time, number_of_questions);
-    //             current_scene = scene_stack.pop();
-    //             break;
+            case Testing:
+                TestingScene(sv, dsmh, ptr, testing_subject, time, number_of_questions);
+                current_scene = scene_stack.pop();
+                break;
 
-    //         case Exit:
-    //             goto exit_tag;
-    //         }
-    //     }
-    //    exit_tag:
-    // string a;
-
-    string a;
-       GiaoDienDanhSachLop(dslh, dsmh);
-
-    //       GiaoDienDanhSachSinhVien(dslh,a, dsmh);
-    //         GiaoDienDanhSachMon(dsmh, dslh);
-    float cur_page = 0;
-   // inBangDiemDanhSachSinhVien(dsmh, dslh, "D21CQCN01-N", cur_page);
+            case Exit:
+                goto exit_tag;
+            }
+        }
+       exit_tag:
     Deinitialize();
     return 0;
 }

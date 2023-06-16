@@ -35,14 +35,14 @@ class DanhSachDiemThi{
         DanhSachDiemThi(const DanhSachDiemThi &dsdt);
         DanhSachDiemThi &operator=(const DanhSachDiemThi &dsdt);
         string getPath();
-        void xuatFileDanhSachDiemThi();
+        /*void xuatFileDanhSachDiemThi();
         static int demMonHocDaThi(DTPtr First);
         void insertFirst (DiemThi dt);
         void insertAfterDT (DiemThi dt, DTPtr First);
         static bool kiemTraDaThi(DTPtr First, char Mamh[15]);
         void insertDiem(DTPtr &First, DiemThi dt);
+        void xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop);*/
         void insertOrderDT(DiemThi dt);
-        void xuatDiemTheoLop(DanhSachSinhVien &list, char *Malop);
         void update();
         DTPtr &getFirst();
 

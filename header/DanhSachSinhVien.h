@@ -43,9 +43,9 @@ class DanhSachSinhVien{
         DanhSachSinhVien(string path);
         DanhSachSinhVien &operator=(const DanhSachSinhVien &dssv);
         DanhSachSinhVien(const DanhSachSinhVien &dssv);
-        // void inSinhVienRaFile(SVPtr FirstSV);
+        /*void inSinhVienRaFile(SVPtr FirstSV);
+        void insertSV(SinhVien sv);*/
         void insertFirst(SinhVien sv);
-        // void insertSV(SinhVien sv);
         void insertAfter(SVPtr FirstSV, SinhVien sv);
         void insertLast(SinhVien sv);
         void insertOrderSV(SinhVien sv);
