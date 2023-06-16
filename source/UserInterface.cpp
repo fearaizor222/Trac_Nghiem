@@ -1129,10 +1129,6 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh, DanhSachCau
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
-        // DrawRectangle(480,705,180,45, Fade(BLUE, 0.2f));
-        // DrawRectangle(850,705,180,45, Fade(BLUE, 0.2f));
-        // DrawTextEx(font, "Trang trước",{490,712.5},30,3,BLACK);
-        // DrawTextEx(font, "Trang sau",{875,712.5},30,3,BLACK);
         DrawRectangle(0, 0, 1500, 100, Fade(GRAY, 0.5f));
         DrawRectangle(10, 10, 320, 40, WHITE); // Vẽô: Nhập từ khóa
         DrawRectangleLines(10, 10, 320, 40, BLACK);
@@ -1551,6 +1547,11 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh, DanhSachCau
             press_Cau_Hoi_Button = false;
             SauKhiAnVaoNganHangCauHoi(dsch);
         }
+        if (IsKeyPressed(KEY_ESCAPE))
+        {
+            break;
+        }
+
         EndDrawing();
 
         if (WindowShouldClose())
@@ -1972,6 +1973,7 @@ void GiaoDienDanhSachMon(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, DanhSachCau
     bool press_Correction_Button = false;
     bool press_Correction_Save_Button = false;
     bool press_Back_Button = false;
+    bool press_Logout_Button = false;
     DArray<bool> press_Row_By_Row_Correction_Button;
     SetWindowPosition(GetMonitorWidth(0) / 2 - screenWidth / 2, GetMonitorHeight(0) / 2 - screenHeight / 2);
     // SetWindowSize(screenWidth, screenHeight);
@@ -2262,8 +2264,11 @@ void GiaoDienDanhSachMon(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, DanhSachCau
             }
         }
         if(press_Back_Button){
+            
             GiaoDienDanhSachLop(dslh, dsmh, dsch);
+            if(IsKeyPressed(KEY_ESCAPE)){
             press_Back_Button = false;
+            }
         }
         EndDrawing();
         if (WindowShouldClose())
@@ -2372,6 +2377,10 @@ void GiaoDienDanhSachMonSV(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma
                 }
                 if(press_Diem_Thi_Button){
                     inBangDiemDanhSachSinhVien(dsmh,dslh, ma_lop, ma_mon, cur_page, dsch);
+                    if(IsKeyPressed(KEY_ESCAPE)){
+                        GiaoDienDanhSachMonSV(dsmh,dslh, ma_lop, dsch);
+                        press_Diem_Thi_Button = false;
+                    }
                 }
         }
         EndDrawing();
@@ -2391,14 +2400,14 @@ void inBangDiemDanhSachSinhVien(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, stri
     const int screenHeight = 800;
     SetWindowPosition(GetMonitorWidth(0) / 2 - screenWidth / 2, GetMonitorHeight(0) / 2 - screenHeight / 2);
     SetWindowSize(screenWidth, screenHeight);
-
+    bool is_button_next_pressed = false;
+    bool is_button_prev_pressed = false;
     int item_per_page = 0;
     float line = 145;
     int page = 0;
     int index = 0;
     bool press_Back_Button = false;
     SVPtr sv = dslh[ma_lop_muon_in]->getDSSV()->getFirst();
-    SVPtr sv2 = dslh[ma_lop_muon_in]->getDSSV()->getFirst();
     while (!is_close_icon_pressed)
     {
         item_per_page = 0;
@@ -2416,6 +2425,10 @@ void inBangDiemDanhSachSinhVien(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, stri
         DrawRectangle(55, 100, 250, 40, DARKBLUE);   // MSSV
         DrawRectangle(305, 100, 995, 40, DARKBLUE);  // Họ tên
         DrawRectangle(1300, 100, 200, 40, DARKBLUE); // Giới tín
+        DrawRectangle(480, 750, 180, 45, Fade(BLUE, 0.2f));
+        DrawRectangle(850, 750, 180, 45, Fade(BLUE, 0.2f));
+        DrawTextEx(font, "Trang trước", {490, 755}, 30, 3, BLACK);
+        DrawTextEx(font, "Trang sau", {875, 755}, 30, 3, BLACK);
         //Viết tên môn header
         DrawRectangle(10, 55, 300, 40, Fade(SKYBLUE, 0.2f));
         DrawRectangleLines(10, 55, 300, 40, BLACK);
@@ -2477,6 +2490,22 @@ void inBangDiemDanhSachSinhVien(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, stri
                 item_per_page = 0;
             }
             
+        }
+        if(CheckCollisionPointRec(GetMousePosition(), {480, 750, 180, 45})){
+            DrawRectangleLinesEx({480, 750, 180, 45}, 3, YELLOW);
+            if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+                cur_page--;
+                if (cur_page < 0){
+                    cur_page = 0;
+                }
+            }
+        }
+        if(CheckCollisionPointRec(GetMousePosition(),{850, 750, 180, 45})){
+            DrawRectangleLinesEx({850, 750, 180, 45}, 3, YELLOW);
+            if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
+                if (cur_page < dem / 15)
+                    cur_page++;
+            }
         }
          if (IsKeyPressed(KEY_LEFT))
     {
