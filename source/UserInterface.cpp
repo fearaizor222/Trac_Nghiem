@@ -1136,7 +1136,6 @@ void GiaoDienDanhSachLop(DanhSachLopHoc &dslh, DanhSachMonHoc &dsmh, DanhSachCau
         DrawRectangleLines(1350, 10, 120, 40, BLACK);
         DrawTextEx(font, "Môn Học", {1357.5, 15}, 30, 1, WHITE);
         DrawTextEx(font, "Nhập niên khóa ", {70, 15}, 30, 3, GRAY);
-        DrawTextEx(font, "Môn Học", {1357.5, 15}, 30, 1, WHITE);
         for (int i = 0; i < 3; i++)
         {
             if (i != 2)
@@ -1606,9 +1605,9 @@ void GiaoDienDanhSachSinhVien(DanhSachLopHoc &dslh, string a, DanhSachMonHoc &ds
         DrawTextEx(font, "Trang trước", {490, 755}, 30, 3, BLACK);
         DrawTextEx(font, "Trang sau", {875, 755}, 30, 3, BLACK);
         DrawRectangle(0, 0, 1500, 100, Fade(GRAY, 0.5f)); // vẽ bản màu xám
-        DrawRectangle(950, 10, 120, 40, DARKBLUE);
-        DrawRectangleLines(950, 10, 120, 40, BLACK);
-        DrawTextEx(font, "BACK", {972.5, 15}, 30, 3, WHITE);
+        // DrawRectangle(950, 10, 120, 40, DARKBLUE);
+        // DrawRectangleLines(950, 10, 120, 40, BLACK);
+        // DrawTextEx(font, "BACK", {972.5, 15}, 30, 3, WHITE);
         DrawRectangle(10, 10, 90, 40, DARKBLUE);
         DrawRectangleLines(10, 10, 90, 40, BLACK);
         DrawTextEx(font, "Thêm", {20, 15}, 30, 3, WHITE);
@@ -1984,9 +1983,9 @@ void GiaoDienDanhSachMon(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, DanhSachCau
         DrawTextEx(font, "Trang trước", {490, 712.5}, 30, 3, BLACK);
         DrawTextEx(font, "Trang sau", {875, 712.5}, 30, 3, BLACK);
         DrawRectangle(0, 0, 1500, 100, Fade(GRAY, 0.5f));
-        DrawRectangle(1150, 10, 120, 40, DARKBLUE);
-        DrawRectangleLines(1150, 10, 120, 40, BLACK);
-        DrawTextEx(font, "BACK", {1172.5, 15}, 30, 3, WHITE);
+        // DrawRectangle(1150, 10, 120, 40, DARKBLUE);
+        // DrawRectangleLines(1150, 10, 120, 40, BLACK);
+        // DrawTextEx(font, "BACK", {1172.5, 15}, 30, 3, WHITE);
 
         for (int i = 0; i < 3; i++)
         {
@@ -2306,9 +2305,9 @@ void GiaoDienDanhSachMonSV(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma
         DrawTextEx(font, "Trang trước", {490, 712.5}, 30, 3, BLACK);
         DrawTextEx(font, "Trang sau", {875, 712.5}, 30, 3, BLACK);
         DrawRectangle(0, 0, 1500, 100, Fade(GRAY, 0.5f));
-        DrawRectangle(1150, 10, 120, 40, DARKBLUE);
-        DrawRectangleLines(1150, 10, 120, 40, BLACK);
-        DrawTextEx(font, "BACK", {1172.5, 15}, 30, 3, WHITE);
+        // DrawRectangle(1150, 10, 120, 40, DARKBLUE);
+        // DrawRectangleLines(1150, 10, 120, 40, BLACK);
+        // DrawTextEx(font, "BACK", {1172.5, 15}, 30, 3, WHITE);
 
 
         for (int j = 1; j < 13; j++)
@@ -2375,7 +2374,6 @@ void GiaoDienDanhSachMonSV(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, string ma
                 if(press_Diem_Thi_Button){
                     inBangDiemDanhSachSinhVien(dsmh,dslh, ma_lop, ma_mon, cur_page, dsch);
                     if(IsKeyPressed(KEY_ESCAPE)){
-                        GiaoDienDanhSachMonSV(dsmh,dslh, ma_lop, dsch);
                         press_Diem_Thi_Button = false;
                     }
                 }
@@ -2415,9 +2413,9 @@ void inBangDiemDanhSachSinhVien(DanhSachMonHoc &dsmh, DanhSachLopHoc &dslh, stri
         BeginDrawing();
         ClearBackground(WHITE);
         DrawRectangle(0, 0, 1500, 100, Fade(GRAY, 0.5f)); // vẽ bản màu xám
-        DrawRectangle(10, 10, 90, 40, DARKBLUE);
-        DrawRectangleLines(10, 10, 90, 40, BLACK);
-        DrawTextEx(font, "BACK", {15, 15}, 30, 3, WHITE);
+        // DrawRectangle(10, 10, 90, 40, DARKBLUE);
+        // DrawRectangleLines(10, 10, 90, 40, BLACK);
+        // DrawTextEx(font, "BACK", {15, 15}, 30, 3, WHITE);
         DrawRectangle(0, 100, 55, 40, DARKBLUE);     // STT
         DrawRectangle(55, 100, 250, 40, DARKBLUE);   // MSSV
         DrawRectangle(305, 100, 995, 40, DARKBLUE);  // Họ tên
