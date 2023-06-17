@@ -61,7 +61,7 @@
 92186|BAS1106|Tập luyện thể dục có tác dụng gì đối với tâm lý?|Giảm căng thẳng và stress|Nâng cao tinh thần và cảm giác hạnh phúc|Tăng khả năng tập trung và sự tự tin|Tất cả các phương án trên|D
 95311|BAS1106|Làm thế nào để chọn đúng giày tập thể dục?|Chọn giày vừa và khít chân|Chọn giày có độ bền cao và thoáng khí|Chọn giày có độ đàn hồi tốt và đệm tốt|Tất cả các phương án trên|D
 98437|BAS1106|Điều gì là quan trọng nhất khi tập thể dục?|Tập luyện đúng kỹ thuật|Sử dụng dụng cụ tập thể dục đúng cách|Điều chỉnh mức độ tập luyện phù hợp với sức khỏe của bản thân|Tất cả các phương án trên|C
-780|BAS1106|Khi tập luyện cường độ cao, ta nên uống loại nước gì để bổ sung lại chất dinh dưỡng cơ thể mất đi?|Nước đường|Nước giải khát có ga|Nước ép trái cây tươi|Nước nhiều điện giải|D\
+780|BAS1106|Khi tập luyện cường độ cao, ta nên uống loại nước gì để bổ sung lại chất dinh dưỡng cơ thể mất đi?|Nước đường|Nước giải khát có ga|Nước ép trái cây tươi|Nước nhiều điện giải|D
 2342|BAS1203|Tích phân của hàm số f(x) trên đoạn [a,b] là gì?|Diện tích hình chữ nhật có chiều rộng là b-a và chiều cao là f(a).|Diện tích hình chữ nhật có chiều rộng là b-a và chiều cao là f(b).|Diện tích hình thang có đáy lớn là f(b), đáy nhỏ là f(a) và chiều cao là b-a.|Diện tích hình tam giác có đáy là b-a và chiều cao là f(a)+f(b)/2.|C
 3905|BAS1203|Đạo hàm của hàm số f(x) là gì?|Tích phân của hàm số f(x) trên đoạn [a,b].|Tích phân của hàm số f(x) trên đoạn [a,x].|Giới hạn của tỷ số thay đổi của f(x) khi x tiến tới một giá trị cố định.|Giới hạn của tỷ số thay đổi của f(x) khi x tiến tới vô cùng.|C
 5467|BAS1203|Tích phân xác định của hàm số f(x) trên đoạn [a,b] có thể được tính bằng công thức nào?|Công thức Simpson|Công thức Newton - Cotes|Quy tắc tích phân trung bình|Tất cả các phương án trên|D
@@ -80,7 +80,6 @@
 25780|BAS1203|Đồ thị hàm số y = f(x) có một điểm cực tiểu địa phương tại điểm x = a nếu:|f(a) < f(x) với mọi giá trị x khác a.|f(a) > f(x) với mọi giá trị x khác a.|f'(a) < 0 và f(x) tăng trên khoảng (a, +∞).|f'(a) > 0 và f(x) giảm trên khoảng (a, +∞).|C
 27342|BAS1203|Điều gì xảy ra với giới hạn của một hàm số khi x tiến tới vô cùng?|Giới hạn bằng 0.|Giới hạn bằng vô cùng.|Giới hạn bằng số dương lớn|Giới hạn không xác định.|B
 28905|BAS1203|Hàm số f(x) được gọi là lồi trên một khoảng nếu:|Đường tiệm cận của đồ thị của f(x) song song với trục hoành trên khoảng đó.|Đồ thị của f(x) nằm trên phía trên của đường thẳng nối hai điểm bất kỳ trên khoảng đó.|Đồ thị của f(x) nằm trên phía dưới của đường thẳng nối hai điểm bất kỳ trên khoảng đó.|Đồ thị của f(x) có dạng hình chữ nhật trên khoảng đó.|B
-30467|BAS1203|Hàm số f(x) có giới hạn bằng L khi x tiến tới x0 khi và chỉ khi:|f(x) tiến tới L khi x tiến tới x0.|f(x) có thể không có giới hạn nhưng không thể bằng L khi x tiến tới x0.|Đối với mọi ε > 0, tồn tại δ > 0 sao cho |f(x) - L| < ε với mọi x khác x0 và |x - x0| < δ.|Đối với mọi ε > 0, tồn tại δ > 0 sao cho |f(x) - L| < δ với mọi x khác x0 và |x - x0| < ε.|C
 32030|BAS1203|Đặt F(x) là một hàm số nguyên khối của f(x). Nếu f(x) có giới hạn bằng L khi x tiến tới x0, thì:|Giới hạn của F(x) khi x tiến tới x0 bằng L.|Giới hạn của F(x) khi x tiến tới x0 bằng ∫f(x)dx từ 0 đến x0.|Giới hạn của F(x) khi x tiến tới x0 bằng lim n→∞ (∑i=1n f(xi)Δx) với Δx = (x0 - 0)/n và xi = iΔx.|Giới hạn của F(x) khi x tiến tới x0 bằng giới hạn của f(x) khi x tiến tới x0.|D
 33592|ELE1433|Các thông tin được biểu diễn dưới dạng số học trong máy tính được gọi là gì?|Các bit|Các byte|Các đơn vị điều khiển trung tâm|Các mã lệnh|A
 35155|ELE1433|Trong mạng máy tính, giao thức TCP được sử dụng để làm gì?|Phân phối dịch vụ Internet|Truyền dữ liệu giữa các máy tính|Phân tích các gói tin mạng|Thiết lập kết nối giữa các máy tính|B
@@ -142,3 +141,5 @@
 11326|BAS1204|Tích phân của hàm số f(x) = 1/x^2 trong khoảng [1,2] là bao nhiêu?|1/2|1/3|1/4|1/5|B
 12108|BAS1204|Tích phân của hàm số f(x) = 1/(x^2+4x+5) trong khoảng [-∞,+∞] là bao nhiêu?|π/2|π|2π|∞|A
 12889|BAS1204|Tích phân của hàm số f(x) = 2x^3 - 3x^2 + 4x - 1 trong khoảng [0,1] là bao nhiêu?|3/2|1/2|1/4|5/4|C
+13670|BAS1105|ACFD|A|B|C|D|A
+14451|INT1154|Ai đẹp trai nhất?|Phước|Long|Phú|Nhân|A

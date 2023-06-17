@@ -714,28 +714,31 @@ void MainSceneSV(SinhVien *&sv, DanhSachMonHoc &dsmh, DanhSachCauHoi &dsch, std:
                             time_testing = box_thoi_gian_thi.text.data;
                             number_of_question = box_so_cau_hoi.text.data;
 
-                            if(stoi(time_testing) < 1 || stoi(time_testing) > 60){
+                            DArray<CauHoi *> list_cau_hoi_thi;
+                            dsch.getQuestionList(list_cau_hoi_thi, testing_subject);
+                            CauHoi **cau_hoi_duoc_chon = new CauHoi *[stoi(number_of_question)];
+                            srand(time(0));
+                            if (stoi(time_testing) < 1 || stoi(time_testing) > 60)
+                            {
                                 error = true;
                                 msg = "Thời gian không hợp lệ";
                             }
-
-                            DArray<CauHoi *> list_cau_hoi_thi;
-                            dsch.getQuestionList(list_cau_hoi_thi, testing_subject);
-                            CauHoi **cau_hoi_duoc_chon = new CauHoi*[stoi(number_of_question)];
-                            srand(time(0));
-                            if(list_cau_hoi_thi.size() < stoi(number_of_question)){
+                            else if (list_cau_hoi_thi.size() < stoi(number_of_question))
+                            {
                                 error = true;
                                 msg = "Số câu hỏi không đủ";
                             }
-                            else{
-                                for(int i = 0; i < stoi(number_of_question); i++){
+                            else
+                            {
+                                for (int i = 0; i < stoi(number_of_question); i++)
+                                {
                                     int random_index = rand() % list_cau_hoi_thi.size();
                                     cau_hoi_duoc_chon[i] = list_cau_hoi_thi[random_index];
                                     list_cau_hoi_thi.remove(random_index);
                                 }
-                            is_close_icon_pressed = true;
-                            scene_stack.push(Testing);
-                            ptr = cau_hoi_duoc_chon;
+                                is_close_icon_pressed = true;
+                                scene_stack.push(Testing);
+                                ptr = cau_hoi_duoc_chon;
                             }
                         }
                         else{
@@ -958,7 +961,7 @@ void TestingScene(SinhVien *&sv, DanhSachMonHoc &dsmh, CauHoi **&ptr, std::strin
                 prev_question_in_thi.run(prev_question);
 
                 DrawRectangleLinesEx({23 + 10, BotLeft().y - 60 - 23, 100, 50}, 2, BLACK);
-                DrawTextEx(font, TextFormat("%i:%i", second / 60, second % 60), {23 + 10 + 100/2 - 15, BotLeft().y - 60 - 23 + 50/2 - 15}, 30, 3, BLACK);
+                DrawTextEx(font, TextFormat("%i:%i", second / 60, second % 60), {23 + 10 + 100/2 - MeasureTextEx(font, TextFormat("%i:%i", second / 60, second % 60), 30, 3).x/2, BotLeft().y - 60 - 23 + 50/2 - 15}, 30, 3, BLACK);
                 if(count % 12 == 0){
                     second--;
                     count = 0;
